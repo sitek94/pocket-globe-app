@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { geoPath, geoNaturalEarth1, geoOrthographic, zoom, select } from 'd3';
+import { zoom, select } from 'd3';
 
 import * as d3 from 'd3';
 import { useData } from './useData';
@@ -42,7 +42,7 @@ export const App = () => {
     if (!data) return;
 
     const svg = select(svgRef.current);
-    const g = select(gRef.current);
+    
     const globe = svg.select('circle');
 
     const paths = svg.selectAll('path');
