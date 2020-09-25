@@ -1,0 +1,52 @@
+:root {
+  --color-hover: #3bd902;
+
+  --white: #fff;
+  --black: #000;
+
+  --gray-10: #F5F3F2;
+  --gray-15: #e4e4e3;
+  --gray-20: #C0C0BB;
+  --gray-30: #8E8883;
+  --gray-40: #635F5D; 
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+
+  font-family: Helvetica, sans-serif;
+}
+
+svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.marks {
+  .country {
+    fill: #E6842A;
+    stroke: none;
+    transition: fill .5s;
+
+    &:hover {
+      fill: #F6B656;
+    }
+  }
+
+  .interiors {
+    stroke: var(--gray-10);
+    stroke-width: .25px;
+    fill: none;
+  }
+
+  .sphere {
+    fill: var(--gray-15);
+  }
+
+  .graticules {
+    fill: none;
+    stroke: var(--gray-20);
+    stroke-opacity: .6;
+  }
+}
