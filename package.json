@@ -1,7 +1,8 @@
 {
-  "name": "react-world-map",
+  "name": "react-d3-interactive-globe",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://sitek94.github.io/react-d3-interactive-globe",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -14,6 +15,8 @@
     "topojson": "^3.0.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
