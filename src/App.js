@@ -1,23 +1,40 @@
 import React, { useEffect, useRef } from 'react';
-import { geoPath, geoNaturalEarth1, geoGraticule, zoom, select } from 'd3';
+import { geoPath, geoNaturalEarth1, geoOrthographic, zoom, select } from 'd3';
 
+import * as d3 from 'd3';
 import { useData } from './useData';
 
 // Variables
-const width = window.innerWidth;
-const height = window.innerHeight;
+const width = 900;
+const height = 500;
 
 // Latitude and longitude to pixel coordinates
-const projection = geoNaturalEarth1();
-// Generate lines from pixel coordinates
-const pathGenerator = geoPath(projection);
-// Geometry object representing all meridians and parallels
-const graticule = geoGraticule();
+// const projection = geoNaturalEarth1();
+// // Generate lines from pixel coordinates
+// const pathGenerator = geoPath(projection);
+// // Geometry object representing all meridians and parallels
+// const graticule = geoGraticule();
+
+
+
+let projection = d3.geoOrthographic()
+  .scale(250)
+  .center([0, 0])
+  .rotate([0,-30])
+  .translate([width / 2, height / 2]);
+
+const sensitivity = 75;
+const initialScale = projection.scale()
+let path = d3.geoPath().projection(projection)
+
+
+
 
 export const App = () => {
   // Fetch data using custom hook
   const data = useData();
   const svgRef = useRef(null);
+  const gRef= useRef(null);
 
   
 
@@ -25,29 +42,73 @@ export const App = () => {
     if (!data) return;
 
     const svg = select(svgRef.current);
-    const container = svg.select('.container');
+    const g = select(gRef.current);
+    const globe = svg.select('circle');
 
-    svg.call(zoom().on('zoom', event => {
-      container.attr('transform', event.transform)
-    }))
+    const paths = svg.selectAll('path');
 
+    svg
+      .call(d3.drag().on('drag', event => {
+        const rotate = projection.rotate()
+        const k = sensitivity / projection.scale()
+        projection.rotate([
+          rotate[0] + event.dx * k,
+          rotate[1] - event.dy * k
+        ])
+        path = d3.geoPath().projection(projection)
+        paths.attr("d", path)
+      }))
+      .call(zoom().on('zoom', event => {
+        if(event.transform.k > 0.3) {
+          projection.scale(initialScale * event.transform.k)
+          path = d3.geoPath().projection(projection)
+          //svg.selectAll("path")
+          paths.attr("d", path)
+          globe.attr("r", projection.scale())
+        }
+        else {
+          event.transform.k = 0.3
+        }
+      }))
+
+
+     
+
+  }, [data])
+
+  useEffect(() => {
+    if (!data) return;
+
+    const g = select(gRef.current);
+    g
+    .selectAll('path')
+    .data(data.features)
+    .join('path')
+    .attr('class', 'country')
+    .attr('d', path)
   })
 
   if (!data) return <pre>Loading...</pre>;
-  const { countries, interiors } = data;
+
   return (
     <svg ref={svgRef} width={width} height={height}>
-      <g className="container">
-        <path className="sphere" d={pathGenerator({ type: 'Sphere' })} />
-        <path className="graticules" d={pathGenerator(graticule())} />
-        {countries.features.map((feature) => (
+      <circle
+        fill="#EEE"
+        stroke="#000"
+        strokeWidth="0.2"
+        cx={width/2}
+        cy={height/2}
+        r={initialScale}
+      />
+      <g className="container" ref={gRef}>
+        
+        {data.features.map((feature) => (
           <path
             className="country"
             key={feature.properties.name}
-            d={pathGenerator(feature)}
           />
         ))}
-        <path className="interiors" d={pathGenerator(interiors)} />
+        
       </g>
     </svg>
   );
