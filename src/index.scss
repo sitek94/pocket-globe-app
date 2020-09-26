@@ -19,34 +19,5 @@ body {
 }
 
 svg {
-  display: block;
-  margin: 0 auto;
-}
-
-.container {
-  .country {
-    fill: #E6842A;
-    stroke: none;
-    transition: fill .5s;
-
-    &:hover {
-      fill: #F6B656;
-    }
-  }
-
-  .interiors {
-    stroke: var(--gray-10);
-    stroke-width: .25px;
-    fill: none;
-  }
-
-  .sphere {
-    fill: var(--gray-15);
-  }
-
-  .graticules {
-    fill: none;
-    stroke: var(--gray-20);
-    stroke-opacity: .6;
-  }
+  
 }

@@ -12,7 +12,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
-    "topojson": "^3.0.2"
+    "topojson": "^3.0.2",
+    "world-atlas": "^2.0.2"
   },
   "scripts": {
     "predeploy": "npm run build",
