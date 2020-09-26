@@ -9,10 +9,32 @@
   --gray-40: #635F5D; 
 }
 
-body {
+* {
   margin: 0;
-  overflow: hidden;
+  padding: 0;
+  box-sizing: inherit;
+}
 
+html {
+  box-sizing: border-box;
   font-family: Helvetica, sans-serif;
 }
 
+body {
+  overflow: hidden;
+}
+
+.Layout {
+  display: grid;
+  grid-template-columns: 800px 1fr;
+}
+
+.Sidebar {
+  color: var(--gray-40);
+  background-color: var(--gray-15);
+  padding: 20px;
+  
+  ul {
+    list-style: none;
+  }
+}

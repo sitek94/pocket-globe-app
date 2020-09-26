@@ -1,17 +1,39 @@
-import { json } from 'd3';
-import React, { useEffect } from 'react';
-import { feature } from 'topojson';
+import React, { useEffect, useState } from 'react';
+import { Country } from './Country';
+
 import { Globe } from './Globe';
 
+const Sidebar = ({ children }) => {
+   return (
+    <div className="Sidebar">
+      {children}
+    </div>
+  )
+}
+
+const Layout = ({ leftColumn, rightColumn }) => (
+  <div className="Layout">
+    <div className="left-column">
+      {leftColumn}
+    </div>
+    <div className="right-column">
+      <Sidebar>
+        {rightColumn}
+      </Sidebar>
+    </div>
+  </div>
+)
+
 export const App = () => {
-  useEffect (() => {
-    json('https://gist.githubusercontent.com/sitek94/5dfcc1335322c06131436c59b1219f7c/raw/f8b72e0bc8c8440232dddee04256e4e324e6365b/countries-50m.json')
-      .then(topology => {
-        console.log(feature(topology, topology.objects.countries));
-      });
-  })
+  const [selectedCountry, setSelectedCountry] = useState({
+    name: 'Poland',
+    alphaCode: 'POL'
+  });
 
   return (
-    <Globe />
+    <Layout
+      leftColumn={<Globe onCountryClick={setSelectedCountry} />} 
+      rightColumn={<Country countryProps={selectedCountry} />}
+    />  
   );
 };

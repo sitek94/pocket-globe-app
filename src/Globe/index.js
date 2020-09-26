@@ -1,11 +1,11 @@
 import './style.scss';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { geoPath, geoOrthographic, select } from 'd3';
 
 import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
 
-export const Globe = ({ width = 600, height = 600, sensitivity = 75 }) => {
+export const Globe = memo(({ width = 600, height = 600, sensitivity = 75, onCountryClick }) => {
 
   // Refs
   const svgRef = useRef(null);
@@ -22,7 +22,7 @@ export const Globe = ({ width = 600, height = 600, sensitivity = 75 }) => {
     
   // Fetch TopoJSON data
   const data = useData({ resolution: 'low' });
-  
+
   // Draw the globe
   useEffect(() => {
     if (!data) return;
@@ -58,8 +58,9 @@ export const Globe = ({ width = 600, height = 600, sensitivity = 75 }) => {
         .data(data.features)
         .join('path')
         .attr('d', path)
+        .on('click', (e, d) => onCountryClick(d.properties))
 
-  }, [data, initialScale, projection, sensitivity])
+  }, [data, initialScale, projection, sensitivity, onCountryClick])
 
   if (!data) return <pre>Loading...</pre>;
 
@@ -76,9 +77,10 @@ export const Globe = ({ width = 600, height = 600, sensitivity = 75 }) => {
           <path
             className="country"
             key={feature.properties.name}
+            
           />
         ))}
       </g>
     </svg>
   )
-}
+})
