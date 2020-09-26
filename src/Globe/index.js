@@ -5,7 +5,6 @@ import { geoPath, geoOrthographic, select } from 'd3';
 import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
 
-
 export const Globe = ({ width = 600, height = 600, sensitivity = 75 }) => {
 
   // Refs
@@ -21,11 +20,10 @@ export const Globe = ({ width = 600, height = 600, sensitivity = 75 }) => {
   // Initial scale
   const initialScale = projection.scale();
     
-    
   // Fetch TopoJSON data
-  const data = useData();
-    
-
+  const data = useData({ resolution: 'low' });
+  
+  // Draw the globe
   useEffect(() => {
     if (!data) return;
     // Path generator
