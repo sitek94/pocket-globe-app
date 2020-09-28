@@ -1,8 +1,8 @@
 import React from 'react';
-import { useCountriesDetails } from './useCountryDetails';
+import { useDetails } from './useDetails';
 
 export const Details = ({ alphaCode }) => {
-  const details = useCountriesDetails(alphaCode);
+  const details = useDetails(alphaCode);
 
   if (!details) return <div>Loading...</div>
 
