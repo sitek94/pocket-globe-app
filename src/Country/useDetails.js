@@ -12,14 +12,14 @@ export const useDetails = (alphaCode) => {
     json(`https://restcountries.eu/rest/v2/alpha/${alphaCode}`)
       .then(({ capital, currencies, population, area, languages }) => {
 
-        // Construct details object
-        setDetails({
-          capital,
-          currency: currencies[0].name, 
-          population: format(',d')(population).replaceAll(',', ' '), 
-          area: format(',d')(area),
-          languages: languages.map(l => l.name)
-        })
+        // Construct details array
+        setDetails([
+          { label: 'Capital', value: capital },
+          { label: 'Population', value: format(',d')(population) },
+          { label: 'Area', value: format(',d')(area) },
+          { label: 'Languages', value: languages.map(l => l.name).join(', ') },
+          { label: 'Currency', value: currencies[0].name },
+        ])
       });
   }, [alphaCode]);
 

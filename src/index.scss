@@ -20,17 +20,28 @@ html {
   font-family: Helvetica, sans-serif;
 }
 
+body {
+  
+}
+
 .Layout {
+  height: 100vh;
   display: grid;
-  grid-template-columns: 800px 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.right-column {
+  overflow-y: scroll;
 }
 
 .Sidebar {
   color: var(--gray-40);
-  background-color: var(--gray-15);
-  padding: 20px;
+
+  
   
   ul {
     list-style: none;
   }
+
 }
+
