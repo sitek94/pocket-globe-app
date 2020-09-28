@@ -1,4 +1,6 @@
 import React from 'react';
+import './style.scss';
+
 import { Details } from './Details';
 import { Photos } from './Photos';
 import { WikiEntry } from './WikiEntry';
