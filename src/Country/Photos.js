@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePhotos } from './usePhotos';
+import { usePhotos } from './hooks/usePhotos';
 
 /* 
   RECOMMENDED CONTRIBUTING PATTERN

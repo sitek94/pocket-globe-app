@@ -1,0 +1,8 @@
+.ExpansionPanel.MuiAccordion-root {
+  & .MuiAccordionSummary-root.Mui-expanded {
+    min-height: 0;
+  }
+  &.Mui-expanded {
+    margin: 0;
+  }
+}
