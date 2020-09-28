@@ -7,7 +7,7 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core';
-import { useDetails } from './useDetails';
+import { useDetails } from './hooks/useDetails';
 
 
 export const Details = ({ alphaCode }) => {
@@ -30,12 +30,5 @@ export const Details = ({ alphaCode }) => {
         </TableBody>
       </Table>
     </TableContainer>
-   /*  <ul>
-      <li>Capital: {capital}</li>
-      <li>Population: {population}</li>
-      <li>Area: {area} km<sup>2</sup></li>
-      <li>Currency: {currency}</li>
-      <li>Languages: {languages.join(', ')}</li>
-    </ul> */
   )
 }

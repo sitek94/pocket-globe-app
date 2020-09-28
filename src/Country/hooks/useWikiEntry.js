@@ -10,7 +10,12 @@ export const useWikiEntry = (term) => {
 
     useEffect(() => {
       axios.get(`https://en.wikipedia.org/api/rest_v1/page/summary/${term}`)
-        .then(res => setWikiEntry(res.data.extract))
+        .then(response => {
+          const paragraph = response.data.extract.split('. ').join('.\n');
+          console.log(paragraph);
+
+          setWikiEntry(paragraph)
+        })
         .catch(err => console.log(err));
   }, [term]);
   return wikiEntry;
