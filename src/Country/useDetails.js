@@ -5,7 +5,7 @@ import { json, format } from 'd3';
  * Fetches data from REST Countries API
  * for provided alpha code of the country
  */
-export const useCountriesDetails = (alphaCode) => {
+export const useDetails = (alphaCode) => {
   const [details, setDetails] = useState(null);
 
   useEffect(() => {
