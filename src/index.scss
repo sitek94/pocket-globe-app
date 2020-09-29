@@ -21,7 +21,7 @@ html {
 }
 
 body {
-  
+  color: var(--gray-40);
 }
 
 .Layout {
@@ -32,16 +32,6 @@ body {
 
 .right-column {
   overflow-y: scroll;
-}
-
-.Sidebar {
-  color: var(--gray-40);
-
-  
-  
-  ul {
-    list-style: none;
-  }
-
+  overflow-x: hidden;
 }
 

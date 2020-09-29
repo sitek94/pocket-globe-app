@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
+
 import { Country } from './Country';
-
 import { Globe } from './Globe';
-
-const Sidebar = ({ children }) => {
-   return (
-    <div className="Sidebar">
-      {children}
-    </div>
-  )
-}
 
 const Layout = ({ leftColumn, rightColumn }) => (
   <div className="Layout">
@@ -17,9 +9,7 @@ const Layout = ({ leftColumn, rightColumn }) => (
       {leftColumn}
     </div>
     <div className="right-column">
-      <Sidebar>
-        {rightColumn}
-      </Sidebar>
+      {rightColumn}
     </div>
   </div>
 )

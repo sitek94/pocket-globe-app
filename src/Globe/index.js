@@ -1,6 +1,6 @@
-import './style.scss';
 import React, { useEffect, useRef, memo } from 'react';
 import { geoPath, geoOrthographic, select } from 'd3';
+import './style.scss';
 
 import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';

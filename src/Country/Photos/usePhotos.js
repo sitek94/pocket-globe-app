@@ -12,7 +12,7 @@ export const usePhotos = (terms) => {
       axios.get('https://api.unsplash.com/search/photos/', {
         params: {
           query: terms.join('-'),
-          per_page: 10
+          per_page: 12
         },
         headers: {
           Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_KEY}`

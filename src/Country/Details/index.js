@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   Table,
   TableBody,
@@ -7,15 +6,13 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core';
-import { useDetails } from './hooks/useDetails';
 
+import { useDetails } from './useDetails';
 
 export const Details = ({ alphaCode }) => {
   const details = useDetails(alphaCode);
 
   if (!details) return <div>Loading...</div>
-
-  
 
   return (
     <TableContainer className="Details">

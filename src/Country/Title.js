@@ -4,10 +4,10 @@ import { Box, Typography } from '@material-ui/core';
 
 export const Title = ({ text }) => {
   return (
-    <Box padding={2}>
+    <Box className="Title">
       <Typography
         component="h1"
-        variant="h3"
+        variant="h4"
         style={text.length > 35 ? { fontSize: '1.8rem' } : null}
       >
         {text}
