@@ -1,6 +1,8 @@
 import React from 'react';
 import './style.scss';
 
+import { Paper } from '@material-ui/core';
+
 import { Details } from './Details';
 import { Photos } from './Photos';
 import { WikiEntry } from './WikiEntry';
