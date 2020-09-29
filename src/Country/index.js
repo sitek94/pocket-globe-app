@@ -10,7 +10,7 @@ import { Title } from './Title';
 export const Country = ({ countryProps: { name, alphaCode } }) => {
   return (
     <div className="Country">
-      <Title>{name}</Title>
+      <Title text={name} />
       <ExpansionPanel 
         summary="Details"
         details={<Details alphaCode={alphaCode} />}

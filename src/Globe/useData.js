@@ -7,7 +7,7 @@ const topologyUrl = {
   low: 'https://unpkg.com/world-atlas@2.0.2/countries-110m.json',
 }
 
-const isoCodesUrl = 'https://gist.githubusercontent.com/sitek94/4339d86883340aac67cf61a5ed7bb05e/raw/ISO-3166-Countries-with-Regional-Codes.json';
+const isoCodesUrl = 'https://gist.githubusercontent.com/sitek94/4339d86883340aac67cf61a5ed7bb05e/raw/00e0fe120a79a29758634cd2416a2e9893895cde/ISO-3166-Countries-with-Regional-Codes.json';
 
 export const useData = ({ resolution }) => {
   const [data, setData] = useState(null);
@@ -39,6 +39,7 @@ export const useData = ({ resolution }) => {
             alphaCode: isoCodeObj['alpha-3'],
             numericCode: isoCodeObj['country-code']
           }
+          console.log(isoCodeObj.name)
         }
       })
 
