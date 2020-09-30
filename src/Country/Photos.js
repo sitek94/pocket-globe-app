@@ -9,7 +9,7 @@ import { useData } from '../useData';
 export const Photos = ({ terms }) => {
   // const photos = usePhotos(terms);
 
-  const [{ data, isLoading, isError }, { setUrl, setConfig }] = useData();
+  const [{ data, isLoading }, { setUrl, setConfig }] = useData();
 
   useEffect(() => {
     setUrl('https://api.unsplash.com/search/photos/');
