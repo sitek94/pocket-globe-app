@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { LoadingSpinner } from '../LoadingSpinner';
 
 
 export const PhotoCard = ({ image, term }) => {
@@ -9,8 +10,6 @@ export const PhotoCard = ({ image, term }) => {
     if (!image) return;
 
     const updateSpans = () => {
-      console.log(term, imageRef.current);
-      console.log(image.alt_description);
       const height = imageRef.current.clientHeight;
       setSpans(Math.ceil(height / 10 + 1));
     };
@@ -25,7 +24,7 @@ export const PhotoCard = ({ image, term }) => {
 
   }, [image,term]);
 
-  if (!image) return <div>Loading</div>
+  if (!image) return <LoadingSpinner />;
   const { urls, alt_description } = image;
 
   return (

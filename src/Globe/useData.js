@@ -11,8 +11,11 @@ const isoCodesUrl = 'https://gist.githubusercontent.com/sitek94/4339d86883340aac
 
 export const useData = ({ resolution }) => {
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     Promise.all([
       /**
        * Because topojson data provides only numeric ISO 3166 codes,
@@ -44,7 +47,10 @@ export const useData = ({ resolution }) => {
 
       setData(featureCollection);
     })
+    .catch(setIsError);
+
+    setIsLoading(false);
   }, [resolution]);
 
-  return data;
+  return [{ data, isLoading, isError }];
 }

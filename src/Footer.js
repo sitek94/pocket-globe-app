@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Typography, Link } from '@material-ui/core';
 
-export const Footer = () => {
+export const Footer = memo(() => {
   const year = new Date().getFullYear();
 
   const myGithubLink = (
@@ -15,4 +15,4 @@ export const Footer = () => {
       <Typography>&copy; {year} by {myGithubLink}</Typography>
     </footer>
   )
-}
+})

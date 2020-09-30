@@ -4,6 +4,7 @@ import './style.scss';
 
 import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
+import { LoadingSpinner } from '../LoadingSpinner/';
 
 export const Globe = memo(({ width = 600, height = 600, sensitivity = 75, onCountryClick }) => {
 
@@ -21,7 +22,7 @@ export const Globe = memo(({ width = 600, height = 600, sensitivity = 75, onCoun
   const initialScale = projection.scale();
     
   // Fetch TopoJSON data
-  const data = useData({ resolution: 'low' });
+  const [{ data, isLoading }] = useData({ resolution: 'low' });
 
   // Draw the globe
   useEffect(() => {
@@ -62,7 +63,7 @@ export const Globe = memo(({ width = 600, height = 600, sensitivity = 75, onCoun
 
   }, [data, initialScale, projection, sensitivity, onCountryClick])
 
-  if (!data) return <pre>Loading...</pre>;
+  if (!data || isLoading) return <LoadingSpinner />;
 
   return (
     <svg ref={svgRef} className="Globe" width={width} height={height}>
