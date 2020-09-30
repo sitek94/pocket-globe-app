@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import './style.scss';
 
 import { PhotoCard } from './PhotoCard';
@@ -6,9 +6,7 @@ import { LoadingSpinner } from '../LoadingSpinner';
 import { useData } from '../useData';
 
 
-export const Photos = ({ terms }) => {
-  // const photos = usePhotos(terms);
-
+export const Photos = memo(({ terms }) => {
   const [{ data, isLoading }, { setUrl, setConfig }] = useData();
 
   useEffect(() => {
@@ -33,7 +31,7 @@ export const Photos = ({ terms }) => {
       {photos && photos.map((photo) => <PhotoCard key={photo.id} term={terms} image={photo} />)}
     </div>
   );
-};
+});
 
 /* 
 *  With Unsplash Reference

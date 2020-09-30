@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './style.scss';
 
 import { Details } from './Details';
 import { Photos } from './Photos';
 import { WikiEntry } from './WikiEntry';
 
-export const Country = ({ countryProps: { name, alphaCode } }) => {
+export const Country = memo(({ countryProps: { name, alphaCode } }) => {
   return (
     <div className="Country">
       <div className="Info-box">
@@ -15,4 +15,4 @@ export const Country = ({ countryProps: { name, alphaCode } }) => {
       <Photos terms={[name, 'travel']} columns={3} />
     </div>
   );
-};
+});

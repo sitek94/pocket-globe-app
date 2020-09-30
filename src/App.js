@@ -18,7 +18,10 @@ export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
   const theme = createMuiTheme({
     palette: {
-      type: darkMode ? 'dark' : 'light'
+      type: darkMode ? 'dark' : 'light',
+      primary: {
+        main: darkMode ? '#90caf9' : '#008dff',
+      }
     }
   });
   const handleDarkModeToggle = () => setDarkMode(!darkMode);

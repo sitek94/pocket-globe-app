@@ -3,12 +3,12 @@
   margin: 0 auto;
 
   .country {
-    fill: #e6842a;
+    fill: #019601;
     stroke: none;
     transition: fill 0.5s;
 
     &:hover {
-      fill: #f6b656;
+      fill: #09d809;;
     }
   }
   
@@ -19,6 +19,6 @@
   }
 
   .circle {
-    fill: var(--gray-15);
+    fill: #008dff;
   }
 }

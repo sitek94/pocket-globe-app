@@ -6,7 +6,12 @@ import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner/';
 
-export const Globe = memo(({ width = 600, height = 600, sensitivity = 75, onCountryClick }) => {
+export const Globe = memo(({ 
+  width = 600, 
+  height = 600, 
+  sensitivity = 75, 
+  onCountryClick,
+}) => {
 
   // Refs
   const svgRef = useRef(null);
@@ -78,7 +83,6 @@ export const Globe = memo(({ width = 600, height = 600, sensitivity = 75, onCoun
           <path
             className="country"
             key={feature.properties.name}
-            
           />
         ))}
       </g>

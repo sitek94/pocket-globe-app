@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, memo } from 'react';
 import { LoadingSpinner } from '../LoadingSpinner';
 
-
-export const PhotoCard = ({ image, term }) => {
+export const PhotoCard = memo(({ image, term }) => {
   const imageRef = useRef();
   const [spans, setSpans] = useState(0);
   
@@ -32,4 +31,4 @@ export const PhotoCard = ({ image, term }) => {
       <img ref={imageRef} alt={alt_description} src={urls.small} />
     </div>
   );
-};
+});
