@@ -8,10 +8,10 @@ export const Photos = ({ terms }) => {
   const photos = usePhotos(terms);
 
   if (!photos) return <div>Loading</div>;
-
+  
   return (
     <div className="Photos">
-      {photos && photos.map((photo) => <PhotoCard key={photo.id} image={photo} />)}
+      {photos && photos.map((photo) => <PhotoCard key={photo.id} term={terms} image={photo} />)}
     </div>
   );
 };

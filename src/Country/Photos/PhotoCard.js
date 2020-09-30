@@ -1,19 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 
-export const PhotoCard = ({ image: { urls, alt_description } }) => {
+export const PhotoCard = ({ image, term }) => {
   const imageRef = useRef();
   const [spans, setSpans] = useState(0);
-
+  
   useEffect(() => {
-    const image = imageRef.current;
-    image.addEventListener('load', updateSpans);
-  }, []);
+    if (!image) return;
 
-  const updateSpans = () => {
-    const height = imageRef.current.clientHeight;
-    setSpans(Math.ceil(height / 10 + 1));
-  };
+    const updateSpans = () => {
+      console.log(term, imageRef.current);
+      console.log(image.alt_description);
+      const height = imageRef.current.clientHeight;
+      setSpans(Math.ceil(height / 10 + 1));
+    };
+
+    const imageEl = imageRef.current;
+    imageEl.addEventListener('load', updateSpans);
+
+    return () => {
+      imageEl.removeEventListener('load', updateSpans);
+  
+    }
+
+  }, [image,term]);
+
+  if (!image) return <div>Loading</div>
+  const { urls, alt_description } = image;
 
   return (
     <div style={{ gridRowEnd: `span ${spans}` }}>

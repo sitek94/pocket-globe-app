@@ -27,6 +27,7 @@ body {
 .Layout {
   height: 100vh;
   display: grid;
+  grid-template-rows: auto 1fr;
   grid-template-columns: 4fr 6fr;
 }
 
@@ -34,17 +35,10 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 6px 0px 30px -9px rgba(0,0,0,0.75);
 }
 
 .right-column {
   overflow-y: scroll;
   overflow-x: hidden;
-}
-
-footer {
-  height: 50px;
-  background-color: #F5F3F2;
-
 }
 

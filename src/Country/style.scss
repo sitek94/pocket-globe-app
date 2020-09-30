@@ -1,28 +1,15 @@
 .Country {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  max-height: 100vh;
   padding: 20px;
-  box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.75);
 
   .Info-box {
+    height: 200px;
+
     display: grid;
     grid-template-columns: 5.5fr 4.5fr;
-    grid-template-areas: 
-      "title title"
-      "wiki details";
     column-gap: 10px;
   }
 
-  .Title {
-    grid-area: title;
-    align-self: center;
-    border-bottom: 1px solid var(--gray-15);
-  }
-
   .Details {
-    grid-area: details;
-
     // Remove border from last detail item
     tr:last-child {
       th, td {
@@ -31,13 +18,11 @@
     }
 
     th {
-      width: 40%;
+      width: 35%;
     }
   }
 
   .WikiEntry {
-    grid-area: wiki;
-
     p {
       text-align: justify;
     }

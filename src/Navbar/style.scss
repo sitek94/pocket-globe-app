@@ -1,0 +1,8 @@
+.Navbar {
+  grid-column: 1 / span 2;
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
+}
