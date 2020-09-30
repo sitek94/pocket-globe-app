@@ -32,12 +32,15 @@ body {
 }
 
 .left-column {
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .right-column {
+  padding: 10px;
+
   overflow-y: scroll;
   overflow-x: hidden;
 }

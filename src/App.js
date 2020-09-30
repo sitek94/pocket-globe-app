@@ -1,9 +1,11 @@
+import { Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 
 import { Country } from './Country';
 import { Globe } from './Globe';
 
 import { Navbar } from './Navbar';
+import { Footer } from './Footer';
 
 const Layout = ({ navbar, leftColumn, rightColumn }) => (
   <div className="Layout">
@@ -26,7 +28,7 @@ export const App = () => {
       leftColumn={
         <>
           <Globe onCountryClick={setSelectedCountry} />
-          <footer>Footer</footer>
+          <Footer />
         </>
       }
       rightColumn={<Country countryProps={selectedCountry} />}
