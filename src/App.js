@@ -14,22 +14,27 @@ const Layout = ({ navbar, leftColumn, rightColumn }) => (
   </Paper>
 );
 
+const initialState = {
+  name: 'Poland',
+  alphaCode: 'POL'
+}
+
 export const App = () => {
+
+  // Dark/light mode
   const [darkMode, setDarkMode] = useState(false);
   const theme = createMuiTheme({
     palette: {
       type: darkMode ? 'dark' : 'light',
       primary: {
-        main: darkMode ? '#90caf9' : '#008dff',
+        main: '#1976d2' // Shade of blue from Material UI website
       }
     }
   });
   const handleDarkModeToggle = () => setDarkMode(!darkMode);
 
-  const [selectedCountry, setSelectedCountry] = useState({
-    name: 'Poland',
-    alphaCode: 'POL',
-  });
+  // Selected country
+  const [selectedCountry, setSelectedCountry] = useState(initialState);
 
   return (
     <ThemeProvider theme={theme}>

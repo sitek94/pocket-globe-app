@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 
 import { AppBar, Toolbar, Typography, IconButton, makeStyles } from '@material-ui/core';
 import {
