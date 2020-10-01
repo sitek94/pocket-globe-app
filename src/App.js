@@ -42,11 +42,11 @@ export const App = () => {
         navbar={<Navbar theme="light" title={selectedCountry.name} onThemeIconClick={handleDarkModeToggle} />}
         leftColumn={
           <>
-            <Globe onCountryClick={setSelectedCountry} />
+            <Globe selectedCountry={selectedCountry} onCountryClick={setSelectedCountry} />
             <Footer />
           </>
         }
-        rightColumn={<Country countryProps={selectedCountry} />}
+        // rightColumn={<Country countryProps={selectedCountry} />}
       />
     </ThemeProvider>
   );

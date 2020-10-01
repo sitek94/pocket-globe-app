@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, memo, useState } from 'react';
 import { geoPath, geoOrthographic, select } from 'd3';
 
 import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner/';
 import { makeStyles } from '@material-ui/core';
+
+import * as d3 from 'd3';
 
 const useStyles = makeStyles(({ palette: { primary, background, getContrastText } }) => ({
   root: {
@@ -28,7 +30,7 @@ export const Globe = memo(({
   sensitivity = 75, 
   onCountryClick,
 }) => {
-
+  
   const classes = useStyles();
 
   // Refs
@@ -43,15 +45,31 @@ export const Globe = memo(({
     .translate([width / 2, height / 2]);
   // Initial scale
   const initialScale = projection.scale();
+
+  // Path generator
+  const path = geoPath().projection(projection);
+
+  const [coordinates, setCoordinates] = useState([0, -30]);
+  useEffect(() => {
+    const svgContent = select(svgContentRef.current);
+    const countries = svgContent.selectAll(`.${classes.country}`)
+    projection.rotate(coordinates);
+
+    let newPath = d3.geoPath().projection(projection)
+
+    countries
+      .attr('d', newPath)
+
+  }, [coordinates, projection, classes]);
     
   // Fetch TopoJSON data
   const [{ data, isLoading }] = useData({ resolution: 'low' });
 
+  console.log('Data: ', data, 'isLoading: ', isLoading);
+
   // Draw the globe
   useEffect(() => {
     if (!data) return;
-    // Path generator
-    const path = geoPath().projection(projection);
 
     // Selectors
     const svg = select(svgRef.current);
@@ -77,14 +95,22 @@ export const Globe = memo(({
         initialScale
       }));
 
+      const handleCountryClick = (e, d) => {
+        const centroid = path.centroid(d);
+        const [x, y] = projection.invert(centroid);
+
+        setCoordinates([-x, -y]);
+        onCountryClick(d.properties);
+      }
+
       // Update path of each country
       countries
         .data(data.features)
         .join('path')
         .attr('d', path)
-        .on('click', (e, d) => onCountryClick(d.properties))
+        .on('click', handleCountryClick);
 
-  }, [data, initialScale, projection, sensitivity, onCountryClick, classes])
+  }, [data, sensitivity, onCountryClick, classes, height, width, initialScale, projection, path])
 
   if (!data || isLoading) return <LoadingSpinner />;
 
@@ -94,7 +120,7 @@ export const Globe = memo(({
         className={classes.circle}
         cx={width / 2}
         cy={height / 2}
-        r={initialScale}
+        r={250}
       />
       <g className="content" ref={svgContentRef}>
         {data.features.map((feature) => (
@@ -107,3 +133,6 @@ export const Globe = memo(({
     </svg>
   )
 })
+
+
+
