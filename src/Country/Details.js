@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { format } from 'd3';
 import {
+  makeStyles,
   Table,
   TableBody,
   TableCell,
@@ -13,8 +14,24 @@ import { useData } from '../useData';
 
 const LANGUAGES_LIMIT = 4;
 
+const useStyles = makeStyles({
+  root: {
+    // Remove border from last detail item
+    'tr:last-child': {
+      'th, td': {
+        border: 0
+      }
+    },
+    'th': {
+      width: '35%'
+    }
+  }
+})
+
 export const Details = ({ alphaCode }) => {
-  const [{ data, isLoading, isError }, { setUrl }] = useData();
+  const classes = useStyles();
+
+  const [{ data, isLoading }, { setUrl }] = useData();
 
   useEffect(() => {
     setUrl(`https://restcountries.eu/rest/v2/alpha/${alphaCode}`);
@@ -32,7 +49,7 @@ export const Details = ({ alphaCode }) => {
   ];
 
   return (
-    <TableContainer className="Details">
+    <TableContainer className={classes.root}>
       <Table size="small">
         <TableBody>
           {details.map(({ label, value }) => (

@@ -1,14 +1,25 @@
 import React, { memo } from 'react';
-import './style.scss';
 
 import { Details } from './Details';
 import { Photos } from './Photos';
 import { WikiEntry } from './WikiEntry';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  infoBox: {
+    height: '200',
+    display: 'grid',
+    gridTemplateColumns: '5.5fr 4.5fr',
+    columnGap: 10,
+  }
+})
 
 export const Country = memo(({ countryProps: { name, alphaCode } }) => {
+  const classes = useStyles();
+
   return (
-    <div className="Country">
-      <div className="Info-box">
+    <div>
+      <div className={classes.infoBox}>
         <WikiEntry term={name} />
         <Details alphaCode={alphaCode} />
       </div>

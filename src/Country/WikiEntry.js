@@ -24,9 +24,7 @@ export const WikiEntry = ({ term }) => {
 
   return (
     <div className="WikiEntry">
-      
-      <Typography variont="body2">{entry}</Typography>
-    
+      <Typography variont="body2" align="justify">{entry}</Typography>
     </div>
   )
 }

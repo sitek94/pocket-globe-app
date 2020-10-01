@@ -46,7 +46,7 @@ export const App = () => {
             <Footer />
           </>
         }
-        // rightColumn={<Country countryProps={selectedCountry} />}
+        rightColumn={<Country countryProps={selectedCountry} />}
       />
     </ThemeProvider>
   );

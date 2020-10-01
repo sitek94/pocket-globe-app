@@ -4,9 +4,22 @@ import './style.scss';
 import { PhotoCard } from './PhotoCard';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { useData } from '../useData';
+import { makeStyles } from '@material-ui/core';
 
+const useStyles = makeStyles({
+  div: {
+    width: '100%',
+    paddingTop: 10,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    gridAutoRows: 10,
+    gridGap: '0 10px',
+  }
+})
 
 export const Photos = memo(({ terms }) => {
+  const classes = useStyles();
+  
   const [{ data, isLoading }, { setUrl, setConfig }] = useData();
 
   useEffect(() => {
@@ -27,7 +40,7 @@ export const Photos = memo(({ terms }) => {
   const photos = data.results;
 
   return (
-    <div className="Photos">
+    <div className={classes.div}>
       {photos && photos.map((photo) => <PhotoCard key={photo.id} term={terms} image={photo} />)}
     </div>
   );
