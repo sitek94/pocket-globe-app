@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Country } from './Country';
 import { Globe } from './Globe';
@@ -20,6 +20,7 @@ const initialState = {
 }
 
 export const App = () => {
+  console.log('[APP]: RENDERED');
 
   // Dark/light mode
   const [darkMode, setDarkMode] = useState(false);
@@ -36,13 +37,17 @@ export const App = () => {
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
 
+  const handleCountryClick = useCallback(d => {
+    setSelectedCountry(d)
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <Layout
         navbar={<Navbar theme="light" title={selectedCountry.name} onThemeIconClick={handleDarkModeToggle} />}
         leftColumn={
           <>
-            <Globe selectedCountry={selectedCountry} onCountryClick={setSelectedCountry} />
+            <Globe onCountryClick={handleCountryClick} />
             <Footer />
           </>
         }

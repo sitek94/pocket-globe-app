@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 
 import { CircularProgress, makeStyles } from '@material-ui/core';
 

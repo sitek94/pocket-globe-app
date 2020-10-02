@@ -1,5 +1,4 @@
 import React, { useEffect, memo } from 'react';
-import './style.scss';
 
 import { PhotoCard } from './PhotoCard';
 import { LoadingSpinner } from '../LoadingSpinner';
