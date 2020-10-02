@@ -31,6 +31,7 @@ export const useData = ({ resolution }) => {
       
       // Convert TopoJSON to GeoJSON - creates feature collection 
       const featureCollection = feature(topology, topology.objects.countries);
+      console.log(featureCollection);
 
       // Extend properties of each feature
       featureCollection.features.forEach(feature => {

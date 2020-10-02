@@ -17,7 +17,7 @@ export const dragBehaviour = ({
     // Update path generator with new projection
     path.projection(projection);
 
-    // Update selected path
+    // Update selection
     selection.attr('d', path);
   });
 
@@ -45,7 +45,7 @@ export const zoomBehaviour = ({
       // Update path generator with new projection
       path.projection(projection);
 
-      // Update selected path and circle
+      // Update selection
       selection.attr('d', path);
       circle.attr('r', projection.scale());
     } 

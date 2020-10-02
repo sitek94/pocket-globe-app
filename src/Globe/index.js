@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, memo, useMemo } from 'react';
-import { geoPath, geoOrthographic, select } from 'd3';
+import { geoPath, geoOrthographic, select, interpolate } from 'd3';
 
 import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { makeStyles } from '@material-ui/core';
+import { NULL } from 'node-sass';
 
 const useStyles = makeStyles(
   ({ palette: { primary, background, getContrastText } }) => ({
@@ -85,6 +86,12 @@ export const Globe = memo(
         );
 
       const handleCountryClick = (e, d) => {
+
+        console.log(e);
+
+        // Store the current rotation and scale:
+        const currentRotate = projection.rotate();
+
         // Get projected planar centroid (in pixels)
         const centroid = path.centroid(d);
         // Converts centroid to [longitude, latitude] in degrees
@@ -95,13 +102,30 @@ export const Globe = memo(
         // Update path generator with new projection
         path.projection(projection);
 
-        // Update path of each country
-        countries.attr('d', path);
+        // Calculate next rotation
+        const nextRotate = projection.rotate();
+
+        // Create interpolator function
+        const r = interpolate(currentRotate, nextRotate);
+       
+        // Update countries
+        countries
+          .transition()
+          .attrTween('d', d => t => {
+              projection.rotate(r(Math.pow(t, 0.33)));
+              path.projection(projection);
+
+              // When interpolator returns null, Chrome throws errors for
+              // <path> with attribute d="null"
+              const pathD = path(d);
+              return pathD !== null ? pathD : "";
+            })
+          .duration(1000);
 
         onCountryClick(d.properties);
       };
 
-      // Update path of each country
+      // Update countries
       countries
         .data(data.features)
         .join('path')
@@ -136,3 +160,4 @@ export const Globe = memo(
     );
   }
 );
+
