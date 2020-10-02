@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { json } from 'd3';
-import { feature } from 'topojson';
+import { feature, mesh } from 'topojson';
 
 const topologyUrl = {
   high: 'https://unpkg.com/world-atlas@2.0.2/countries-50m.json',
@@ -28,13 +28,12 @@ export const useData = ({ resolution }) => {
       json(isoCodesUrl)
     ])
     .then(([topology, isoCodes]) => {
-      
-      // Convert TopoJSON to GeoJSON - creates feature collection 
-      const featureCollection = feature(topology, topology.objects.countries);
-      console.log(featureCollection);
+
+      // Convert TopoJSON to GeoJSON 
+      const countriesGeoJSON = feature(topology, topology.objects.countries);
 
       // Extend properties of each feature
-      featureCollection.features.forEach(feature => {
+      countriesGeoJSON.features.forEach(feature => {
         // Some countries in the collection don't have an id
         if (feature.id) {
           const isoCodeObj = isoCodes.find(country => country['country-code'] === feature.id);
@@ -46,7 +45,7 @@ export const useData = ({ resolution }) => {
         }
       })
 
-      setData(featureCollection);
+      setData(countriesGeoJSON);
     })
     .catch(setIsError);
 

@@ -5,7 +5,6 @@ import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { makeStyles } from '@material-ui/core';
-import { NULL } from 'node-sass';
 
 const useStyles = makeStyles(
   ({ palette: { primary, background, getContrastText } }) => ({
@@ -15,6 +14,8 @@ const useStyles = makeStyles(
     },
     country: {
       fill: background.default,
+      stroke: getContrastText(background.default),
+      strokeWidth: .25,
       '&:hover': {
         fill: primary.main,
       },
@@ -86,8 +87,6 @@ export const Globe = memo(
         );
 
       const handleCountryClick = (e, d) => {
-
-        console.log(e);
 
         // Store the current rotation and scale:
         const currentRotate = projection.rotate();
