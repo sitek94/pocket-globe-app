@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Country } from './Country';
 import { Globe } from './Globe';
@@ -33,6 +33,8 @@ export const App = () => {
   });
   const handleDarkModeToggle = () => setDarkMode(!darkMode);
 
+  const tooltipRef = useRef();
+
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
 
@@ -42,7 +44,7 @@ export const App = () => {
         navbar={<Navbar theme="light" title={selectedCountry.name} onThemeIconClick={handleDarkModeToggle} />}
         leftColumn={
           <>
-            <Globe onCountryClick={setSelectedCountry} />
+            <Globe onCountryClick={setSelectedCountry} tooltipRef={tooltipRef} />
             <Footer />
           </>
         }

@@ -5,6 +5,7 @@ import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { makeStyles } from '@material-ui/core';
+import { createTooltip } from './createTooltip';
 
 const useStyles = makeStyles(
   ({ palette: { primary, background, getContrastText } }) => ({
@@ -15,6 +16,7 @@ const useStyles = makeStyles(
     country: {
       fill: background.default,
       stroke: getContrastText(background.default),
+      transition: 'fill .5s',
       strokeWidth: .25,
       '&:hover': {
         fill: primary.main,
@@ -22,6 +24,7 @@ const useStyles = makeStyles(
     },
     circle: {
       fill: getContrastText(background.default),
+      transition: 'fill .5s',
     },
   })
 );
@@ -29,10 +32,11 @@ const useStyles = makeStyles(
 export const Globe = memo(
   ({ width = 600, height = 600, sensitivity = 75, onCountryClick }) => {
     const classes = useStyles();
-
+    
     // Refs
     const svgRef = useRef(null);
     const svgContentRef = useRef(null);
+    const tooltipRef = useRef(null);
 
     // Projection
     // useMemo is important here because we want to create a projection only once
@@ -63,6 +67,7 @@ export const Globe = memo(
       const svgContent = select(svgContentRef.current);
       const circle = svg.select(`.${classes.circle}`);
       const countries = svgContent.selectAll(`.${classes.country}`);
+      const tooltip = select(tooltipRef.current);
 
       // Apply zoom and drag
       svg
@@ -86,7 +91,7 @@ export const Globe = memo(
           })
         );
 
-      const handleCountryClick = (e, d) => {
+      const handleClick = (e, d) => {
 
         // Store the current rotation and scale:
         const currentRotate = projection.rotate();
@@ -123,13 +128,18 @@ export const Globe = memo(
 
         onCountryClick(d.properties);
       };
+      
+      const { handleMouseover, handleMouseout } = createTooltip(tooltip);
 
       // Update countries
       countries
         .data(data.features)
         .join('path')
         .attr('d', path)
-        .on('click', handleCountryClick);
+        .on('click', handleClick)
+        .on('mouseover', handleMouseover)
+        .on('mouseout', handleMouseout);
+        
     }, [
       data,
       path,
@@ -143,19 +153,24 @@ export const Globe = memo(
     if (!data || isLoading) return <LoadingSpinner />;
 
     return (
-      <svg ref={svgRef} className={classes.root} width={width} height={height}>
-        <circle
-          className={classes.circle}
-          cx={width / 2}
-          cy={height / 2}
-          r={250}
-        />
-        <g className="content" ref={svgContentRef}>
-          {data.features.map((feature) => (
-            <path className={classes.country} key={feature.properties.name} />
-          ))}
-        </g>
-      </svg>
+      <>
+        <svg ref={svgRef} className={classes.root} width={width} height={height}>
+          <circle
+            className={classes.circle}
+            cx={width / 2}
+            cy={height / 2}
+            r={250}
+          />
+          <g className="content" ref={svgContentRef}>
+            {data.features.map(({ properties: { name } }) => (
+              <path className={classes.country} key={name} />
+            ))}
+          </g>
+        </svg>
+        <div className="tooltip" ref={tooltipRef}>
+          <p className="tooltip-details"></p>
+        </div>
+      </>
     );
   }
 );
