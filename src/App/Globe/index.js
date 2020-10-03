@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, memo, useMemo } from 'react';
+import React, { useState, useEffect, useRef, memo, useMemo } from 'react';
 import { geoPath, geoOrthographic, select, interpolate } from 'd3';
 import { makeStyles } from '@material-ui/core';
 
@@ -17,10 +17,13 @@ const useStyles = makeStyles(
       fill: background.default,
       stroke: getContrastText(background.default),
       transition: 'fill .5s',
-      strokeWidth: .25,
+      strokeWidth: 0.25,
       '&:hover': {
         fill: primary.main,
       },
+    },
+    selected: {
+      fill: primary.light,
     },
     circle: {
       fill: getContrastText(background.default),
@@ -30,12 +33,20 @@ const useStyles = makeStyles(
 );
 
 export const Globe = memo(
-  ({ width = 600, height = 600, sensitivity = 75, onCountryClick }) => {
+  ({
+    width = 600,
+    height = 600,
+    sensitivity = 75,
+    initialAlphaCode,
+    onCountryClick,
+  }) => {
     const classes = useStyles();
-    
+
     // Refs
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
+
+    const [selectedCountryCode, setSelectedCountryCode] = useState(initialAlphaCode);
 
     // Projection
     // useMemo is important here because we want to create a projection only once
@@ -63,9 +74,9 @@ export const Globe = memo(
 
       // Selectors
       const svg = select(svgRef.current);
-      const circle = svg.select(`.${classes.circle}`);
-      const countries = svg.selectAll(`.${classes.country}`);
       const tooltip = select(tooltipRef.current);
+      const circle = svg.select('circle');
+      const countries = svg.selectAll(`path`);
 
       // Apply zoom and drag
       svg
@@ -91,7 +102,6 @@ export const Globe = memo(
 
       // Click event handler
       const handleClick = (e, d) => {
-
         // Store the current rotation and scale:
         const currentRotate = projection.rotate();
 
@@ -110,24 +120,25 @@ export const Globe = memo(
 
         // Create interpolator function
         const r = interpolate(currentRotate, nextRotate);
-       
+
         // Update countries
         countries
           .transition()
-          .attrTween('d', d => t => {
-              projection.rotate(r(Math.pow(t, 0.33)));
-              path.projection(projection);
+          .attrTween('d', (d) => (t) => {
+            projection.rotate(r(Math.pow(t, 0.33)));
+            path.projection(projection);
 
-              // When interpolator returns null, Chrome throws errors for
-              // <path> with attribute d="null"
-              const pathD = path(d);
-              return pathD !== null ? pathD : "";
-            })
+            // When interpolator returns null, Chrome throws errors for
+            // <path> with attribute d="null"
+            const pathD = path(d);
+            return pathD !== null ? pathD : '';
+          })
           .duration(1000);
 
         onCountryClick(d.properties);
+        setSelectedCountryCode(d.properties.alphaCode);
       };
-      
+
       // Mouseover, mouseout event handlers
       const { handleMouseover, handleMouseout } = getTooltipHandlers(tooltip);
 
@@ -139,7 +150,6 @@ export const Globe = memo(
         .on('click', handleClick)
         .on('mouseover', handleMouseover)
         .on('mouseout', handleMouseout);
-        
     }, [
       data,
       path,
@@ -162,14 +172,19 @@ export const Globe = memo(
             r={250}
           />
           <g>
-            {data.features.map(({ properties: { name } }) => (
-              <path className={classes.country} key={name} />
+            {data.features.map(({ properties: { alphaCode } }) => (
+              <path
+                key={alphaCode}
+                id={alphaCode}
+                className={`${classes.country} ${
+                  selectedCountryCode === alphaCode && classes.selected
+                }`}
+              />
             ))}
           </g>
         </svg>
-        <Tooltip ref={tooltipRef} /> 
+        <Tooltip ref={tooltipRef} />
       </>
     );
   }
 );
-
