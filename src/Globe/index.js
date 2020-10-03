@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, memo, useMemo } from 'react';
 import { geoPath, geoOrthographic, select, interpolate } from 'd3';
+import { makeStyles } from '@material-ui/core';
 
 import { useData } from './useData';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
-import { makeStyles } from '@material-ui/core';
-import { createTooltip } from './createTooltip';
+import { Tooltip, getTooltipHandlers } from './Tooltip';
 
 const useStyles = makeStyles(
   ({ palette: { primary, background, getContrastText } }) => ({
@@ -35,7 +35,6 @@ export const Globe = memo(
     
     // Refs
     const svgRef = useRef(null);
-    const svgContentRef = useRef(null);
     const tooltipRef = useRef(null);
 
     // Projection
@@ -64,9 +63,8 @@ export const Globe = memo(
 
       // Selectors
       const svg = select(svgRef.current);
-      const svgContent = select(svgContentRef.current);
       const circle = svg.select(`.${classes.circle}`);
-      const countries = svgContent.selectAll(`.${classes.country}`);
+      const countries = svg.selectAll(`.${classes.country}`);
       const tooltip = select(tooltipRef.current);
 
       // Apply zoom and drag
@@ -129,7 +127,7 @@ export const Globe = memo(
         onCountryClick(d.properties);
       };
       
-      const { handleMouseover, handleMouseout } = createTooltip(tooltip);
+      const { handleMouseover, handleMouseout } = getTooltipHandlers(tooltip);
 
       // Update countries
       countries
@@ -161,15 +159,13 @@ export const Globe = memo(
             cy={height / 2}
             r={250}
           />
-          <g className="content" ref={svgContentRef}>
+          <g>
             {data.features.map(({ properties: { name } }) => (
               <path className={classes.country} key={name} />
             ))}
           </g>
         </svg>
-        <div className="tooltip" ref={tooltipRef}>
-          <p className="tooltip-details"></p>
-        </div>
+        <Tooltip ref={tooltipRef} /> 
       </>
     );
   }

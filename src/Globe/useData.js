@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { json } from 'd3';
-import { feature, mesh } from 'topojson';
-
+import { feature } from 'topojson';
 const topologyUrl = {
   high: 'https://unpkg.com/world-atlas@2.0.2/countries-50m.json',
   low: 'https://unpkg.com/world-atlas@2.0.2/countries-110m.json',
@@ -32,7 +31,7 @@ export const useData = ({ resolution }) => {
       // Convert TopoJSON to GeoJSON 
       const countriesGeoJSON = feature(topology, topology.objects.countries);
 
-      // Extend properties of each feature
+      // Extend properties of each feature with ISO CODES
       countriesGeoJSON.features.forEach(feature => {
         // Some countries in the collection don't have an id
         if (feature.id) {
