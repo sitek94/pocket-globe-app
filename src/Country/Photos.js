@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, memo } from 'react';
 
 import { PhotoCard } from './PhotoCard';
 import { LoadingSpinner } from '../LoadingSpinner';
@@ -6,7 +6,7 @@ import { useData } from '../useData';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
-  div: {
+  container: {
     width: '100%',
     paddingTop: 10,
     display: 'grid',
@@ -39,7 +39,7 @@ export const Photos = memo(({ term }) => {
   const photos = data.results;
 
   return (
-    <div className={classes.div}>
+    <div className={classes.container}>
       {photos && photos.map((photo) => <PhotoCard key={photo.id} term={term} image={photo} />)}
     </div>
   );

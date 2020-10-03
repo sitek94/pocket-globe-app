@@ -9,7 +9,7 @@ import { Tooltip, getTooltipHandlers } from './Tooltip';
 
 const useStyles = makeStyles(
   ({ palette: { primary, background, getContrastText } }) => ({
-    root: {
+    svg: {
       display: 'block',
       margin: '0 auto',
     },
@@ -89,6 +89,7 @@ export const Globe = memo(
           })
         );
 
+      // Click event handler
       const handleClick = (e, d) => {
 
         // Store the current rotation and scale:
@@ -127,6 +128,7 @@ export const Globe = memo(
         onCountryClick(d.properties);
       };
       
+      // Mouseover, mouseout event handlers
       const { handleMouseover, handleMouseout } = getTooltipHandlers(tooltip);
 
       // Update countries
@@ -152,7 +154,7 @@ export const Globe = memo(
 
     return (
       <>
-        <svg ref={svgRef} className={classes.root} width={width} height={height}>
+        <svg ref={svgRef} className={classes.svg} width={width} height={height}>
           <circle
             className={classes.circle}
             cx={width / 2}

@@ -24,26 +24,3 @@ body {
   color: var(--gray-40);
 }
 
-.Layout {
-  height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  grid-template-columns: 4fr 6fr;
-}
-
-.left-column {
-  padding: 15px;
-  padding-right: 10px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.right-column {
-  padding: 15px;
-  padding-left: 10px;
-
-  overflow-y: scroll;
-  overflow-x: hidden;
-}

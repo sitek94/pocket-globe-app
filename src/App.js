@@ -1,18 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
+import { Layout } from './Layout';
 import { Country } from './Country';
 import { Globe } from './Globe';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import { ThemeProvider, createMuiTheme, Paper } from '@material-ui/core';
-
-const Layout = ({ navbar, leftColumn, rightColumn }) => (
-  <Paper className="Layout">
-    {navbar}
-    <div className="left-column">{leftColumn}</div>
-    <div className="right-column">{rightColumn}</div>
-  </Paper>
-);
+import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 
 const initialState = {
   name: 'Poland',
@@ -33,8 +26,6 @@ export const App = () => {
   });
   const handleDarkModeToggle = () => setDarkMode(!darkMode);
 
-  const tooltipRef = useRef();
-
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
   
@@ -42,13 +33,9 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <Layout
         navbar={<Navbar title={selectedCountry.name} onThemeIconClick={handleDarkModeToggle} />}
-        leftColumn={
-          <>
-            <Globe onCountryClick={setSelectedCountry} tooltipRef={tooltipRef} />
-            <Footer />
-          </>
-        }
+        leftColumn={<Globe onCountryClick={setSelectedCountry} />}
         rightColumn={<Country countryProps={selectedCountry} />}
+        footer={<Footer />}
       />
     </ThemeProvider>
   );
