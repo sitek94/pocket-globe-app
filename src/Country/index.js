@@ -23,7 +23,7 @@ export const Country = memo(({ countryProps: { name, alphaCode } }) => {
         <WikiEntry term={name} />
         <Details alphaCode={alphaCode} />
       </div>
-      <Photos terms={[name, 'travel']} columns={3} />
+      <Photos term={name} columns={3} />
     </div>
   );
 });

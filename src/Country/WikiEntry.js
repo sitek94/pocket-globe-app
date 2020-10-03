@@ -12,10 +12,10 @@ export const WikiEntry = ({ term }) => {
 
   useEffect(() => {
     setUrl(`https://en.wikipedia.org/api/rest_v1/page/summary/${term}`);
-  }, [term, setUrl])
-  
+  }, [term, setUrl]);
+
   if (isLoading || !data) return <LoadingSpinner />;
-  
+
   // Keep removing one sentence from the entry until it is less than max length
   let entry = data.extract;
   while (entry.length >= MAX_ENTRY_LENGTH) {
@@ -24,7 +24,9 @@ export const WikiEntry = ({ term }) => {
 
   return (
     <div className="WikiEntry">
-      <Typography variont="body2" align="justify">{entry}</Typography>
+      <Typography variont="body2" align="justify">
+        {entry}
+      </Typography>
     </div>
-  )
-}
+  );
+};

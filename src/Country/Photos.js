@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 
 import { PhotoCard } from './PhotoCard';
 import { LoadingSpinner } from '../LoadingSpinner';
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   }
 })
 
-export const Photos = memo(({ terms }) => {
+export const Photos = memo(({ term }) => {
   const classes = useStyles();
   
   const [{ data, isLoading }, { setUrl, setConfig }] = useData();
@@ -25,14 +25,14 @@ export const Photos = memo(({ terms }) => {
     setUrl('https://api.unsplash.com/search/photos/');
     setConfig({
       params: {
-        query: terms.join('-'),
+        query: term,
         per_page: 12
       },
       headers: {
         Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_KEY}`
       }
-    })
-  }, [terms, setUrl, setConfig])
+    });
+  }, [term, setUrl, setConfig]);
 
   if (!data || isLoading) return <LoadingSpinner height={300} />;
   
@@ -40,7 +40,7 @@ export const Photos = memo(({ terms }) => {
 
   return (
     <div className={classes.div}>
-      {photos && photos.map((photo) => <PhotoCard key={photo.id} term={terms} image={photo} />)}
+      {photos && photos.map((photo) => <PhotoCard key={photo.id} term={term} image={photo} />)}
     </div>
   );
 });

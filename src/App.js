@@ -37,11 +37,11 @@ export const App = () => {
 
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
-
+  
   return (
     <ThemeProvider theme={theme}>
       <Layout
-        navbar={<Navbar theme="light" title={selectedCountry.name} onThemeIconClick={handleDarkModeToggle} />}
+        navbar={<Navbar title={selectedCountry.name} onThemeIconClick={handleDarkModeToggle} />}
         leftColumn={
           <>
             <Globe onCountryClick={setSelectedCountry} tooltipRef={tooltipRef} />
