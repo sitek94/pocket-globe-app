@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { json } from 'd3';
 import { feature } from 'topojson';
+
 const topologyUrl = {
   high: 'https://unpkg.com/world-atlas@2.0.2/countries-50m.json',
   low: 'https://unpkg.com/world-atlas@2.0.2/countries-110m.json',

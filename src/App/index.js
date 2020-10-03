@@ -5,7 +5,7 @@ import { Country } from './Country';
 import { Globe } from './Globe';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core';
 
 const initialState = {
   name: 'Poland',
@@ -31,6 +31,7 @@ export const App = () => {
   
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Layout
         navbar={<Navbar title={selectedCountry.name} onThemeIconClick={handleDarkModeToggle} />}
         leftColumn={<Globe onCountryClick={setSelectedCountry} />}
