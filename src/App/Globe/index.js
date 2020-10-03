@@ -46,6 +46,7 @@ export const Globe = memo(
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
 
+    // Selected country alpha code - used for adding 'selected' class
     const [selectedCountryCode, setSelectedCountryCode] = useState(initialAlphaCode);
 
     // Projection
@@ -172,9 +173,9 @@ export const Globe = memo(
             r={250}
           />
           <g>
-            {data.features.map(({ properties: { alphaCode } }) => (
+            {data.features.map(({ properties: { name, alphaCode } }) => (
               <path
-                key={alphaCode}
+                key={name}
                 id={alphaCode}
                 className={`${classes.country} ${
                   selectedCountryCode === alphaCode && classes.selected

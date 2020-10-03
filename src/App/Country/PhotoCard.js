@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const PhotoCard = memo(({ image }) => {
+export const PhotoCard = memo(({ image, onClick }) => {
   const imageRef = useRef();
   const [spans, setSpans] = useState(0);
 
@@ -44,6 +44,7 @@ export const PhotoCard = memo(({ image }) => {
         ref={imageRef}
         src={urls.small}
         alt={alt_description}
+        onClick={onClick}
       />
     </div>
   );
