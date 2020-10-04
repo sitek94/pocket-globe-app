@@ -10,5 +10,7 @@ photos of the country clicked.
 
 * React
 * D3 + TopoJSON + World Atlas TopoJSON
+* Material-UI
 * REST Countries API
 * Unsplash API
+* Wikimedia REST API 
