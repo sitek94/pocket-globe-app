@@ -23,8 +23,6 @@ export const Modal = ({ inZoom, children, ...other }) => {
 
   return (
     <MuiModal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
       className={classes.modal}
       closeAfterTransition
       BackdropComponent={Backdrop}

@@ -45,6 +45,9 @@ export const Navbar = ({ title, onThemeIconClick }) => {
         edge="end"
         color="inherit"
         aria-label={githubIconLabel}
+        href="https://github.com/sitek94/pocket-globe-app"
+        target="_blank"
+        rel="noopener"
       >
         <GitHubIcon />
       </IconButton>
