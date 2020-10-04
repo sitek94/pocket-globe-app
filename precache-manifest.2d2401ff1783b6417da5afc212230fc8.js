@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3f013bdad0a78bb55985528be8854f55",
+    "revision": "9899059cc5bfb0c1365347ce8edfb7f0",
     "url": "/pocket-globe-app/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pocket-globe-app/static/js/2.b507afe0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3dbee375bee9c3db6f44",
-    "url": "/pocket-globe-app/static/js/main.f113bd27.chunk.js"
+    "revision": "abd46a61c692e5d869f0",
+    "url": "/pocket-globe-app/static/js/main.172282b1.chunk.js"
   },
   {
     "revision": "370a28b4d2f4b998a94d",
