@@ -1,8 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import MuiModal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import {
+  makeStyles,
+  Modal as MuiModal,
+  Backdrop,
+  Zoom,
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -10,18 +12,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  paper: {
-    width: '75%',
-    backgroundColor: theme.palette.background.paper,
+  div: {
+    outline: 'none',
     boxShadow: theme.shadows[5],
   },
 }));
 
-export default function Modal({
-  children,
-  isOpen,
-  onClose,
-}) {
+export const Modal = ({ inZoom, children, ...other }) => {
   const classes = useStyles();
 
   return (
@@ -29,20 +26,16 @@ export default function Modal({
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       className={classes.modal}
-      open={isOpen}
-      onClose={onClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500,
       }}
+      {...other}
     >
-      <Fade in={isOpen}>
-      {/* <div className={classes.paper}> */}
-
-        {children}
-      {/* </div> */}
-      </Fade>
+      <Zoom in={inZoom}>
+        <div className={classes.div}>{children}</div>
+      </Zoom>
     </MuiModal>
   );
 }

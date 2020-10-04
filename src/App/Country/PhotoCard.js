@@ -9,17 +9,18 @@ const useStyles = makeStyles({
   },
   img: {
     width: '100%',
+    cursor: 'pointer',
   },
 });
 
-export const PhotoCard = memo(({ image, onClick }) => {
+export const PhotoCard = memo(({ photo, onClick }) => {
   const imageRef = useRef();
   const [spans, setSpans] = useState(0);
 
   const classes = useStyles(spans);
 
   useEffect(() => {
-    if (!image) return;
+    if (!photo) return;
 
     const updateSpans = () => {
       const height = imageRef.current.clientHeight;
@@ -32,10 +33,10 @@ export const PhotoCard = memo(({ image, onClick }) => {
     return () => {
       imageEl.removeEventListener('load', updateSpans);
     };
-  }, [image]);
+  }, [photo]);
 
-  if (!image) return <LoadingSpinner />;
-  const { urls, alt_description } = image;
+  if (!photo) return <LoadingSpinner />;
+  const { urls, alt_description } = photo;
 
   return (
     <div className={classes.container}>

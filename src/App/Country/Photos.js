@@ -1,13 +1,11 @@
 import React, { useState, useEffect, memo } from 'react';
+import { makeStyles } from '@material-ui/core';
 
 import { PhotoCard } from './PhotoCard';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { useData } from '../useData';
-import { makeStyles } from '@material-ui/core';
-
-import Modal from '../Modal';
-
-const unsplashReferral = '?utm_source=your_app_name&utm_medium=referral';
+import { Modal } from '../Modal';
+import { PhotoViewer } from './PhotoViewer';
 
 const useStyles = makeStyles({
   container: {
@@ -27,7 +25,7 @@ const useStyles = makeStyles({
   },
   img: {
     height: '100%',
-  }
+  },
 });
 
 export const Photos = memo(({ term }) => {
@@ -37,11 +35,10 @@ export const Photos = memo(({ term }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
-  const handlePhotoClick = index => {
+  const handlePhotoClick = (index) => {
     setCurrentIndex(index);
     setIsModalOpen(true);
-  }
-
+  };
 
   useEffect(() => {
     setUrl('https://api.unsplash.com/search/photos/');
@@ -59,25 +56,8 @@ export const Photos = memo(({ term }) => {
   if (!data || isLoading) return <LoadingSpinner height={300} />;
 
   const photos = data.results;
+  const clickedPhoto = photos[currentIndex];
 
-  const renderClickedPhoto = () => {
-    console.log(currentIndex);
-    if (!data || isLoading) return <div>ops</div>
-    const photo = photos[currentIndex];
-    const { urls, description, links, user: { name } } = photo;
-    
-    return (
-      <figure className={classes.figure}>
-        <img className={classes.img} src={urls.regular} alt={description} />
-        <figcaption>
-          by
-          <a href={links.html + unsplashReferral}>{name}</a> on{' '}
-          <a href={`https://unsplash.com/${unsplashReferral}`}>Unsplash</a>
-        </figcaption>
-      </figure>
-    )
-  }
- 
   return (
     <div className={classes.container}>
       {photos &&
@@ -85,25 +65,16 @@ export const Photos = memo(({ term }) => {
           <PhotoCard
             key={photo.id}
             onClick={() => handlePhotoClick(i)}
-            image={photo}
+            photo={photo}
           />
         ))}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        {renderClickedPhoto()}
+      <Modal 
+        open={isModalOpen} 
+        inZoom={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <PhotoViewer photo={clickedPhoto} />
       </Modal>
     </div>
   );
 });
-
-/* 
-*  With Unsplash Reference
-*  
-<figure key={id}>
-    <img src={urls.small} alt={description} />
-    <figcaption>
-      by
-      <a href={links.html + unsplashReferral}>{name}</a> on{' '}
-      <a href={`https://unsplash.com/${unsplashReferral}`}>Unsplash</a>
-    </figcaption> }
-</figure>
-*/
