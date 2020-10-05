@@ -3,21 +3,29 @@ import { Link, makeStyles, Typography } from '@material-ui/core';
 
 const referralString = '?utm_source=your_app_name&utm_medium=referral';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(({ breakpoints }) => ({
   figure: {
     margin: '0 auto',
     padding: 25,
     backgroundColor: 'white',
     outline: 'none',
     height: '85vh',
+    
   },
   img: {
     height: '100%',
   },
-  source: {
-
+  [breakpoints.down('sm')]: {
+    figure: {
+      height: 'auto',
+      width: '95vw',
+    },
+    img: {
+      height: 'auto',
+      width: '100%',
+    }
   }
-});
+}));
 
 export const PhotoViewer = ({ photo }) => {
   const classes = useStyles();
