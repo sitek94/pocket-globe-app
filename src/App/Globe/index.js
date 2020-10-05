@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, memo, useMemo } from 'react';
 import { geoPath, geoOrthographic, select, interpolate } from 'd3';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core';
 
 import { useData } from './useData';
+import { useWindowWidth } from './useWindowWidth';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
@@ -34,13 +35,22 @@ const useStyles = makeStyles(
 
 export const Globe = memo(
   ({
-    width = 600,
-    height = 600,
+    defaultSize = 600,
     sensitivity = 75,
     initialAlphaCode,
     onCountryClick,
   }) => {
     const classes = useStyles();
+
+    const { breakpoints, spacing } = useTheme();
+    const windowWidth = useWindowWidth();
+    const padding = spacing(2) * 2;
+
+    // Compute size of the globe svg
+    const size = windowWidth > breakpoints.values.sm + padding
+      ? defaultSize
+      : windowWidth - padding;
+    const width = size, height = size;
 
     // Refs
     const svgRef = useRef(null);

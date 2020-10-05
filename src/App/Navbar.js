@@ -13,34 +13,57 @@ import {
   Brightness7 as SunIcon,
   GitHub as GitHubIcon,
 } from '@material-ui/icons';
-import { useTheme } from '@material-ui/core';
+import { useTheme, useMediaQuery } from '@material-ui/core';
 
-const useStyles = makeStyles(({ palette }) => ({
+const useStyles = makeStyles(({ palette, breakpoints, spacing }) => ({
   root: {
+    flexGrow: 1,
     gridColumn: '1 / span 2',
     color: palette.text.primary,
     backgroundColor: palette.background.default,
   },
   toolbar: {
-    display: 'flex',
   },
   title: {
-    flex: 1,
+    left: 0,
+    position: 'absolute',
+    width: '100%',
     textAlign: 'center',
+    [breakpoints.only('xs')]: {
+      position: 'static',
+      textAlign: 'left',
+    }
   },
+  pushToRight: {
+    marginLeft: 'auto',
+  }
 }));
 
 export const Navbar = ({ title, onThemeIconClick }) => {
-  const {
-    palette: { type },
-  } = useTheme();
   const classes = useStyles();
+  const { 
+    palette: { type }, 
+    breakpoints,
+  } = useTheme();
+
+  // Media queries
+  const matchesUpSm = useMediaQuery(breakpoints.up('sm'));
+  const matchesDownSmall = useMediaQuery(breakpoints.down('xs'));
+  const matchesDownMobile = useMediaQuery(`(max-width:${breakpoints.values.mobile}px)`);
+
+  // App Globe icon
+  const appGlobeIcon = (
+    <IconButton edge="start">
+      <GlobeIcon fontSize="large" />
+    </IconButton>
+  );
 
   // GitHub repository icon
   const githubIconLabel = 'GitHub repository';
   const githubIcon = (
     <Tooltip title={githubIconLabel} aria-label={githubIconLabel}>
       <IconButton
+        className={classes.pushToRight}
         component="a"
         edge="end"
         color="inherit"
@@ -69,11 +92,15 @@ export const Navbar = ({ title, onThemeIconClick }) => {
     </Tooltip>
   );
 
+  let titleVariant = 'h4';
+  if (matchesDownSmall) titleVariant = 'h5';
+  if (matchesDownMobile) titleVariant = 'h6';  
+
   return (
     <AppBar className={classes.root} position="static">
       <Toolbar className={classes.toolbar}>
-        <GlobeIcon fontSize="large" />
-        <Typography className={classes.title} variant="h4">{title}</Typography>
+        {matchesUpSm && appGlobeIcon}
+        <Typography className={classes.title} variant={titleVariant}>{title}</Typography>
         {githubIcon}
         {themeIcon}
       </Toolbar>

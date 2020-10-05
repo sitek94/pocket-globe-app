@@ -14,19 +14,28 @@ import { useData } from '../useData';
 
 const LANGUAGES_LIMIT = 4;
 
-const useStyles = makeStyles({
-  root: {
-    // Remove border from last detail item
-    'tr:last-child': {
-      'th, td': {
+const styles = {
+  horizontal: {
+     // Remove border from last detail item
+    '& tr:last-child': {
+      '& th, td': {
         border: 0
       }
-    },
-    'th': {
-      width: '35%'
-    }
+    },    
+  }, 
+  vertical: {
+    marginBottom: 10,
   }
-})
+};
+
+const useStyles = makeStyles(({ breakpoints }) => ({
+  container: {
+    [breakpoints.only('xs')]: styles.vertical,
+    [breakpoints.only('sm')]: styles.horizontal,
+    [breakpoints.only('md')]: styles.vertical,
+    [breakpoints.up('lg')]: styles.horizontal,
+  }
+}));
 
 export const Details = ({ alphaCode }) => {
   const classes = useStyles();
@@ -49,7 +58,7 @@ export const Details = ({ alphaCode }) => {
   ];
 
   return (
-    <TableContainer className={classes.root}>
+    <TableContainer className={classes.container}>
       <Table size="small">
         <TableBody>
           {details.map(({ label, value }) => (

@@ -22,7 +22,18 @@ export const App = () => {
         main: '#1976d2', // Shade of blue from Material UI website
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        mobile: 400,
+        sm: 600,
+        md: 960,
+        lg: 1280,
+        xl: 1920,
+      }
+    }
   });
+
   const handleDarkModeToggle = () => setDarkMode(!darkMode);
 
   // Selected country

@@ -1,40 +1,57 @@
 import React from 'react';
-import { makeStyles, Paper } from '@material-ui/core';
+import { makeStyles, Paper, Container, useMediaQuery, useTheme } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   container: {
     height: '100vh',
     display: 'grid',
     gridTemplateRows: 'auto 1fr',
     gridTemplateColumns: '4fr 6fr',
+    [breakpoints.down('sm')]: {
+      height: 'auto',
+      display: 'flex',
+      flexDirection: 'column'
+    }
   },
   leftColumn: {
-    padding: 15,
-    paddingRight: 10,
+    padding: spacing(2),
+    paddingRight: spacing(1),
 
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
   rightColumn: {
-    padding: 15,
-    paddingLeft: 10,
+    padding: spacing(2),
+    paddingLeft: spacing(1),
     overflowY: 'scroll',
     overflowX: 'hidden',
   },
-});
+  [breakpoints.down('sm')]: {
+    leftColumn: { padding: spacing(2) },
+    rightColumn: { padding: spacing(2) }
+  },
+  [breakpoints.only('xs')]: {
+    rightColumn: { paddingTop: 0 }
+  }
+}));
 
 export const Layout = ({ navbar, leftColumn, rightColumn, footer }) => {
   const classes = useStyles();
+  const { breakpoints } = useTheme();
+  const matchesDownSm = useMediaQuery(breakpoints.down('sm'));
 
   return (
-    <Paper className={classes.container}>
-      {navbar}
-      <div className={classes.leftColumn}>
-        {leftColumn}
-        {footer}
-      </div>
-      <div className={classes.rightColumn}>{rightColumn}</div>
-    </Paper>
+    <Container maxWidth={false} disableGutters>
+      <Paper className={classes.container}>
+        {navbar}
+        <div className={classes.leftColumn}>
+          {leftColumn}
+          {!matchesDownSm && footer}
+        </div>
+        <div className={classes.rightColumn}>{rightColumn}</div>
+        {matchesDownSm && footer}
+      </Paper>
+    </Container>
   );
 };
