@@ -29,9 +29,11 @@ export const PhotoCard = memo(({ photo, onClick }) => {
 
     const imageEl = imageRef.current;
     imageEl.addEventListener('load', updateSpans);
+    window.addEventListener('resize', updateSpans);
 
     return () => {
       imageEl.removeEventListener('load', updateSpans);
+      window.removeEventListener('resize', updateSpans);
     };
   }, [photo]);
 
