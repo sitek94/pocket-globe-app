@@ -7,9 +7,14 @@ import { useWindowWidth } from './useWindowWidth';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
+import { ZoomButtons } from '../ZoomButtons';
 
 const useStyles = makeStyles(
   ({ palette: { primary, background, getContrastText } }) => ({
+    container: {
+      position: 'relative',
+      margin: '0 auto',
+    },
     svg: {
       display: 'block',
       margin: '0 auto',
@@ -174,7 +179,7 @@ export const Globe = memo(
     if (!data || isLoading) return <LoadingSpinner />;
 
     return (
-      <>
+      <div className={classes.container}>
         <svg ref={svgRef} className={classes.svg} width={width} height={height}>
           <circle
             className={classes.circle}
@@ -194,8 +199,12 @@ export const Globe = memo(
             ))}
           </g>
         </svg>
+        <ZoomButtons
+          onZoomInClick={() => console.log('zoom in')}
+          onZoomOutClick={() => console.log('zoom out')}
+        />
         <Tooltip ref={tooltipRef} />
-      </>
+      </div>
     );
   }
 );

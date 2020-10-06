@@ -9,7 +9,7 @@ export const useWindowWidth = () => {
     };
 
     window.addEventListener('resize', updateWidth);
-
+    
     return () => {
       window.removeEventListener('resize', updateWidth);
     };
