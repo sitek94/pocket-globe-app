@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export const useData = () => {
-  const [data, setData] = useState(null);
-  const [url, setUrl] = useState(null);
+export const useData = (initialUrl, initialData) => {
+  const [data, setData] = useState(initialData);
+  const [url, setUrl] = useState(initialUrl);
   const [config, setConfig] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -18,6 +18,7 @@ export const useData = () => {
         setData(result.data)
 
       } catch (error) {
+        
         setIsError(error);
       }
       setIsLoading(false);
