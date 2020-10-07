@@ -5,14 +5,14 @@ import { InfoBox } from './InfoBox';
 import { Photos } from './Photos';
 import { WikiEntry } from './WikiEntry';
 
-export const Country = memo(({ countryProps: { name, alphaCode } }) => {
+export const Country = memo(({ selectedCountry: { name, alpha } }) => {
   return (
     <div>
       <InfoBox>
         <WikiEntry term={name} />
-        <Details alphaCode={alphaCode} />
+        <Details alpha={alpha} />
       </InfoBox>
-      <Photos term={name} columns={3} />
+      <Photos term={name} />
     </div>
   );
 });

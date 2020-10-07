@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef, memo, useMemo } from 'react';
+import React, { useEffect, useRef, memo, useMemo } from 'react';
 import { geoPath, geoOrthographic, select, interpolate } from 'd3';
 import { makeStyles, useTheme } from '@material-ui/core';
 
-import { useData } from './useData';
+import { useGeoJsonData } from './useGeoJsonData';
 import { useWindowWidth } from './useWindowWidth';
 import { dragBehaviour, zoomBehaviour } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
-import { ZoomButtons } from '../ZoomButtons';
+// import { ZoomButtons } from '../ZoomButtons';
+import { SearchBox } from '../Widgets';
 
 const useStyles = makeStyles(
   ({ palette: { primary, background, getContrastText } }) => ({
     container: {
       position: 'relative',
-      margin: '0 auto',
     },
     svg: {
       display: 'block',
@@ -38,12 +38,13 @@ const useStyles = makeStyles(
   })
 );
 
+
 export const Globe = memo(
   ({
     defaultSize = 600,
     sensitivity = 75,
-    initialAlphaCode,
-    onCountryClick,
+    selectedCountry,
+    onSelectedCountryChange,
   }) => {
     const classes = useStyles();
 
@@ -60,9 +61,6 @@ export const Globe = memo(
     // Refs
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
-
-    // Selected country alpha code - used for adding 'selected' class
-    const [selectedCountryCode, setSelectedCountryCode] = useState(initialAlphaCode);
 
     // Projection
     // useMemo is important here because we want to create a projection only once
@@ -82,7 +80,7 @@ export const Globe = memo(
     const path = geoPath().projection(projection);
 
     // Fetch TopoJSON data
-    const [{ data, isLoading }] = useData({ resolution: 'low' });
+    const [{ data, isLoading }] = useGeoJsonData();
 
     // Draw the globe
     useEffect(() => {
@@ -151,8 +149,7 @@ export const Globe = memo(
           })
           .duration(1000);
 
-        onCountryClick(d.properties);
-        setSelectedCountryCode(d.properties.alphaCode);
+        onSelectedCountryChange(d.id);
       };
 
       // Mouseover, mouseout event handlers
@@ -172,7 +169,7 @@ export const Globe = memo(
       projection,
       initialScale,
       sensitivity,
-      onCountryClick,
+      onSelectedCountryChange,
       classes,
     ]);
 
@@ -188,21 +185,22 @@ export const Globe = memo(
             r={250}
           />
           <g>
-            {data.features.map(({ properties: { name, alphaCode } }) => (
+            {data.features.map(({ id }) => (
               <path
-                key={name}
-                id={alphaCode}
+                key={id}
+                id={id}
                 className={`${classes.country} ${
-                  selectedCountryCode === alphaCode && classes.selected
+                  selectedCountry.code === id && classes.selected
                 }`}
               />
             ))}
           </g>
         </svg>
-        <ZoomButtons
+        {/* <ZoomButtons
           onZoomInClick={() => console.log('zoom in')}
           onZoomOutClick={() => console.log('zoom out')}
-        />
+        /> */}
+        <SearchBox onTermSubmit={onSelectedCountryChange} />
         <Tooltip ref={tooltipRef} />
       </div>
     );
