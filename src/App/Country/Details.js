@@ -37,14 +37,14 @@ const useStyles = makeStyles(({ breakpoints }) => ({
   }
 }));
 
-export const Details = ({ alphaCode }) => {
+export const Details = ({ alpha }) => {
   const classes = useStyles();
 
   const [{ data, isLoading }, { setUrl }] = useData();
 
   useEffect(() => {
-    setUrl(`https://restcountries.eu/rest/v2/alpha/${alphaCode}`);
-  }, [alphaCode, setUrl])
+    setUrl(`https://restcountries.eu/rest/v2/alpha/${alpha}`);
+  }, [alpha, setUrl])
 
   if (!data || isLoading) return <LoadingSpinner />;
 

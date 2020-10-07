@@ -20,20 +20,23 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    [breakpoints.down('sm')]: {
+      padding: spacing(2)
+    }
   },
   rightColumn: {
     padding: spacing(2),
     paddingLeft: spacing(1),
     overflowY: 'scroll',
     overflowX: 'hidden',
+    [breakpoints.down('sm')]: {
+      padding: spacing(2), 
+      overflowY: 'hidden',
+    },
+    [breakpoints.only('xs')]: {
+      paddingTop: 0
+    }
   },
-  [breakpoints.down('sm')]: {
-    leftColumn: { padding: spacing(2) },
-    rightColumn: { padding: spacing(2) }
-  },
-  [breakpoints.only('xs')]: {
-    rightColumn: { paddingTop: 0 }
-  }
 }));
 
 export const Layout = ({ navbar, leftColumn, rightColumn, footer }) => {

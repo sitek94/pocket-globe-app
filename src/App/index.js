@@ -6,10 +6,13 @@ import { Globe } from './Globe';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core';
+import { useIsoCountriesData } from './useIsoCountriesData';
+import { LoadingSpinner } from './LoadingSpinner';
 
 const initialState = {
-  name: 'Poland',
-  alphaCode: 'POL',
+  name: "Poland",
+  code: "616",
+  alpha: "POL",
 };
 
 export const App = () => {
@@ -36,8 +39,16 @@ export const App = () => {
 
   const handleDarkModeToggle = () => setDarkMode(!darkMode);
 
+  const [countries] = useIsoCountriesData();
+  
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
+  const handleSelectedCountryChange = code => {
+
+    setSelectedCountry(countries[code]);
+  }
+
+  if (!countries) return <LoadingSpinner />  
 
   return (
     <ThemeProvider theme={theme}>
@@ -51,11 +62,11 @@ export const App = () => {
         }
         leftColumn={
           <Globe
-            initialAlphaCode={initialState.alphaCode}
-            onCountryClick={setSelectedCountry}
+            selectedCountry={selectedCountry}
+            onSelectedCountryChange={handleSelectedCountryChange}
           />
         }
-        rightColumn={<Country countryProps={selectedCountry} />}
+        rightColumn={<Country selectedCountry={selectedCountry} />}
         footer={<Footer />}
       />
     </ThemeProvider>
