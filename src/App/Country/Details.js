@@ -11,6 +11,7 @@ import {
 
 import { LoadingSpinner } from '../LoadingSpinner';
 import { useData } from '../useData';
+import { notListedCountries } from './notListedCountries';
 
 const LANGUAGES_LIMIT = 4;
 
@@ -44,11 +45,17 @@ export const Details = ({ alpha }) => {
 
   useEffect(() => {
     setUrl(`https://restcountries.eu/rest/v2/alpha/${alpha}`);
-  }, [alpha, setUrl])
+  }, [alpha, setUrl]);
 
   if (!data || isLoading) return <LoadingSpinner />;
 
-  const { capital, currencies, population, area, languages } = data;
+  // Some countries like Kosovo, Somaliland and N. Cyprus are not listed
+  // by restcountries API, I hard coded these details in notListedCountries
+  const detailsSource = notListedCountries.keys().includes(alpha)
+    ? notListedCountries
+    : data;
+
+  const { capital, currencies, population, area, languages } = detailsSource;
   const details = [
     { label: 'Capital', value: capital },
     { label: 'Population', value: format(',d')(population) },
