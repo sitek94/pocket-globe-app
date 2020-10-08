@@ -9,7 +9,7 @@ import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core';
 import { useIsoCountriesData } from './useIsoCountriesData';
 import { LoadingSpinner } from './LoadingSpinner';
 
-const initialState = {
+export const initialState = {
   name: "Poland",
   code: "616",
   alpha: "POL",

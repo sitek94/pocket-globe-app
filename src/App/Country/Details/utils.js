@@ -21,3 +21,4 @@ export const generateDetails = ({
   },
   { label: 'Currency', value: currencies[0].name },
 ];
+

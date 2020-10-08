@@ -1,11 +1,11 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 
 import { PhotoCard } from './PhotoCard';
 import { LoadingSpinner } from '../../LoadingSpinner';
 import { Modal } from '../../Modal';
 import { PhotoViewer } from './PhotoViewer';
-import { useUnsplashData } from './useUnsplashData';
+import { useUnsplashApi } from './useUnsplashApi';
 import { ErrorBox } from '../../ErrorBox';
 
 const useStyles = makeStyles({
@@ -22,8 +22,11 @@ const useStyles = makeStyles({
 export const Photos = memo(({ term }) => {
   const classes = useStyles();
 
-  const { data, isLoading, isError } = useUnsplashData(term);
+  // Fetch photos from Unsplash
+  const [{ data, isLoading, isError }, setQuery] = useUnsplashApi();
+  useEffect(() => setQuery(term), [term, setQuery]);
 
+  // Open photo in a modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
   const handlePhotoClick = (index) => {
@@ -31,30 +34,28 @@ export const Photos = memo(({ term }) => {
     setIsModalOpen(true);
   };
 
-  if (!data || isLoading) return <LoadingSpinner height={300} />;
-
-  const renderPhotos = photos => photos.map((photo, i) => (
-    <PhotoCard
-      key={photo.id}
-      onClick={() => handlePhotoClick(i)}
-      photo={photo}
-    />
-  ));
+  const photos = data.results;
 
   return (
     <div className={classes.container}>
-      {isError && <ErrorBox when="fetching photos from Unsplash" />}
+      {isError && <ErrorBox when="fetching photos" />}
       {isLoading ? (
         <LoadingSpinner height={300} />
       ) : (
         <>
-          {renderPhotos(data.results)}
+          {photos.map((photo, i) => (
+            <PhotoCard
+              key={photo.id}
+              onClick={() => handlePhotoClick(i)}
+              photo={photo}
+            />
+          ))}
           <Modal
             open={isModalOpen}
             inZoom={isModalOpen}
             onClose={() => setIsModalOpen(false)}
           >
-            <PhotoViewer photo={data.results[currentIndex]} />
+            <PhotoViewer photo={photos[currentIndex]} />
           </Modal>
         </>
       )}
