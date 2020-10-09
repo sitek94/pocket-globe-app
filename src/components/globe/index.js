@@ -3,7 +3,7 @@ import { geoPath, geoOrthographic, select, interpolate } from 'd3';
 import { useTheme } from '@material-ui/core';
 import { useStyles } from './globe-styles';
 import { useGeoJsonData, useWindowWidth } from './hooks';
-import { dragBehaviour, zoomBehaviour } from './utils';
+import { dragBehaviour, zoomBehaviour, rotateProjection } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
 // import { ZoomButtons } from '../ZoomButtons';
@@ -23,10 +23,12 @@ export const Globe = memo(
     const padding = spacing(2) * 2;
 
     // Compute size of the globe svg
-    const size = windowWidth > breakpoints.values.sm + padding
-      ? defaultSize
-      : windowWidth - padding;
-    const width = size, height = size;
+    const size =
+      windowWidth > breakpoints.values.sm + padding
+        ? defaultSize
+        : windowWidth - padding;
+    const width = size,
+      height = size;
 
     // Refs
     const svgRef = useRef(null);
@@ -86,38 +88,12 @@ export const Globe = memo(
 
       // Click event handler
       const handleClick = (e, d) => {
-        // Store the current rotation and scale:
-        const currentRotate = projection.rotate();
-
-        // Get projected planar centroid (in pixels)
-        const centroid = path.centroid(d);
-        // Converts centroid to [longitude, latitude] in degrees
-        const [longitude, latitude] = projection.invert(centroid);
-
-        // Rotate the projection
-        projection.rotate([-longitude, -latitude]);
-        // Update path generator with new projection
-        path.projection(projection);
-
-        // Calculate next rotation
-        const nextRotate = projection.rotate();
-
-        // Create interpolator function
-        const r = interpolate(currentRotate, nextRotate);
-
-        // Update countries
-        countries
-          .transition()
-          .attrTween('d', (d) => (t) => {
-            projection.rotate(r(Math.pow(t, 0.33)));
-            path.projection(projection);
-
-            // When interpolator returns null, Chrome throws errors for
-            // <path> with attribute d="null"
-            const pathD = path(d);
-            return pathD !== null ? pathD : '';
-          })
-          .duration(1000);
+        // rotateProjection({
+        //   selection: countries,
+        //   path,
+        //   projection,
+        //   target: d,
+        // });
 
         onSelectedCountryChange(d.id);
       };
@@ -143,7 +119,23 @@ export const Globe = memo(
       classes,
     ]);
 
-    if (!data || isLoading) return <LoadingSpinner />;
+
+    useEffect(() => {
+      const svg = select(svgRef.current);
+      const countries = svg.selectAll(`path`);
+      
+      const feature = data.features.find(f => f.id === selectedCountry.code);
+
+      rotateProjection({
+        selection: countries,
+        path,
+        projection,
+        target: feature,
+      });
+
+    }, [data, projection, path, selectedCountry]);
+
+    if (isLoading) return <LoadingSpinner />;
 
     return (
       <div className={classes.container}>
@@ -170,7 +162,6 @@ export const Globe = memo(
           onZoomInClick={() => console.log('zoom in')}
           onZoomOutClick={() => console.log('zoom out')}
         /> */}
-        <SearchBox onTermSubmit={onSelectedCountryChange} />
         <Tooltip ref={tooltipRef} />
       </div>
     );

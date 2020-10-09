@@ -9,6 +9,7 @@ import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { useIsoCountriesData, useDarkMode } from './hooks';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { ErrorBox } from '../ErrorBox';
+import { SearchBox } from '../Widgets';
 
 export const initialState = {
   name: 'Poland',
@@ -22,7 +23,7 @@ export const App = () => {
 
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
-  const handleSelectedCountryChange = (code) => {
+  const setSelectedCountryByCode = (code) => {
     setSelectedCountry(countries[code]);
   };
 
@@ -41,10 +42,13 @@ export const App = () => {
             />
           }
           leftColumn={
+            <>
             <Globe
               selectedCountry={selectedCountry}
-              onSelectedCountryChange={handleSelectedCountryChange}
+              onSelectedCountryChange={setSelectedCountryByCode}
             />
+             <SearchBox onTermSubmit={setSelectedCountryByCode} />
+            </>
          }
           rightColumn={<Country selectedCountry={selectedCountry} />}
           footer={<Footer />}

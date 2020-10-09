@@ -14,6 +14,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     }
   },
   leftColumn: {
+    position: 'relative',
     padding: spacing(2),
     paddingRight: spacing(1),
 
@@ -46,7 +47,7 @@ export const Layout = ({ navbar, leftColumn, rightColumn, footer }) => {
 
   return (
     <Container maxWidth={false} disableGutters>
-      <Paper className={classes.container}>
+      <Paper className={classes.container} elevation={0}>
         {navbar}
         <div className={classes.leftColumn}>
           {leftColumn}

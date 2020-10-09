@@ -3,7 +3,10 @@ import { feature } from 'topojson';
 import axios from 'axios';
 
 export const useGeoJsonData = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({
+    features: [],
+    type: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
