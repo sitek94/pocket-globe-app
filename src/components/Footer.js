@@ -1,12 +1,11 @@
 import React, { memo } from 'react';
 import { Typography, Link, makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(({ breakpoints, spacing }) => ({
-  footer: {
-    [breakpoints.down('sm')]: {
-      padding: spacing(1),
-      textAlign: 'center'
-    }
+const useStyles = makeStyles(({ spacing, shadows }) => ({
+  container: {
+    padding: spacing(1),
+    textAlign: 'center',
+    boxShadow: shadows['3']
   }
 }))
 
@@ -22,8 +21,8 @@ export const Footer = memo(() => {
   )
   
   return (
-    <footer className={classes.footer}>
-      <Typography>&copy; {year} by {myGithubLink}</Typography>
+    <footer className={classes.container}>
+      <Typography color="textSecondary" variant="body2">&copy; {year} by {myGithubLink}</Typography>
     </footer>
   )
 })

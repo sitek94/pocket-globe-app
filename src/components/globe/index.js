@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, memo, useMemo } from 'react';
-import { geoPath, geoOrthographic, select, interpolate } from 'd3';
-import { useTheme } from '@material-ui/core';
+import { geoPath, geoOrthographic, select } from 'd3';
 import { useStyles } from './globe-styles';
-import { useGeoJsonData, useWindowWidth } from './hooks';
+import { useGeoJsonData } from './hooks';
 import { dragBehaviour, zoomBehaviour, rotateProjection } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
+import { useColumnWidth } from '../../hooks/useColumnWidth';
+
 // import { ZoomButtons } from '../ZoomButtons';
-import { SearchBox } from '../Widgets';
 
 export const Globe = memo(
   ({
@@ -18,21 +18,14 @@ export const Globe = memo(
   }) => {
     const classes = useStyles();
 
-    const { breakpoints, spacing } = useTheme();
-    const windowWidth = useWindowWidth();
-    const padding = spacing(2) * 2;
-
-    // Compute size of the globe svg
-    const size =
-      windowWidth > breakpoints.values.sm + padding
-        ? defaultSize
-        : windowWidth - padding;
-    const width = size,
-      height = size;
-
     // Refs
+    const containerRef = useRef(null);
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
+
+    // Compute size of the globe svg
+    const width = useColumnWidth();
+    const height = defaultSize;
 
     // Projection
     // useMemo is important here because we want to create a projection only once
@@ -88,13 +81,6 @@ export const Globe = memo(
 
       // Click event handler
       const handleClick = (e, d) => {
-        // rotateProjection({
-        //   selection: countries,
-        //   path,
-        //   projection,
-        //   target: d,
-        // });
-
         onSelectedCountryChange(d.id);
       };
 
@@ -110,6 +96,7 @@ export const Globe = memo(
         .on('mouseover', handleMouseover)
         .on('mouseout', handleMouseout);
     }, [
+      width,
       data,
       path,
       projection,
@@ -133,12 +120,12 @@ export const Globe = memo(
         target: feature,
       });
 
-    }, [data, projection, path, selectedCountry]);
+    }, [width, data, projection, path, selectedCountry]);
 
     if (isLoading) return <LoadingSpinner />;
 
     return (
-      <div className={classes.container}>
+      <div ref={containerRef} className={classes.container}>
         <svg ref={svgRef} className={classes.svg} width={width} height={height}>
           <circle
             className={classes.circle}

@@ -17,8 +17,6 @@ import { useTheme, useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles(({ palette, breakpoints }) => ({
   root: {
-    flexGrow: 1,
-    gridColumn: '1 / span 2',
     color: palette.text.primary,
     backgroundColor: palette.background.default,
   },

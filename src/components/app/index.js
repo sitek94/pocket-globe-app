@@ -23,8 +23,10 @@ export const App = () => {
 
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
-  const setSelectedCountryByCode = (code) => {
-    setSelectedCountry(countries[code]);
+  const setSelectedCountryByCode = (value) => {
+    const newCountry = countries[value.toLowerCase()];
+
+    if (newCountry) setSelectedCountry(newCountry);
   };
 
   return (
@@ -43,13 +45,13 @@ export const App = () => {
           }
           leftColumn={
             <>
-            <Globe
-              selectedCountry={selectedCountry}
-              onSelectedCountryChange={setSelectedCountryByCode}
-            />
-             <SearchBox onTermSubmit={setSelectedCountryByCode} />
+              <Globe
+                selectedCountry={selectedCountry}
+                onSelectedCountryChange={setSelectedCountryByCode}
+              />
+              <SearchBox onTermSubmit={setSelectedCountryByCode} />
             </>
-         }
+          }
           rightColumn={<Country selectedCountry={selectedCountry} />}
           footer={<Footer />}
         />

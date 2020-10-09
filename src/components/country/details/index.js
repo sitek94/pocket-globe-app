@@ -22,10 +22,12 @@ export const Details = ({ alpha }) => {
     initialData: initialDetailsData,
     initialUrl: initialState.alpha,
   });
+  console.log(data);
 
   useEffect(() => {
     // If alpha code is among not listed countries, don't fetch the data
-    // if (notListedCountries[alpha]) return;
+    if (notListedCountries[alpha]) return;
+
     setUrl(alpha);
   }, [alpha, setUrl]);
 

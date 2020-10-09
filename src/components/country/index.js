@@ -9,8 +9,8 @@ export const Country = ({ selectedCountry: { name, alpha } }) => {
   return (
     <div>
       <InfoBox>
-        <Details alpha={alpha} />
         <WikiEntry term={name} />
+        <Details alpha={alpha} />
       </InfoBox>
       <Photos term={name} />
     </div>

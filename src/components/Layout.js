@@ -1,5 +1,11 @@
 import React from 'react';
-import { makeStyles, Paper, Container, useMediaQuery, useTheme } from '@material-ui/core';
+import {
+  makeStyles,
+  Paper,
+  Container,
+  useMediaQuery,
+  useTheme,
+} from '@material-ui/core';
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   container: {
@@ -10,8 +16,11 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     [breakpoints.down('sm')]: {
       height: 'auto',
       display: 'flex',
-      flexDirection: 'column'
-    }
+      flexDirection: 'column',
+    },
+  },
+  navbar: {
+    gridColumn: '1 / span 2',
   },
   leftColumn: {
     position: 'relative',
@@ -22,8 +31,8 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     [breakpoints.down('sm')]: {
-      padding: spacing(2)
-    }
+      padding: spacing(2),
+    },
   },
   rightColumn: {
     padding: spacing(2),
@@ -31,30 +40,28 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     overflowY: 'scroll',
     overflowX: 'hidden',
     [breakpoints.down('sm')]: {
-      padding: spacing(2), 
+      padding: spacing(2),
       overflowY: 'hidden',
     },
     [breakpoints.only('xs')]: {
-      paddingTop: 0
-    }
+      paddingTop: 0,
+    },
+  },
+  footer: {
+    gridColumn: '1 / span 2',
   },
 }));
 
 export const Layout = ({ navbar, leftColumn, rightColumn, footer }) => {
   const classes = useStyles();
-  const { breakpoints } = useTheme();
-  const matchesDownSm = useMediaQuery(breakpoints.down('sm'));
 
   return (
     <Container maxWidth={false} disableGutters>
       <Paper className={classes.container} elevation={0}>
-        {navbar}
-        <div className={classes.leftColumn}>
-          {leftColumn}
-          {!matchesDownSm && footer}
-        </div>
+        <div className={classes.navbar}>{navbar}</div>
+        <div className={classes.leftColumn}>{leftColumn}</div>
         <div className={classes.rightColumn}>{rightColumn}</div>
-        {matchesDownSm && footer}
+        <div className={classes.footer}>{footer}</div>
       </Paper>
     </Container>
   );
