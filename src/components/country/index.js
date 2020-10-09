@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 
 import { Details } from './details';
 import { InfoBox } from './InfoBox';
