@@ -1,20 +1,13 @@
-import React from 'react';
-import {
-  makeStyles,
-  Paper,
-  Container,
-  useMediaQuery,
-  useTheme,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(({ breakpoints, spacing }) => ({
+export const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   container: {
     height: '100vh',
     display: 'grid',
     gridTemplateRows: 'auto 1fr',
-    gridTemplateColumns: '4fr 6fr',
+    gridTemplateColumns: '1fr 1fr',
     [breakpoints.down('sm')]: {
-      height: 'auto',
+      height: '100%',
       display: 'flex',
       flexDirection: 'column',
     },
@@ -51,18 +44,3 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     gridColumn: '1 / span 2',
   },
 }));
-
-export const Layout = ({ navbar, leftColumn, rightColumn, footer }) => {
-  const classes = useStyles();
-
-  return (
-    <Container maxWidth={false} disableGutters>
-      <Paper className={classes.container} elevation={0}>
-        <div className={classes.navbar}>{navbar}</div>
-        <div className={classes.leftColumn}>{leftColumn}</div>
-        <div className={classes.rightColumn}>{rightColumn}</div>
-        <div className={classes.footer}>{footer}</div>
-      </Paper>
-    </Container>
-  );
-};

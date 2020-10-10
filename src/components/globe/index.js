@@ -5,13 +5,11 @@ import { useGeoJsonData } from './hooks';
 import { dragBehaviour, zoomBehaviour, rotateProjection } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
-import { useColumnWidth } from '../../hooks/useColumnWidth';
-
-// import { ZoomButtons } from '../ZoomButtons';
 
 export const Globe = memo(
   ({
-    defaultSize = 600,
+    width = 600,
+    height = 600,
     sensitivity = 75,
     selectedCountry,
     onSelectedCountryChange,
@@ -23,10 +21,8 @@ export const Globe = memo(
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
 
-    // Compute size of the globe svg
-    const width = useColumnWidth();
-    const height = defaultSize;
-
+    
+    
     // Projection
     // useMemo is important here because we want to create a projection only once
     const projection = useMemo(
@@ -131,7 +127,7 @@ export const Globe = memo(
             className={classes.circle}
             cx={width / 2}
             cy={height / 2}
-            r={250}
+            r={initialScale}
           />
           <g>
             {data.features.map(({ id }) => (

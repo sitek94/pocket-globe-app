@@ -4,6 +4,7 @@ export const useStyles = makeStyles(
   ({ palette: { primary, background, getContrastText } }) => ({
     container: {
       position: 'relative',
+      height: '100%',
     },
     svg: {
       display: 'block',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Layout } from '../Layout';
+import { Layout } from '../layout';
 import { Country } from '../country';
 import { Globe } from '../globe';
 import { Navbar } from '../Navbar';
@@ -10,6 +10,7 @@ import { useIsoCountriesData, useDarkMode } from './hooks';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { ErrorBox } from '../ErrorBox';
 import { SearchBox } from '../Widgets';
+import { useGlobeSize } from '../layout/hooks/useColumnHeight';
 
 export const initialState = {
   name: 'Poland',
@@ -29,6 +30,9 @@ export const App = () => {
     if (newCountry) setSelectedCountry(newCountry);
   };
 
+  // Svg dimensions
+  const [globeWidth, globeHeight] = useGlobeSize();
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -46,6 +50,8 @@ export const App = () => {
           leftColumn={
             <>
               <Globe
+                width={globeWidth}
+                height={globeHeight}
                 selectedCountry={selectedCountry}
                 onSelectedCountryChange={setSelectedCountryByCode}
               />

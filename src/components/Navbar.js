@@ -52,7 +52,7 @@ export const Navbar = ({ title, onThemeIconClick }) => {
 
   // App Globe icon
   const appGlobeIcon = (
-    <IconButton edge="start">
+    <IconButton disabled edge="start">
       <GlobeIcon fontSize="large" />
     </IconButton>
   );

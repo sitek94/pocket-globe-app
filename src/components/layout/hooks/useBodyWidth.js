@@ -12,13 +12,12 @@ export const useBodyWidth = (delay = 250) => {
     const debouncedHandleResize = debounce(handleResize, delay);
 
     window.addEventListener('resize', debouncedHandleResize);
-    
+
     handleResize();
-    
+
     return () => {
       window.removeEventListener('resize', debouncedHandleResize);
     };
-
   }, [delay]);
 
   return width;
