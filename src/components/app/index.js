@@ -9,7 +9,7 @@ import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { useIsoCountriesData, useDarkMode } from './hooks';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { ErrorBox } from '../ErrorBox';
-import { SearchBox } from '../Widgets';
+import { SearchBox } from '../search-box';
 import { useGlobeSize } from '../layout/hooks/useColumnHeight';
 
 export const initialState = {
