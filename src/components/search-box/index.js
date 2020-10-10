@@ -5,9 +5,7 @@ import { useStyles } from './search-box-styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const countries = ['Poland', 'United States', 'Germany'];
-
-export const SearchBox = ({ onTermSubmit }) => {
+export const SearchBox = ({ onTermSubmit, options }) => {
   const classes = useStyles();
 
   // User input
@@ -36,25 +34,23 @@ export const SearchBox = ({ onTermSubmit }) => {
       color="background.paper"
       className={classes.box}
     >
-      <form>
-        <Autocomplete
-          value={selectedValue}
-          onChange={handleSelectedValueChange}
-          inputValue={inputValue}
-          onInputChange={handleInputChange}
-          options={countries}
-          size="small"
-          style={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              size="small"
-              label="Search country"
-              variant="filled"
-            />
-          )}
-        />
-      </form>
+      <Autocomplete
+        value={selectedValue}
+        onChange={handleSelectedValueChange}
+        inputValue={inputValue}
+        onInputChange={handleInputChange}
+        options={options}
+        size="small"
+        style={{ width: 300 }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            size="small"
+            label="Search country"
+            variant="filled"
+          />
+        )}
+      />
     </Box>
   );
 };

@@ -21,7 +21,7 @@ export const useGeoJsonData = () => {
         const { data: topology } = await axios.get(
           'https://gist.githubusercontent.com/sitek94/5dfcc1335322c06131436c59b1219f7c/raw/countries-110m.json'
         );
-        
+
         // Convert TopoJSON to GeoJSON
         const geoJsonData = feature(topology, topology.objects.countries);
 

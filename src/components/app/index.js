@@ -20,18 +20,21 @@ export const initialState = {
 
 export const App = () => {
   const [theme, toggleDarkMode] = useDarkMode();
-  const [countries, isLoading, isError] = useIsoCountriesData();
+  const [countries, countryNames, isLoading, isError] = useIsoCountriesData();
 
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
   const setSelectedCountryByCode = (value) => {
+    if (!value) return;
+
     const newCountry = countries[value.toLowerCase()];
 
     if (newCountry) setSelectedCountry(newCountry);
   };
-
   // Svg dimensions
   const [globeWidth, globeHeight] = useGlobeSize();
+
+  console.log(countryNames);
 
   return (
     <ThemeProvider theme={theme}>
@@ -55,7 +58,7 @@ export const App = () => {
                 selectedCountry={selectedCountry}
                 onSelectedCountryChange={setSelectedCountryByCode}
               />
-              <SearchBox onTermSubmit={setSelectedCountryByCode} />
+              <SearchBox onTermSubmit={setSelectedCountryByCode} options={countryNames} />
             </>
           }
           rightColumn={<Country selectedCountry={selectedCountry} />}
