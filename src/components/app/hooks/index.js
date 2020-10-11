@@ -1,3 +1,2 @@
-import { useIsoCountriesData } from './useIsoCountriesData';
-import { useDarkMode } from './useDarkMode';
-export { useIsoCountriesData, useDarkMode };
+import { useDarkTheme } from './useDarkTheme';
+export { useDarkTheme };

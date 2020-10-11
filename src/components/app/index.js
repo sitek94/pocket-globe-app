@@ -6,11 +6,10 @@ import { Globe } from '../globe';
 import { Navbar } from '../Navbar';
 import { Footer } from '../Footer';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import { useIsoCountriesData, useDarkMode } from './hooks';
-import { LoadingSpinner } from '../LoadingSpinner';
-import { ErrorBox } from '../ErrorBox';
-import { SearchBox } from '../search-box';
+import { countries } from '../../assets/countries';
+import { CountrySelect } from '../search-box';
 import { useGlobeSize } from '../layout/hooks/useColumnHeight';
+import { useDarkTheme } from './hooks';
 
 export const initialState = {
   name: 'Poland',
@@ -19,52 +18,40 @@ export const initialState = {
 };
 
 export const App = () => {
-  const [theme, toggleDarkMode] = useDarkMode();
-  const [countries, countryNames, isLoading, isError] = useIsoCountriesData();
+  const [theme, toggleTheme] = useDarkTheme();
 
   // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
-  const setSelectedCountryByCode = (value) => {
-    if (!value) return;
-
-    const newCountry = countries[value.toLowerCase()];
-
-    if (newCountry) setSelectedCountry(newCountry);
+  const setSelectedCountryById = (id) => {
+    setSelectedCountry(countries.find((c) => id === c.id));
   };
   // Svg dimensions
   const [globeWidth, globeHeight] = useGlobeSize();
 
-  console.log(countryNames);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {isError && <ErrorBox when="loading the app" />}
-      {isLoading ? (
-        <LoadingSpinner height={600} />
-      ) : (
-        <Layout
-          navbar={
-            <Navbar
-              title={selectedCountry.name}
-              onThemeIconClick={toggleDarkMode}
+      <Layout
+        navbar={
+          <Navbar
+            title={selectedCountry.name}
+            onThemeIconClick={toggleTheme}
+          />
+        }
+        leftColumn={
+          <>
+            <Globe
+              width={globeWidth}
+              height={globeHeight}
+              selectedCountry={selectedCountry}
+              onSelectedCountryChange={setSelectedCountryById}
             />
-          }
-          leftColumn={
-            <>
-              <Globe
-                width={globeWidth}
-                height={globeHeight}
-                selectedCountry={selectedCountry}
-                onSelectedCountryChange={setSelectedCountryByCode}
-              />
-              <SearchBox onTermSubmit={setSelectedCountryByCode} options={countryNames} />
-            </>
-          }
-          rightColumn={<Country selectedCountry={selectedCountry} />}
-          footer={<Footer />}
-        />
-      )}
+            <CountrySelect onCountrySelect={setSelectedCountry} />
+          </>
+        }
+        rightColumn={<Country selectedCountry={selectedCountry} />}
+        footer={<Footer />}
+      />
     </ThemeProvider>
   );
 };

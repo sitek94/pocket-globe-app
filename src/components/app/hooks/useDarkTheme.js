@@ -12,7 +12,7 @@ const breakpoints = {
   },
 };
 
-export const useDarkMode = () => {
+export const useDarkTheme = () => {
   // Dark/light mode
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [darkMode, setDarkMode] = useState(prefersDarkMode);
@@ -26,6 +26,6 @@ export const useDarkMode = () => {
     breakpoints
   });
 
-  const toggleDarkMode = () => setDarkMode(!darkMode);
-  return [theme, toggleDarkMode];
+  const toggleTheme = () => setDarkMode(!darkMode);
+  return [theme, toggleTheme];
 };

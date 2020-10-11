@@ -20,8 +20,6 @@ export const Globe = memo(
     const containerRef = useRef(null);
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
-
-    
     
     // Projection
     // useMemo is important here because we want to create a projection only once

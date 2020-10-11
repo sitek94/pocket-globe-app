@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Box } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Box, TextField } from '@material-ui/core';
 import { useStyles } from './search-box-styles';
+import { Autocomplete } from '@material-ui/lab';
+import { countries } from '../../assets/countries';
 
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-
-export const SearchBox = ({ onTermSubmit, options }) => {
+export const CountrySelect = ({ onCountrySelect }) => {
   const classes = useStyles();
 
-  // User input
+  const [value, setValue] = useState(countries[0]);
   const [inputValue, setInputValue] = useState('');
-  const handleInputChange = (e, newInputValue) => {
-    setInputValue(newInputValue);
-  }
-
-  // Selected value
-  const [selectedValue, setSelectedValue] = useState(null);
-  const handleSelectedValueChange = (e, newValue) => {
-    e.preventDefault();
-
-    setSelectedValue(newValue);
-  };
-  // Watch selected value and submit the term on change
-  useEffect(() => {
-    if (selectedValue) {
-      onTermSubmit(selectedValue);
-    }
-  }, [selectedValue, onTermSubmit]);
 
   return (
     <Box
@@ -35,18 +17,24 @@ export const SearchBox = ({ onTermSubmit, options }) => {
       className={classes.box}
     >
       <Autocomplete
-        value={selectedValue}
-        onChange={handleSelectedValueChange}
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          if (newValue) onCountrySelect(newValue);
+        }}
         inputValue={inputValue}
-        onInputChange={handleInputChange}
-        options={options}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        options={countries}
+        getOptionLabel={(option) => option.name}
         size="small"
         style={{ width: 300 }}
         renderInput={(params) => (
           <TextField
             {...params}
+            label="Choose a country"
             size="small"
-            label="Search country"
             variant="filled"
           />
         )}

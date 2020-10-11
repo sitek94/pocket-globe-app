@@ -5,8 +5,8 @@ export const useStyles = makeStyles(
   ({ breakpoints, spacing, transitions, shape }) => ({
     box: {
       position: 'absolute',
-      left: spacing(3),
-      top: spacing(3),
+      left: spacing(2),
+      top: spacing(2),
       
       borderRadius: shape.borderRadius,
       width: '100%',
