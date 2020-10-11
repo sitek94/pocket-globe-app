@@ -11,7 +11,7 @@ export const useStyles = makeStyles(
       margin: '0 auto',
     },
     country: {
-      fill: background.default,
+      //fill: background.default,
       stroke: getContrastText(background.default),
       transition: 'fill .5s',
       strokeWidth: 0.25,
@@ -20,7 +20,7 @@ export const useStyles = makeStyles(
       },
     },
     selected: {
-      fill: primary.light,
+      //fill: primary.light,
     },
     circle: {
       fill: getContrastText(background.default),

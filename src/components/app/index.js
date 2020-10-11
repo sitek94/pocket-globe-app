@@ -12,7 +12,10 @@ import { useGlobeSize } from '../layout/hooks/useColumnHeight';
 import { useDarkTheme } from './hooks';
 
 export const initialState = {
-  name: 'Poland',
+//   name: 'Poland',
+//   code: '616',
+//   alpha: 'POL',
+  name: 'Antarctica',
   code: '616',
   alpha: 'POL',
 };
@@ -27,7 +30,7 @@ export const App = () => {
   };
   // Svg dimensions
   const [globeWidth, globeHeight] = useGlobeSize();
-
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

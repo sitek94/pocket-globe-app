@@ -1,0 +1,6 @@
+.path {
+  fill: white;
+}
+.path.clicked {
+  fill: red;
+}

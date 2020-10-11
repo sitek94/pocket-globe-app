@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, memo, useMemo } from 'react';
+import React, { useState, useEffect, useRef, memo, useMemo } from 'react';
 import { geoPath, geoOrthographic, select } from 'd3';
 import { useStyles } from './globe-styles';
 import { useGeoJsonData } from './hooks';
 import { dragBehaviour, zoomBehaviour, rotateProjection } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
-
+import './index.css';
 export const Globe = memo(
   ({
     width = 600,
@@ -15,6 +15,8 @@ export const Globe = memo(
     onSelectedCountryChange,
   }) => {
     const classes = useStyles();
+
+    const [clicked, setClicked] = useState([]);
 
     // Refs
     const containerRef = useRef(null);
@@ -75,11 +77,21 @@ export const Globe = memo(
 
       // Click event handler
       const handleClick = (e, d) => {
+        setClicked(clicked.concat(d.id));
         onSelectedCountryChange(d.id);
       };
 
       // Mouseover, mouseout event handlers
       const { handleMouseover, handleMouseout } = getTooltipHandlers(tooltip);
+
+      const feature = data.features.find(f => f.id === selectedCountry.code);
+
+      rotateProjection({
+        selection: countries,
+        path,
+        projection,
+        target: feature,
+      });
 
       // Update countries
       countries
@@ -96,25 +108,27 @@ export const Globe = memo(
       projection,
       initialScale,
       sensitivity,
+      selectedCountry,
       onSelectedCountryChange,
       classes,
+      clicked,
     ]);
 
+    
+    // useEffect(() => {
+    //   const svg = select(svgRef.current);
+    //   const countries = svg.selectAll(`path`);
+    
+    //   const feature = data.features.find(f => f.id === selectedCountry.code);
 
-    useEffect(() => {
-      const svg = select(svgRef.current);
-      const countries = svg.selectAll(`path`);
-      
-      const feature = data.features.find(f => f.id === selectedCountry.code);
+    //   rotateProjection({
+    //     selection: countries,
+    //     path,
+    //     projection,
+    //     target: feature,
+    //   });
 
-      rotateProjection({
-        selection: countries,
-        path,
-        projection,
-        target: feature,
-      });
-
-    }, [width, data, projection, path, selectedCountry]);
+    // }, [width, data, projection, path, selectedCountry]);
 
     if (isLoading) return <LoadingSpinner />;
 
@@ -132,9 +146,9 @@ export const Globe = memo(
               <path
                 key={id}
                 id={id}
-                className={`${classes.country} ${
+                className={`path ${classes.country} ${
                   selectedCountry.code === id && classes.selected
-                }`}
+                } ${clicked.includes(id) && 'clicked'}`}
               />
             ))}
           </g>
