@@ -1,24 +1,27 @@
 import { zoom } from 'd3';
-// Zoom
-export const zoomBehaviour = ({
+import { MAX_SCROLL, MIN_SCROLL } from './defaultValues';
+
+// Zoom in/out using scroll
+export const scrollBehaviour = ({
   selection,
   projection,
   path,
   initialScale,
   circle,
-  maxZoom = 20,
-  minZoom = 0.3,
+  maxScroll = MAX_SCROLL,
+  minScroll = MIN_SCROLL,
 }) =>
   zoom().on('zoom', (event) => {
-    const zoomValue = event.transform.k;
+    const scrollValue = event.transform.k;
 
     // Reached max/min zoom
-    if (zoomValue >= maxZoom) event.transform.k = maxZoom;
-    if (zoomValue <= minZoom) event.transform.k = minZoom;
+    if (scrollValue >= maxScroll) event.transform.k = maxScroll;
+    if (scrollValue <= minScroll) event.transform.k = minScroll;
     else {
+
       // Update projection
       projection.scale(initialScale * event.transform.k);
-
+      
       // Update path generator with new projection
       path.projection(projection);
 
