@@ -8,12 +8,14 @@ import {
   rotateProjectionTo,
   handleZoomClick,
   handleRotationClick,
+  getRandomCountry,
 } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
 import { countries } from '../../assets/countries';
 import { ZoomButtons, Buttons } from './Buttons';
 import { INITIAL_ROTATION, INITIAL_SCALE } from './utils/defaultValues';
+
 
 export const Globe = memo(
   ({
@@ -94,7 +96,6 @@ export const Globe = memo(
 
       // Mouseover, mouseout event handlers
       const { handleMouseover, handleMouseout } = getTooltipHandlers(tooltip);
-
 
       buttons.on(
         'click',
@@ -183,6 +184,16 @@ export const Globe = memo(
             ))}
           </g>
         </svg>
+        <button
+          style={{
+            position: 'absolute',
+            top: 100,
+            right: 0,
+          }}
+          onClick={() => onCountryClick(getRandomCountry(selectedCountry))}
+        >
+          RANDOM COUNTRY
+        </button>
         <Buttons ref={buttonsRef} />
         <ZoomButtons ref={zoomButtonsRef} />
         <Tooltip ref={tooltipRef} />

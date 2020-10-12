@@ -33,3 +33,16 @@ export const ZoomButtons = forwardRef((props, ref) => {
     </div>
   );
 });
+export const RandomCountry = (props) => {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: 100,
+        right: 0,
+      }}
+    >
+      <button value="plus">RANDOM COUNTRY</button>
+    </div>
+  );
+};
