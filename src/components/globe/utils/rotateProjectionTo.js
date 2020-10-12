@@ -1,6 +1,6 @@
 import { interpolate } from 'd3';
 
-export const rotateProjection = ({ selection, projection, path, rotation }) => {
+export const rotateProjectionTo = ({ selection, projection, path, rotation }) => {
   // Store the current rotation and scale:
   const currentRotate = projection.rotate();
 

@@ -1,4 +1,12 @@
 import { dragBehaviour } from './dragBehaviour';
-import { zoomBehaviour } from './zoomBehaviour';
-import { rotateProjection } from './rotateProjection';
-export { dragBehaviour, zoomBehaviour, rotateProjection };
+import { scrollBehaviour } from './scrollBehaviour';
+import { rotateProjectionTo } from './rotateProjectionTo';
+import { handleRotationClick } from './handleRotationClick';
+import { handleZoomClick } from './handleZoomClick';
+export {
+  dragBehaviour,
+  scrollBehaviour,
+  handleRotationClick,
+  rotateProjectionTo,
+  handleZoomClick,
+};

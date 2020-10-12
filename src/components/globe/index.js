@@ -2,10 +2,18 @@ import React, { useEffect, useRef, memo, useMemo } from 'react';
 import { geoPath, geoOrthographic, select } from 'd3';
 import { useStyles } from './globe-styles';
 import { useGeoJsonData } from './hooks';
-import { dragBehaviour, zoomBehaviour, rotateProjection } from './utils';
+import {
+  dragBehaviour,
+  scrollBehaviour,
+  rotateProjectionTo,
+  handleZoomClick,
+  handleRotationClick,
+} from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
 import { countries } from '../../assets/countries';
+import { ZoomButtons, Buttons } from './Buttons';
+import { INITIAL_ROTATION, INITIAL_SCALE } from './utils/defaultValues';
 
 export const Globe = memo(
   ({
@@ -21,15 +29,17 @@ export const Globe = memo(
     const containerRef = useRef(null);
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
+    const buttonsRef = useRef(null);
+    const zoomButtonsRef = useRef(null);
 
     // Projection
     // useMemo is important here because we want to create a projection only once
     const projection = useMemo(
       () =>
         geoOrthographic()
-          .scale(250)
+          .scale(INITIAL_SCALE)
           .center([0, 0])
-          .rotate([0, -30])
+          .rotate(INITIAL_ROTATION)
           .translate([width / 2, height / 2]),
       [height, width]
     );
@@ -39,7 +49,7 @@ export const Globe = memo(
     // Path generator
     const path = geoPath().projection(projection);
 
-    // Fetch TopoJSON data
+    // Get GeoJson data
     const [{ data, isLoading }] = useGeoJsonData();
 
     // Draw the globe
@@ -51,8 +61,10 @@ export const Globe = memo(
       const tooltip = select(tooltipRef.current);
       const circle = svg.select('circle');
       const countryPaths = svg.selectAll(`path`);
+      const buttons = select(buttonsRef.current);
+      const zoomButtons = select(zoomButtonsRef.current);
 
-      // Apply zoom and drag
+      // Apply scroll and drag behaviour
       svg
         // Drag
         .call(
@@ -63,9 +75,9 @@ export const Globe = memo(
             sensitivity,
           })
         )
-        // Zoom
+        // Scroll
         .call(
-          zoomBehaviour({
+          scrollBehaviour({
             selection: countryPaths,
             path,
             projection,
@@ -76,12 +88,32 @@ export const Globe = memo(
 
       // Click event handler
       const handleClick = (e, feature) => {
-        const country = countries.find(country => country.id === feature.id);
+        const country = countries.find((country) => country.id === feature.id);
         onCountryClick(country);
       };
 
       // Mouseover, mouseout event handlers
       const { handleMouseover, handleMouseout } = getTooltipHandlers(tooltip);
+
+
+      buttons.on(
+        'click',
+        handleRotationClick({
+          selection: countryPaths,
+          path,
+          projection,
+        })
+      );
+
+      zoomButtons.on(
+        'click',
+        handleZoomClick({
+          selection: countryPaths,
+          path,
+          projection,
+          circle,
+        })
+      );
 
       // Update country paths
       countryPaths
@@ -93,8 +125,7 @@ export const Globe = memo(
         .on('mouseout', handleMouseout);
 
       // Update circle
-      circle
-        .attr('r', projection.scale());
+      circle.attr('r', projection.scale());
     }, [
       width,
       data,
@@ -106,6 +137,7 @@ export const Globe = memo(
       classes,
     ]);
 
+    // Watch selected country and update projection when it changes
     useEffect(() => {
       if (!data.features.length) return;
 
@@ -120,7 +152,7 @@ export const Globe = memo(
       const { rotation } = feature.properties;
 
       // Rotate projection
-      rotateProjection({
+      rotateProjectionTo({
         selection: countryPaths,
         path,
         projection,
@@ -151,10 +183,8 @@ export const Globe = memo(
             ))}
           </g>
         </svg>
-        {/* <ZoomButtons
-          onZoomInClick={() => console.log('zoom in')}
-          onZoomOutClick={() => console.log('zoom out')}
-        /> */}
+        <Buttons ref={buttonsRef} />
+        <ZoomButtons ref={zoomButtonsRef} />
         <Tooltip ref={tooltipRef} />
       </div>
     );
