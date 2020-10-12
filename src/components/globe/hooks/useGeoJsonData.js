@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { feature } from 'topojson';
-
 import axios from 'axios';
 
 export const useGeoJsonData = () => {
   const [data, setData] = useState({
     features: [],
-    type: "",
+    type: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -20,16 +19,13 @@ export const useGeoJsonData = () => {
 
       try {
         const { data: topology } = await axios.get(
-          'https://gist.githubusercontent.com/sitek94/5dfcc1335322c06131436c59b1219f7c/raw/countries-110m.json'
+          'https://gist.githubusercontent.com/sitek94/dff8b65aa26c9ba01d8f4217cf40587f/raw/topojson-countries-110m.json'
         );
 
-        // Convert TopoJSON to GeoJSON
         const geoJsonData = feature(topology, topology.objects.countries);
 
         if (_isMounted) setData(geoJsonData);
-        
       } catch (error) {
-
         if (_isMounted) setIsError(error);
       }
       if (_isMounted) setIsLoading(false);
@@ -38,7 +34,7 @@ export const useGeoJsonData = () => {
 
     return () => {
       _isMounted = false;
-    }
+    };
   }, []);
 
   return [{ data, isLoading, isError }];
