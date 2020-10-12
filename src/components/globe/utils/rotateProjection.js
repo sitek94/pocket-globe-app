@@ -1,26 +1,14 @@
 import { interpolate } from 'd3';
 
-export const rotateProjection = ({
-  selection,
-  projection,
-  path,
-  target,
-}) => {
+export const rotateProjection = ({ selection, projection, path, rotation }) => {
   // Store the current rotation and scale:
   const currentRotate = projection.rotate();
 
-  // Get projected planar centroid (in pixels)
-  const centroid = path.centroid(target);
-  // Converts centroid to [longitude, latitude] in degrees
-  const [longitude, latitude] = projection.invert(centroid);
-
-  // Rotate the projection
-  projection.rotate([-longitude, -latitude]);
   // Update path generator with new projection
   path.projection(projection);
 
-  // Calculate next rotation
-  const nextRotate = projection.rotate();
+  // Set  next rotation
+  const nextRotate = rotation;
 
   // Create interpolator function
   const r = interpolate(currentRotate, nextRotate);

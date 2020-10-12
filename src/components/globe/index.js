@@ -5,6 +5,7 @@ import { useGeoJsonData } from './hooks';
 import { dragBehaviour, zoomBehaviour, rotateProjection } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
+import { countries } from '../../assets/countries';
 
 export const Globe = memo(
   ({
@@ -12,7 +13,7 @@ export const Globe = memo(
     height = 600,
     sensitivity = 75,
     selectedCountry,
-    onSelectedCountryChange,
+    onCountryClick,
   }) => {
     const classes = useStyles();
 
@@ -20,7 +21,7 @@ export const Globe = memo(
     const containerRef = useRef(null);
     const svgRef = useRef(null);
     const tooltipRef = useRef(null);
-    
+
     // Projection
     // useMemo is important here because we want to create a projection only once
     const projection = useMemo(
@@ -43,20 +44,20 @@ export const Globe = memo(
 
     // Draw the globe
     useEffect(() => {
-      if (!data) return;
+      if (!data.features.length) return;
 
       // Selectors
       const svg = select(svgRef.current);
       const tooltip = select(tooltipRef.current);
       const circle = svg.select('circle');
-      const countries = svg.selectAll(`path`);
+      const countryPaths = svg.selectAll(`path`);
 
       // Apply zoom and drag
       svg
         // Drag
         .call(
           dragBehaviour({
-            selection: countries,
+            selection: countryPaths,
             path,
             projection,
             sensitivity,
@@ -65,7 +66,7 @@ export const Globe = memo(
         // Zoom
         .call(
           zoomBehaviour({
-            selection: countries,
+            selection: countryPaths,
             path,
             projection,
             circle,
@@ -74,21 +75,26 @@ export const Globe = memo(
         );
 
       // Click event handler
-      const handleClick = (e, d) => {
-        onSelectedCountryChange(d.id);
+      const handleClick = (e, feature) => {
+        const country = countries.find(country => country.id === feature.id);
+        onCountryClick(country);
       };
 
       // Mouseover, mouseout event handlers
       const { handleMouseover, handleMouseout } = getTooltipHandlers(tooltip);
 
-      // Update countries
-      countries
+      // Update country paths
+      countryPaths
         .data(data.features)
         .join('path')
         .attr('d', path)
         .on('click', handleClick)
         .on('mouseover', handleMouseover)
         .on('mouseout', handleMouseout);
+
+      // Update circle
+      circle
+        .attr('r', projection.scale());
     }, [
       width,
       data,
@@ -96,25 +102,31 @@ export const Globe = memo(
       projection,
       initialScale,
       sensitivity,
-      onSelectedCountryChange,
+      onCountryClick,
       classes,
     ]);
 
-
     useEffect(() => {
-      const svg = select(svgRef.current);
-      const countries = svg.selectAll(`path`);
-      
-      const feature = data.features.find(f => f.id === selectedCountry.code);
+      if (!data.features.length) return;
 
+      const svg = select(svgRef.current);
+      const countryPaths = svg.selectAll(`path`);
+
+      // Find selected country feature
+      const feature = data.features.find(
+        (feature) => feature.id === selectedCountry.id
+      );
+      // Get its rotation
+      const { rotation } = feature.properties;
+
+      // Rotate projection
       rotateProjection({
-        selection: countries,
+        selection: countryPaths,
         path,
         projection,
-        target: feature,
+        rotation,
       });
-
-    }, [width, data, projection, path, selectedCountry]);
+    }, [data, projection, path, selectedCountry]);
 
     if (isLoading) return <LoadingSpinner />;
 
@@ -132,7 +144,7 @@ export const Globe = memo(
               <path
                 key={id}
                 id={id}
-                className={`${classes.country} ${
+                className={`path ${classes.country} ${
                   selectedCountry.code === id && classes.selected
                 }`}
               />
