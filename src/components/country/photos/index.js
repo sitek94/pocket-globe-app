@@ -7,7 +7,7 @@ import { Modal } from '../../Modal';
 import { PhotoViewer } from './PhotoViewer';
 import { ErrorBox } from '../../ErrorBox';
 import { useDataApi } from '../../../hooks/useDataApi';
-import { initialState } from '../../../utils/initialState';
+import { initialState } from '../../../utils';
 import { unsplashApi } from './utils';
 
 const useStyles = makeStyles({

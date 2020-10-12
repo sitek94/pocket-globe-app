@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, memo, useMemo } from 'react';
+import React, { useEffect, useRef, memo, useMemo, useState } from 'react';
 import { geoPath, geoOrthographic, select } from 'd3';
 import { useStyles } from './globe-styles';
 import { useGeoJsonData } from './hooks';
@@ -7,12 +7,11 @@ import {
   scrollBehaviour,
   rotateProjectionTo,
   handleZoomClick,
-  handleRotationClick,
-  getRandomCountry,
+  handleRotationClick
 } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
-import { countries } from '../../assets/countries';
+import { countries, getCountryById, getRandomCountry } from '../../utils';
 import { ZoomButtons, Buttons } from './Buttons';
 import { INITIAL_ROTATION, INITIAL_SCALE } from './utils/defaultValues';
 
@@ -26,6 +25,7 @@ export const Globe = memo(
     onCountryClick,
   }) => {
     const classes = useStyles();
+    const [update, setUpdate] = useState(false);
 
     // Refs
     const containerRef = useRef(null);
@@ -90,8 +90,7 @@ export const Globe = memo(
 
       // Click event handler
       const handleClick = (e, feature) => {
-        const country = countries.find((country) => country.id === feature.id);
-        onCountryClick(country);
+        onCountryClick(getCountryById(feature.id));
       };
 
       // Mouseover, mouseout event handlers
@@ -129,6 +128,7 @@ export const Globe = memo(
       circle.attr('r', projection.scale());
     }, [
       width,
+      update,
       data,
       path,
       projection,
@@ -193,6 +193,16 @@ export const Globe = memo(
           onClick={() => onCountryClick(getRandomCountry(selectedCountry))}
         >
           RANDOM COUNTRY
+        </button>
+        <button
+          style={{
+            position: 'absolute',
+            top: 150,
+            right: 0,
+          }}
+          onClick={() => setUpdate(!update)}
+        >
+          CENTER ON SELECTED
         </button>
         <Buttons ref={buttonsRef} />
         <ZoomButtons ref={zoomButtonsRef} />

@@ -5,7 +5,7 @@ import { LoadingSpinner } from '../../LoadingSpinner';
 import { limitCharacters, wikiApi } from './utils';
 import { useDataApi } from '../../../hooks/useDataApi';
 import { ErrorBox } from '../../ErrorBox';
-import { initialState } from '../../../utils/initialState';
+import { initialState } from '../../../utils';
 
 export const WikiEntry = ({ term }) => {
   const [{ data, isLoading, isError }, { setUrl }] = useDataApi({

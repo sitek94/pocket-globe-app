@@ -9,7 +9,7 @@ import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { CountrySelect } from '../search-box';
 import { useGlobeSize } from '../layout/hooks/useColumnHeight';
 import { useDarkTheme } from './hooks';
-import { initialState } from '../../utils/initialState';
+import { initialState } from '../../utils';
 
 export const App = () => {
   const [theme, toggleTheme] = useDarkTheme();

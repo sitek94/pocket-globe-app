@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Paper, TextField } from '@material-ui/core';
 
 import { Autocomplete } from '@material-ui/lab';
-import { countries } from '../../assets/countries';
+import { countries } from '../../utils/countries';
 
 import { makeStyles } from '@material-ui/core/styles';
 

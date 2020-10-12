@@ -6,7 +6,7 @@ import { ErrorBox } from '../../ErrorBox';
 import { useStyles } from './details-styles';
 import { Detail } from './Detail';
 import { useDataApi } from '../../../hooks/useDataApi';
-import { initialState } from '../../../utils/initialState';
+import { initialState } from '../../../utils';
 import {
   generateDetailsArray,
   notListedCountries,
