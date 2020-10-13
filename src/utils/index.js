@@ -15,5 +15,5 @@ export const getCountryById = id => {
 }
 
 export const getRandomCountry = () => {
-  return countries[sample(countries.length)];
+  return sample(countries);
 }

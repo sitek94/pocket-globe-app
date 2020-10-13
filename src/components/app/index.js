@@ -9,7 +9,7 @@ import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { CountrySelect } from '../search-box';
 import { useGlobeSize } from '../layout/hooks/useColumnHeight';
 import { useDarkTheme } from './hooks';
-import { initialState } from '../../utils';
+import { getCountryById, getRandomCountry, initialState } from '../../utils';
 
 export const App = () => {
   const [theme, toggleTheme] = useDarkTheme();
@@ -19,6 +19,27 @@ export const App = () => {
 
   // Svg dimensions
   const [globeWidth, globeHeight] = useGlobeSize();
+  const [rotation, setRotation] = useState(initialState.rotation);
+
+  const handleCountryClick = ({ target: { id } }) => {
+    const clickedCountry = getCountryById(id);
+
+    setSelectedCountry(clickedCountry);
+    setRotation(clickedCountry.rotation);
+  }
+
+  const handleCenterRotation = () => {
+    setRotation(selectedCountry.rotation);
+  }
+
+  const handleSetRandomCountry = () => {
+    const newCountry = getRandomCountry();
+
+    console.log(newCountry);
+
+    setSelectedCountry(newCountry);
+    setRotation(newCountry.rotation);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -30,13 +51,13 @@ export const App = () => {
         leftColumn={
           <>
             <Globe
-              projection
-              pathGenerator
-              
+              rotation={rotation}
               width={globeWidth}
               height={globeHeight}
               selectedCountry={selectedCountry}
-              setSelectedCountry={setSelectedCountry}
+              onCountryClick={handleCountryClick}
+              onNineKeyDown={handleCenterRotation}
+              onZeroKeyDown={handleSetRandomCountry}
             />
             <CountrySelect onCountrySelect={setSelectedCountry} />
           </>
@@ -47,3 +68,9 @@ export const App = () => {
     </ThemeProvider>
   );
 };
+
+
+/* 
+// KEYBOARD EVENT HANDLERS
+    
+*/

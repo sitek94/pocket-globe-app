@@ -19,8 +19,6 @@ export const rotateProjectionTo = ({
   // Create interpolator function
   const r = interpolate(currentRotate, nextRotate);
 
-  console.log(rotation);
-
   // Update countries
   selection
     .transition()
