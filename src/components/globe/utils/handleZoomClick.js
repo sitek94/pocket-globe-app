@@ -1,4 +1,5 @@
-import { MAX_SCALE, MIN_SCALE, ZOOM_IN_VALUE, ZOOM_OUT_VALUE } from './defaultValues';
+import { throttle } from 'lodash';
+import { MAX_SCALE, MIN_SCALE } from './projection-defaults';
 
 // Zooms the selection by value
 const zoomProjectionBy = ({
@@ -28,17 +29,11 @@ const zoomProjectionBy = ({
   }
 };
 
-// Handle clicking on zoom in/out
-export const handleZoomClick = (params) => (event) => {
-  const { value } = event.target;
-
-  let zoomValue;
-
-  if (value === 'plus') zoomValue = ZOOM_IN_VALUE;
-  if (value === 'minus') zoomValue = ZOOM_OUT_VALUE;
-
+export const throttledZoomProjectionBy = throttle((params) => {
   zoomProjectionBy({
     ...params,
-    zoomValue,
+    duration: 0,
   });
-};
+  // Throught experimenting with different values I found that 50ms
+  // works best because it's quite smooth and doesn't lag
+}, 50);

@@ -1,4 +1,4 @@
-import { random } from 'lodash';
+import { sample } from 'lodash';
 import { countries } from './countries';
 export { countries };
 
@@ -7,17 +7,13 @@ export const initialState = {
   name: 'Poland',
   code: '616',
   alpha: 'POL',
+  rotation: [-19.343761889362877, -52.134071581669645, 0],
 };
 
 export const getCountryById = id => {
   return countries.find((country) => country.id === id);
 }
 
-export const getRandomCountry = (selectedCountry) => {
-  let newCountry; 
-  do {
-    newCountry = countries[random(countries.length)];
-  } while (newCountry.id === selectedCountry.id);
-  
-  return newCountry;
+export const getRandomCountry = () => {
+  return countries[sample(countries.length)];
 }

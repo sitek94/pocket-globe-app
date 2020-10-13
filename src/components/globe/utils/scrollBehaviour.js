@@ -1,5 +1,5 @@
 import { zoom } from 'd3';
-import { MAX_SCROLL, MIN_SCROLL } from './defaultValues';
+import { MAX_SCROLL, MIN_SCROLL } from './projection-defaults';
 
 // Zoom in/out using scroll
 export const scrollBehaviour = ({

@@ -5,7 +5,7 @@ const useStyles = makeStyles(({ spacing, shadows }) => ({
   container: {
     padding: spacing(1),
     textAlign: 'center',
-    boxShadow: shadows['3']
+    boxShadow: shadows['7']
   }
 }))
 

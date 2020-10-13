@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, memo, useMemo, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  memo,
+  useMemo,
+  useState,
+} from 'react';
 import { geoPath, geoOrthographic, select } from 'd3';
 import { useStyles } from './globe-styles';
 import { useGeoJsonData } from './hooks';
@@ -6,15 +12,14 @@ import {
   dragBehaviour,
   scrollBehaviour,
   rotateProjectionTo,
-  handleZoomClick,
-  handleRotationClick
 } from './utils';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { Tooltip, getTooltipHandlers } from './Tooltip';
-import { countries, getCountryById, getRandomCountry } from '../../utils';
+import { getCountryById, getRandomCountry } from '../../utils';
 import { ZoomButtons, Buttons } from './Buttons';
-import { INITIAL_ROTATION, INITIAL_SCALE } from './utils/defaultValues';
-
+import { INITIAL_ROTATION, INITIAL_SCALE, ZOOM_IN_VALUE, ZOOM_OUT_VALUE } from './utils/projection-defaults';
+import { throttledRotateProjectionBy } from './utils/rotate-projection-by';
+import { throttledZoomProjectionBy } from './utils/handleZoomClick';
 
 export const Globe = memo(
   ({
@@ -22,7 +27,7 @@ export const Globe = memo(
     height = 600,
     sensitivity = 75,
     selectedCountry,
-    onCountryClick,
+    setSelectedCountry,
   }) => {
     const classes = useStyles();
     const [update, setUpdate] = useState(false);
@@ -54,6 +59,8 @@ export const Globe = memo(
     // Get GeoJson data
     const [{ data, isLoading }] = useGeoJsonData();
 
+    
+
     // Draw the globe
     useEffect(() => {
       if (!data.features.length) return;
@@ -67,7 +74,7 @@ export const Globe = memo(
       const zoomButtons = select(zoomButtonsRef.current);
 
       // Apply scroll and drag behaviour
-      svg
+   /*    svg
         // Drag
         .call(
           dragBehaviour({
@@ -86,17 +93,17 @@ export const Globe = memo(
             circle,
             initialScale,
           })
-        );
+        ); */
 
       // Click event handler
-      const handleClick = (e, feature) => {
-        onCountryClick(getCountryById(feature.id));
+      const handleCountryClick = (e, feature) => {
+        setSelectedCountry(getCountryById(feature.id));
       };
 
       // Mouseover, mouseout event handlers
       const { handleMouseover, handleMouseout } = getTooltipHandlers(tooltip);
 
-      buttons.on(
+      /* buttons.on(
         'click',
         handleRotationClick({
           selection: countryPaths,
@@ -113,14 +120,14 @@ export const Globe = memo(
           projection,
           circle,
         })
-      );
+      ); */
 
       // Update country paths
       countryPaths
         .data(data.features)
         .join('path')
         .attr('d', path)
-        .on('click', handleClick)
+        .on('click', handleCountryClick)
         .on('mouseover', handleMouseover)
         .on('mouseout', handleMouseout);
 
@@ -134,7 +141,7 @@ export const Globe = memo(
       projection,
       initialScale,
       sensitivity,
-      onCountryClick,
+      setSelectedCountry,
       classes,
     ]);
 
@@ -142,22 +149,14 @@ export const Globe = memo(
     useEffect(() => {
       if (!data.features.length) return;
 
-      const svg = select(svgRef.current);
-      const countryPaths = svg.selectAll(`path`);
-
-      // Find selected country feature
-      const feature = data.features.find(
-        (feature) => feature.id === selectedCountry.id
-      );
-      // Get its rotation
-      const { rotation } = feature.properties;
+      const countryPaths = select(svgRef.current).selectAll(`path`);
 
       // Rotate projection
       rotateProjectionTo({
         selection: countryPaths,
         path,
         projection,
-        rotation,
+        rotation: selectedCountry.rotation,
       });
     }, [data, projection, path, selectedCountry]);
 
@@ -165,7 +164,14 @@ export const Globe = memo(
 
     return (
       <div ref={containerRef} className={classes.container}>
-        <svg ref={svgRef} className={classes.svg} width={width} height={height}>
+        <svg
+          // onKeyDown={handleKeyDown}
+          tabIndex="0"
+          ref={svgRef}
+          className={classes.svg}
+          width={width}
+          height={height}
+        >
           <circle
             className={classes.circle}
             cx={width / 2}
@@ -184,13 +190,13 @@ export const Globe = memo(
             ))}
           </g>
         </svg>
-        <button
+ {/*        <button
           style={{
             position: 'absolute',
             top: 100,
             right: 0,
           }}
-          onClick={() => onCountryClick(getRandomCountry(selectedCountry))}
+          onClick={() => setSelectedCountry(getRandomCountry(selectedCountry))}
         >
           RANDOM COUNTRY
         </button>
@@ -203,11 +209,71 @@ export const Globe = memo(
           onClick={() => setUpdate(!update)}
         >
           CENTER ON SELECTED
-        </button>
-        <Buttons ref={buttonsRef} />
+        </button> */}
+ {/*        <Buttons ref={buttonsRef} />
         <ZoomButtons ref={zoomButtonsRef} />
-        <Tooltip ref={tooltipRef} />
+        <Tooltip ref={tooltipRef} /> */}
       </div>
     );
   }
 );
+
+
+/* 
+// KEYBOARD EVENT HANDLERS
+    const handleKeyDown = ({ which, keyCode, shiftKey, ctrlKey }) => {
+      const pressedKey = which || keyCode;
+      const svg = select(svgRef.current);
+      const countryPaths = svg.selectAll(`path`);
+      
+      const UP = 38, DOWN = 40, LEFT = 37, RIGHT = 39;
+      const PLUS = 187, NUM_PLUS = 107, MINUS = 189, NUM_MINUS = 109;
+      const L = 76, R = 82;
+
+      // Arrow keys - rotating the globe
+      if ([UP, DOWN, LEFT, RIGHT].includes(pressedKey)) {
+        const rotationValue = 5;
+        const rotation = { x: 0, y: 0, z: 0 };
+          
+        if (pressedKey === 38) rotation.y = rotationValue;
+        if (pressedKey === 40) rotation.y = -rotationValue;
+        if (pressedKey === 37) rotation.x = -rotationValue;
+        if (pressedKey === 39) rotation.x = rotationValue;
+        
+        throttledRotateProjectionBy({
+          selection: countryPaths,
+          path,
+          projection,
+          ...rotation,
+        });
+
+        // Plus and minus - zooming in/out
+      } else if ([PLUS, NUM_PLUS, MINUS, NUM_MINUS].includes(pressedKey)) {
+        let zoomValue;
+      
+        if (pressedKey === PLUS || pressedKey === NUM_PLUS) zoomValue = ZOOM_IN_VALUE;
+        if (pressedKey === MINUS || pressedKey === NUM_MINUS) zoomValue = ZOOM_OUT_VALUE;
+      
+        throttledZoomProjectionBy({
+          selection: countryPaths,
+          path,
+          projection,
+          zoomValue,
+        });
+
+        // shift + ctrl + L - center on selected country
+      } else if (shiftKey && ctrlKey && pressedKey === L) {
+        rotateProjectionTo({
+          selection: countryPaths,
+          path,
+          projection,
+          rotation: selectedCountry.rotation,
+        });
+
+        // shift + ctrl + R - select random country
+      } else if (shiftKey && ctrlKey && pressedKey === R) {
+        setSelectedCountry(getRandomCountry());
+      }
+    };
+
+*/

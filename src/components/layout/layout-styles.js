@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   container: {
+    minHeight: '100vh',
     height: '100vh',
     display: 'grid',
     gridTemplateRows: 'auto 1fr',

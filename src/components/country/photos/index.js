@@ -12,6 +12,7 @@ import { unsplashApi } from './utils';
 
 const useStyles = makeStyles({
   container: {
+    minHeight: 300,
     width: '100%',
     paddingTop: 10,
     display: 'grid',

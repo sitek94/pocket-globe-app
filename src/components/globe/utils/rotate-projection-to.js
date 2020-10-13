@@ -1,6 +1,12 @@
 import { interpolate } from 'd3';
 
-export const rotateProjectionTo = ({ selection, projection, path, rotation }) => {
+export const rotateProjectionTo = ({
+  selection,
+  projection,
+  path,
+  duration = 1000,
+  rotation,
+}) => {
   // Store the current rotation and scale:
   const currentRotate = projection.rotate();
 
@@ -12,6 +18,8 @@ export const rotateProjectionTo = ({ selection, projection, path, rotation }) =>
 
   // Create interpolator function
   const r = interpolate(currentRotate, nextRotate);
+
+  console.log(rotation);
 
   // Update countries
   selection
@@ -25,5 +33,5 @@ export const rotateProjectionTo = ({ selection, projection, path, rotation }) =>
       const pathD = path(d);
       return pathD !== null ? pathD : '';
     })
-    .duration(1000);
+    .duration(duration);
 };

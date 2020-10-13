@@ -9,6 +9,10 @@ export const useStyles = makeStyles(
     svg: {
       display: 'block',
       margin: '0 auto',
+      outline: 'none',
+      '&:focus': {
+        boxShadow: `0px 0px 38px -13px ${primary.light}`
+      }
     },
     country: {
       fill: background.default,
