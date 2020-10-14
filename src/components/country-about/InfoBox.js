@@ -20,7 +20,6 @@ const useStyles = makeStyles(({ breakpoints }) => ({
     [breakpoints.down('md')]: styles.vertical,
     [breakpoints.down('sm')]: styles.horizontal,
     [breakpoints.down('xs')]: styles.vertical,
-
   }
 }))
 

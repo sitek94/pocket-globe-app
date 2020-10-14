@@ -5,7 +5,7 @@ import { InfoBox } from './InfoBox';
 import { Photos } from './photos';
 import { WikiEntry } from './wiki-entry';
 
-export const Country = ({ selectedCountry: { name, alpha } }) => {
+export const CountryAbout = ({ selectedCountry: { name, alpha } }) => {
   return (
     <div>
       <InfoBox>

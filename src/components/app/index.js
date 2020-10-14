@@ -1,45 +1,48 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
+import { ThemeProvider, CssBaseline } from '@material-ui/core';
 
 import { Layout } from '../layout';
-import { Country } from '../country';
-import { Globe } from '../globe';
 import { Navbar } from '../Navbar';
 import { Footer } from '../Footer';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import { CountrySelect } from '../search-box';
-import { useGlobeSize } from '../layout/hooks/useColumnHeight';
-import { useDarkTheme } from './hooks';
+import { Globe } from '../globe';
+import { CountryAbout } from '../country-about';
+import { CountrySelect } from '../country-select';
+import { useGlobeSize } from '../layout/hooks';
+import { useDarkTheme } from './useDarkTheme';
 import { getCountryById, getRandomCountry, initialState } from '../../utils';
 
 export const App = () => {
+  // STATE
   const [theme, toggleTheme] = useDarkTheme();
-
-  // Selected country
   const [selectedCountry, setSelectedCountry] = useState(initialState);
-
-  // Svg dimensions
   const [globeWidth, globeHeight] = useGlobeSize();
   const [rotation, setRotation] = useState(initialState.rotation);
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  const handleCountryClick = ({ target: { id } }) => {
-    const clickedCountry = getCountryById(id);
-
-    setSelectedCountry(clickedCountry);
-    setRotation(clickedCountry.rotation);
-  }
-
-  const handleCenterRotation = () => {
-    setRotation(selectedCountry.rotation);
-  }
-
-  const handleSetRandomCountry = () => {
-    const newCountry = getRandomCountry();
-
-    console.log(newCountry);
-
+  // Updates selected country and rotation
+  const updateSelectedCountry = (newCountry) => {
     setSelectedCountry(newCountry);
     setRotation(newCountry.rotation);
-  }
+  };
+
+  const handleCountryClick = ({ target: { id } }) => {
+    updateSelectedCountry(getCountryById(id));
+  };
+
+  const handleCountrySelect = (event, newCountry) => {
+    if (newCountry) updateSelectedCountry(newCountry);
+  };
+
+  const handleKeyDown = ({ which, keyCode }) => {
+    const pressedKey = which || keyCode;
+
+    const L = 76,
+      R = 82;
+    // Select random country
+    if (pressedKey === L) forceUpdate();
+    // Center on selected country (force the globe to update)
+    if (pressedKey === R) updateSelectedCountry(getRandomCountry());
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,23 +55,22 @@ export const App = () => {
           <>
             <Globe
               rotation={rotation}
+              initialRotation={initialState.rotation}
               width={globeWidth}
               height={globeHeight}
               selectedCountry={selectedCountry}
               onCountryClick={handleCountryClick}
-              onNineKeyDown={handleCenterRotation}
-              onZeroKeyDown={handleSetRandomCountry}
+              onKeyDown={handleKeyDown}
             />
-            <CountrySelect onCountrySelect={setSelectedCountry} />
+            <CountrySelect onCountrySelect={handleCountrySelect} />
           </>
         }
-        rightColumn={<Country selectedCountry={selectedCountry} />}
+        rightColumn={<CountryAbout selectedCountry={selectedCountry} />}
         footer={<Footer />}
       />
     </ThemeProvider>
   );
 };
-
 
 /* 
 // KEYBOARD EVENT HANDLERS

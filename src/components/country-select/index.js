@@ -1,31 +1,9 @@
 import React, { useState } from 'react';
 import { Paper, TextField } from '@material-ui/core';
-
 import { Autocomplete } from '@material-ui/lab';
+
 import { countries } from '../../utils/countries';
-
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(({ spacing, shape }) => ({
-  root: {
-    position: 'absolute',
-    left: spacing(2),
-    top: spacing(2),
-    display: 'flex',
-    alignItems: 'center',
-    width: 250,
-  },
-  input: {
-    borderRadius: 0,
-    borderBottomRightRadius: shape.borderRadius,
-  },
-  inputInput: {
-    padding: spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${spacing(4)}px)`,
-    width: '100%',
-  },
-}));
+import { useStyles } from './search-box-styles';
 
 export const CountrySelect = ({ onCountrySelect }) => {
   const classes = useStyles();
@@ -33,7 +11,8 @@ export const CountrySelect = ({ onCountrySelect }) => {
   const [value, setValue] = useState(countries[0]);
   const handleValueChange = (event, newValue) => {
     setValue(newValue);
-    if (newValue) onCountrySelect(newValue);
+
+    if (newValue) onCountrySelect(event, newValue);
   };
 
   const [inputValue, setInputValue] = useState('');

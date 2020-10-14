@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-
 import { Typography } from '@material-ui/core';
+
 import { LoadingSpinner } from '../../LoadingSpinner';
-import { limitCharacters, wikiApi } from './utils';
+import { limitCharacters } from './utils';
 import { useDataApi } from '../../../hooks/useDataApi';
 import { ErrorBox } from '../../ErrorBox';
 import { initialState } from '../../../utils';
+import { wikiApi } from '../apis';
 
 export const WikiEntry = ({ term }) => {
   const [{ data, isLoading, isError }, { setUrl }] = useDataApi({

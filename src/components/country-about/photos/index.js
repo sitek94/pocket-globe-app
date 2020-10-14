@@ -8,7 +8,7 @@ import { PhotoViewer } from './PhotoViewer';
 import { ErrorBox } from '../../ErrorBox';
 import { useDataApi } from '../../../hooks/useDataApi';
 import { initialState } from '../../../utils';
-import { unsplashApi } from './utils';
+import { unsplashApi } from '../apis';
 
 const useStyles = makeStyles({
   container: {

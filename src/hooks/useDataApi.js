@@ -2,8 +2,8 @@ import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
 const FETCH_INIT = 'FETCH_INIT',
-  FETCH_SUCCESS = 'FETCH_SUCCESS',
-  FETCH_FAILURE = 'FETCH_FAILURE';
+      FETCH_SUCCESS = 'FETCH_SUCCESS',
+      FETCH_FAILURE = 'FETCH_FAILURE';
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
