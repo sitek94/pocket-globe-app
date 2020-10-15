@@ -9,7 +9,7 @@ const baseTheme = createMuiTheme({
       main: '#1976d2',
     },
   },
-})
+});
 
 export const useTheme = () => {
   /* Dark / light mode */
@@ -32,10 +32,6 @@ export const useTheme = () => {
     },
     widgets: {
       button: {
-        width: 29,
-        height: 29,
-        borderRadius: 8,
-        boxShadow: baseTheme.shadows['11'],
         base: {
           width: 29,
           height: 29,
@@ -44,6 +40,7 @@ export const useTheme = () => {
           minHeight: 0,
           borderRadius: 8,
         },
+        boxShadow: baseTheme.shadows['11'],
         border: `1px solid ${baseTheme.palette.primary.dark}`,
       }
     }

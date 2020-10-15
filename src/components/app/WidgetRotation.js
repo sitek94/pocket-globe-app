@@ -1,14 +1,19 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import Button from '@material-ui/core/Button';
-import MyLocationIcon from '@material-ui/icons/MyLocation';
 import clsx from 'clsx';
+import { makeStyles, Button } from '@material-ui/core/';
+import { MyLocation as LocationIcon } from '@material-ui/icons';
+import {
+  IoIosArrowUp as IconUp,
+  IoIosArrowDown as IconDown,
+  IoIosArrowBack as IconLeft,
+  IoIosArrowForward as IconRight,
+} from 'react-icons/io';
+import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-const useStyles = makeStyles(({ widgets: { button }, shadows }) => ({
+const useStyles = makeStyles(({ widgets: { button } }) => ({
   widgetRotation: {
     display: 'grid',
     gridTemplateColumns: `repeat(3, auto)`,
@@ -20,7 +25,19 @@ const useStyles = makeStyles(({ widgets: { button }, shadows }) => ({
   },
   button: {
     ...button.base,
-    position: 'relative',
+  },
+  shadow: {
+    boxShadow: button.boxShadow,
+    '&:hover': {
+      boxShadow: button.boxShadow,
+    },
+  },
+  /* Remove shadow because it overlap neighbor buttons */
+  disableShadow: {
+    boxShadow: 'none',
+    '&:hover': {
+      boxShadow: 'none',
+    },
   },
   up: {
     gridArea: 'up',
@@ -46,11 +63,11 @@ const useStyles = makeStyles(({ widgets: { button }, shadows }) => ({
     gridArea: 'center',
     borderRadius: 0,
     boxShadow: 'none',
-    border: button.border,
+    border: button.base.border,
   },
   /* Used for two divs that are beneath the buttons to avoid overlapping */
-  shadow: {
-    borderRadius: button.borderRadius,
+  shadowHelper: {
+    borderRadius: button.base.borderRadius,
     backgroundColor: 'transparent',
     boxShadow: button.boxShadow,
   },
@@ -64,53 +81,93 @@ const useStyles = makeStyles(({ widgets: { button }, shadows }) => ({
   },
 }));
 
+export const WidgetButton = ({
+  className,
+  disableShadow = false,
+  shadow = false,
+  ...other
+}) => {
+  const classes = useStyles();
+
+  return (
+    <Button
+      variant="contained"
+      color="primary"
+      classes={{
+        root: classes.button,
+      }}
+      className={clsx(className, {
+        [classes.disableShadow]: disableShadow,
+        [classes.shadow]: shadow,
+      })}
+      {...other}
+    />
+  );
+};
+
+const useZoomStyles = makeStyles(({ widgets: { button } }) => ({
+  root: {
+    borderRadius: button.base.borderRadius,
+    boxShadow: button.boxShadow,
+  },
+  button: {
+    ...button.base,
+  },
+}));
+
+export const WidgetZoom = () => {
+  const classes = useZoomStyles();
+
+  return (
+    <ButtonGroup
+      className={classes.root}
+      orientation="vertical"
+      variant="contained"
+      color="primary"
+    >
+      <WidgetButton shadow>
+        <AddIcon />
+      </WidgetButton>
+
+      <WidgetButton shadow>
+        <RemoveIcon />
+      </WidgetButton>
+    </ButtonGroup>
+  );
+};
+
+export const WidgetRandom = () => {
+  const classes = useStyles();
+
+  return (
+    <WidgetButton shadow>
+      <GiPerspectiveDiceSixFacesRandom />
+    </WidgetButton>
+  );
+};
+
 export const WidgetRotation = ({ className }) => {
   const classes = useStyles();
 
   return (
     <div className={clsx(className, classes.widgetRotation)}>
-      <Button
-        variant="contained"
-        disableElevation
-        color="primary"
-        className={clsx(classes.button, classes.up)}
-      >
-        <ArrowDropUpIcon />
-      </Button>
-      <Button
-        variant="contained"
-        disableElevation
-        color="primary"
-        className={clsx(classes.button, classes.down)}
-      >
-        <ArrowDropDownIcon />
-      </Button>
-      <Button
-        variant="contained"
-        disableElevation
-        color="primary"
-        className={clsx(classes.button, classes.center)}
-      >
-        <MyLocationIcon fontSize="inherit" />
-      </Button>
-      <Button
-        variant="contained"
-        disableElevation
-        color="primary"
-        className={clsx(classes.button, classes.left)}
-      >
-        <ArrowLeftIcon />
-      </Button>
-      <Button
-        variant="contained"
-        disableElevation
-        color="primary"
-        className={clsx(classes.button, classes.right)}
-      >
-        <ArrowRightIcon />
-      </Button>
-      <div className={clsx(classes.shadowHorizontal, classes.shadow)} />
-      <div className={clsx(classes.shadowVertical, classes.shadow)} />
+      <WidgetButton disableShadow className={classes.up}>
+        <IconUp />
+      </WidgetButton>
+      <WidgetButton disableShadow className={classes.down}>
+        <IconDown />
+      </WidgetButton>
+      <WidgetButton disableShadow className={classes.center}>
+        <LocationIcon fontSize="inherit" />
+      </WidgetButton>
+      <WidgetButton disableShadow className={classes.left}>
+        <IconLeft />
+      </WidgetButton>
+      <WidgetButton disableShadow className={classes.right}>
+        <IconRight />
+      </WidgetButton>
+      <div className={clsx(classes.shadowHorizontal, classes.shadowHelper)} />
+      <div className={clsx(classes.shadowVertical, classes.shadowHelper)} />
     </div>
   );
 };

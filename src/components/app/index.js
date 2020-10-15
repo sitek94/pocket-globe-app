@@ -11,8 +11,7 @@ import { useGlobeSize } from '../layout/hooks';
 import { useTheme } from './useTheme';
 import { getCountryById, getRandomCountry, initialState } from '../../utils';
 
-import { WidgetRotation } from './WidgetRotation';
-import { WidgetZoom } from './WidgetZoom';
+import { WidgetRotation, WidgetRandom, WidgetZoom } from './WidgetRotation';
 
 const useStyles = makeStyles(theme => ({
   widgets: {
@@ -94,6 +93,7 @@ export const App = () => {
             />
             <CountrySelect onCountrySelect={handleCountrySelect} />
             <Widgets>
+              <WidgetRandom />
               <WidgetZoom />
               <WidgetRotation />
             </Widgets>
