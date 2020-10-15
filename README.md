@@ -16,3 +16,18 @@ See the project live here: https://sitek94.github.io/pocket-globe-app/.
 * REST Countries API
 * Unsplash API
 * Wikimedia REST API 
+
+## Accessibility 
+
+### Keyboard shortcuts
+| Key                | Description                 |
+| ------------------ | :-------------------------- |
+| `↑`                | Rotate up                   |
+| `↓`                | Rotate down                 |
+| `←`                | Rotate left                 |
+| `→`                | Rotate right                |
+| `+`                | Zoom in                     |
+| `-`                | Zoom out                    |
+| `l`                | Rotate to selected country  |
+| `r`                | Select random country       |
+
