@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
+import { ThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
 
 import { Layout } from '../layout';
 import { Navbar } from '../Navbar';
@@ -8,12 +8,42 @@ import { Globe } from '../globe';
 import { CountryAbout } from '../country-about';
 import { CountrySelect } from '../country-select';
 import { useGlobeSize } from '../layout/hooks';
-import { useDarkTheme } from './useDarkTheme';
+import { useTheme } from './useTheme';
 import { getCountryById, getRandomCountry, initialState } from '../../utils';
+
+import { WidgetRotation } from './WidgetRotation';
+import { WidgetZoom } from './WidgetZoom';
+
+const useStyles = makeStyles(theme => ({
+  widgets: {
+    /* Position in the right bottom corner of relative parent */
+    position: 'absolute',
+    bottom: theme.spacing(3),
+    right: theme.spacing(2),
+    /* Position children */
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& > *:not(:last-child)': {
+      marginBottom: theme.spacing(1),
+    }
+  }
+}))
+
+const Widgets = ({ children }) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.widgets}>
+      {children}
+    </div>
+  )
+}
 
 export const App = () => {
   // STATE
-  const [theme, toggleTheme] = useDarkTheme();
+  const [theme, toggleTheme] = useTheme();
   const [selectedCountry, setSelectedCountry] = useState(initialState);
   const [globeWidth, globeHeight] = useGlobeSize();
   const [rotation, setRotation] = useState(initialState.rotation);
@@ -63,6 +93,10 @@ export const App = () => {
               onKeyDown={handleKeyDown}
             />
             <CountrySelect onCountrySelect={handleCountrySelect} />
+            <Widgets>
+              <WidgetZoom />
+              <WidgetRotation />
+            </Widgets>
           </>
         }
         rightColumn={<CountryAbout selectedCountry={selectedCountry} />}
