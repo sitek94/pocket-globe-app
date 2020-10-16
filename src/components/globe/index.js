@@ -261,24 +261,7 @@ export const Globe =
         projection,
         rotation,
       });
-    }
-
-    function zoomBy(value) {
-      const svg = select(svgRef.current);
-      const countryPaths = svg.selectAll(`path`);
-      const globeCircle = svg.select('circle');
-        
-      throttledZoomProjectionBy({
-        selection: countryPaths,
-        circle: globeCircle,
-        path,
-        projection,
-        maxScale,
-        minScale,
-        value,
-      });
-    }
-    
+    }    
 
     if (isLoading) return <LoadingSpinner />;
 
