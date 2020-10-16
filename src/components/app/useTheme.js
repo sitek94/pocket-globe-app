@@ -2,14 +2,7 @@ import { useState } from 'react';
 import { createMuiTheme, useMediaQuery } from '@material-ui/core';
 
 /* Base theme for reference when creating app theme */
-const baseTheme = createMuiTheme({
-  palette: {
-    primary: {
-      /* Shade of blue from Material UI website */
-      main: '#1976d2',
-    },
-  },
-});
+const defaultTheme = createMuiTheme();
 
 export const useTheme = () => {
   /* Dark / light mode */
@@ -19,31 +12,21 @@ export const useTheme = () => {
   const theme = createMuiTheme({
     palette: {
       type: darkMode ? 'dark' : 'light',
-      primary: {  
-        main: baseTheme.palette.primary.main,
+      primary: {
+        /* Shade of blue from Material UI website */
+        main: '#1976d2',
       },
     },
     breakpoints: {
       values: {
         /* Extend original breakpoints with custom mobile breakpoint */
-        ...baseTheme.breakpoints.values,
+        ...defaultTheme.breakpoints.values,
         mobile: 400,
       },
     },
-    widgets: {
-      button: {
-        base: {
-          width: 29,
-          height: 29,
-          padding: 0,
-          minWidth: 0,
-          minHeight: 0,
-          borderRadius: 8,
-        },
-        boxShadow: baseTheme.shadows['11'],
-        border: `1px solid ${baseTheme.palette.primary.dark}`,
-      }
-    }
+    shape: {
+      borderRadius: 8,
+    },
   });
 
   const toggleTheme = () => setDarkMode(!darkMode);

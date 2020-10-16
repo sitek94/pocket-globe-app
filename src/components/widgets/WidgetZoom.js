@@ -4,9 +4,9 @@ import { makeStyles, ButtonGroup } from '@material-ui/core/';
 import { ButtonBase } from './ButtonBase';
 import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons';
 
-const useZoomStyles = makeStyles(({ widgets: { button } }) => ({
+const useZoomStyles = makeStyles(({ shape }) => ({
   root: {
-    borderRadius: button.base.borderRadius,
+    borderRadius: shape.borderRadius,
   },
 }));
 

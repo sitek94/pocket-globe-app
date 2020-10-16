@@ -196,7 +196,6 @@ export const Globe =
       onKeyDown({ which, keyCode });
     };
 
-
     /**
      * Zoom Widget click
      * 
