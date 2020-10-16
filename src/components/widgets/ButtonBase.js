@@ -2,15 +2,20 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, Button } from '@material-ui/core/';
 
-const useStyles = makeStyles(({ widgets: { button } }) => ({
+const useStyles = makeStyles(({ shadows, shape, palette }) => ({
   root: {
-    ...button.base,
+    width: 29,
+    height: 29,
+    padding: 0,
+    minWidth: 0,
+    minHeight: 0,
+    borderRadius: shape.borderRadius,
     fontSize: '1.3rem',
   },
   shadow: {
-    boxShadow: button.boxShadow,
+    boxShadow: shadows['11'],
     '&:hover': {
-      boxShadow: button.boxShadow,
+      boxShadow: shadows['11'],
     },
   },
   /* Remove shadow because it overlap neighbor buttons */
@@ -43,7 +48,7 @@ const useStyles = makeStyles(({ widgets: { button } }) => ({
   center: {
     gridArea: 'center',
     borderRadius: 0,
-    border: button.border,
+    border: `1px solid ${palette.primary.dark}`,
   },
 }));
 
@@ -66,8 +71,8 @@ export const ButtonBase = ({
           [classes.disableShadow]: disableShadow,
           [classes.shadow]: !disableShadow,
         },
-        className, 
-        )}
+        className
+      )}
       {...other}
     />
   );

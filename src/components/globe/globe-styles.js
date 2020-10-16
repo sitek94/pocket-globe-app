@@ -1,7 +1,12 @@
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles(
-  ({ palette: { primary, background, getContrastText } }) => ({
+  ({
+    palette: { primary, background, getContrastText },
+    transitions: { create, duration },
+    shadows,
+    shape,
+  }) => ({
     container: {
       position: 'relative',
       height: '100%',
@@ -9,15 +14,17 @@ export const useStyles = makeStyles(
     svg: {
       display: 'block',
       margin: '0 auto',
+      borderRadius: shape.borderRadius,
       outline: 'none',
+      transition: create('box-shadow', duration.short),
       '&:focus': {
-        boxShadow: `0px 0px 38px -13px ${primary.light}`
-      }
+        boxShadow: shadows['5'],
+      },
     },
     country: {
       fill: background.default,
       stroke: getContrastText(background.default),
-      transition: 'fill .5s',
+      transition: create('fill', duration.standard),
       strokeWidth: 0.25,
       '&:hover': {
         fill: primary.main,
@@ -28,7 +35,7 @@ export const useStyles = makeStyles(
     },
     circle: {
       fill: getContrastText(background.default),
-      transition: 'fill .5s',
+      transition: create('fill', duration.standard),
     },
   })
 );

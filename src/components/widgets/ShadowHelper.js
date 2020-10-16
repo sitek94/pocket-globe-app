@@ -2,12 +2,12 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/';
 
-const shadowStyles = makeStyles(({ widgets: { button } }) => ({
+const shadowStyles = makeStyles(({ shadows, shape }) => ({
   base: {
     /* Mimic shape of rotation widget */
-    borderRadius: button.base.borderRadius,
+    borderRadius: shape.borderRadius,
     backgroundColor: 'transparent',
-    boxShadow: button.boxShadow,
+    boxShadow: shadows['11'],
   },
   /* Take advantage of the fact that WidgetRotation uses grid display */
   horizontal: {

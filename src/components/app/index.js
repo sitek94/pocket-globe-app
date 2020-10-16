@@ -6,7 +6,7 @@ import { Navbar } from '../Navbar';
 import { Footer } from '../Footer';
 import { Globe } from '../globe';
 import { CountryAbout } from '../country-about';
-import { CountrySelect } from '../country-select';
+import { SearchBox } from '../search-box';
 import { useGlobeSize } from '../layout/hooks';
 import { useTheme } from './useTheme';
 import { getCountryById, getRandomCountry, initialState } from '../../utils';
@@ -70,7 +70,7 @@ export const App = () => {
               onCountryClick={handleCountryClick}
               onRandomCountryClick={handleRandomCountryClick}
             />
-            <CountrySelect onCountrySelect={handleCountrySelect} />
+            <SearchBox onOptionSelect={handleCountrySelect} />
           </>
         }
         rightColumn={<CountryAbout selectedCountry={selectedCountry} />}

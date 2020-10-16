@@ -34,7 +34,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 export const Widgets = ({ children }) => {
   const classes = useStyles();
 
