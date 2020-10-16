@@ -10,9 +10,11 @@ import {
   throttledZoomProjectionBy,
   rotateProjectionTo,
 } from './globe-transformations';
+import { WidgetNavigation, WidgetRandomCountry, Widgets, WidgetZoom } from '../widgets';
 
 export const Globe = 
   ({
+    /* Initial values */
     width = 600,
     height = 600,
     initialRotation = [0, -30],
@@ -29,6 +31,7 @@ export const Globe =
     selectedCountry,
     onKeyDown,
     onCountryClick,
+    onRandomCountryClick,
   }) => {
     const classes = useStyles();
 
@@ -52,7 +55,14 @@ export const Globe =
     // Get GeoJson data
     const [{ data, isLoading }] = useGeoJsonData();
 
-    // Initial draw of the globe
+    /**
+     * Initial globe set up.
+     * 
+     * Draws the globe and using d3 attaches drag and zoom event handlers.
+     * 
+     * Additionaly, watches 'width' prop to update whenever window's width
+     * changes. 
+     */
     useEffect(() => {
       if (!data.features.length) return;
 
@@ -109,18 +119,26 @@ export const Globe =
       sensitivity,
     ]);
 
-    // Rotation update
+    /**
+     * Watch rotation and prop and smoothly (using rotateProjactionTo)
+     * update the rotation.
+     *  
+     */
     useEffect(() => {
-      const paths = select(svgRef.current).selectAll('path');
+      const countryPaths = select(svgRef.current).selectAll('path');
 
       rotateProjectionTo({
-        selection: paths,
+        selection: countryPaths,
         projection,
         path,
         rotation,
       });
     }, [rotation, path, projection]);
 
+    /**
+     * Key down event handler
+     *  
+     */
     const handleKeyDown = ({ which, keyCode }) => {
       const pressedKey = which || keyCode;
 
@@ -178,6 +196,90 @@ export const Globe =
       onKeyDown({ which, keyCode });
     };
 
+
+    /**
+     * Zoom Widget click
+     * 
+     */
+    const handleZoomClick = ({ currentTarget: { id } }) => {
+      const svg = select(svgRef.current);
+      const countryPaths = svg.selectAll(`path`);
+      const globeCircle = svg.select('circle');
+      
+      let zoomValue;
+      if (id === 'widget-zoom-in') zoomValue = zoomInValue;
+      if (id === 'widget-zoom-out') zoomValue = zoomOutValue;
+        
+      throttledZoomProjectionBy({
+        selection: countryPaths,
+        circle: globeCircle,
+        path,
+        projection,
+        maxScale,
+        minScale,
+        zoomValue,
+      });
+    }
+
+    /**
+     * Navigation Widget - rotation buttons click
+     * 
+     */
+    const handleRotateClick = ({ currentTarget: { id }}) => {
+      let x = 0, y = 0, z = 0;
+      if (id === "widget-rotate-up") y = rotationValue;
+      if (id === "widget-rotate-down") y = -rotationValue;
+      if (id === "widget-rotate-left") x = -rotationValue;
+      if (id === "widget-rotate-right") x = rotationValue;
+
+      rotateBy([x, y, z]);
+    }
+
+    const handleCenterClick = () => {
+      resetRotation();
+    }
+
+    // Reset rotation
+    function resetRotation() {
+      const countryPaths = select(svgRef.current).selectAll('path');
+
+      rotateProjectionTo({
+        selection: countryPaths,
+        projection,
+        path,
+        rotation,
+      });
+    }
+
+    // Rotate by
+    function rotateBy(rotation) {
+      const countryPaths = select(svgRef.current).selectAll('path');
+
+      throttledRotateProjectionBy({
+        selection: countryPaths,
+        path,
+        projection,
+        rotation,
+      });
+    }
+
+    function zoomBy(value) {
+      const svg = select(svgRef.current);
+      const countryPaths = svg.selectAll(`path`);
+      const globeCircle = svg.select('circle');
+        
+      throttledZoomProjectionBy({
+        selection: countryPaths,
+        circle: globeCircle,
+        path,
+        projection,
+        maxScale,
+        minScale,
+        value,
+      });
+    }
+    
+
     if (isLoading) return <LoadingSpinner />;
 
     return (
@@ -210,6 +312,14 @@ export const Globe =
             ))}
           </g>
         </svg>
+        <Widgets>
+          <WidgetRandomCountry onClick={onRandomCountryClick} />
+          <WidgetZoom onClick={handleZoomClick} />
+          <WidgetNavigation 
+            onRotateClick={handleRotateClick}
+            onCenterClick={handleCenterClick}
+          />
+        </Widgets>
       </div>
     );
   }
