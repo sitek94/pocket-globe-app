@@ -13,6 +13,7 @@ import { getCountryById, getRandomCountry, initialState } from '../../utils';
 
 export const App = () => {
   const [theme, toggleTheme] = useTheme();
+  const [showWidgets, setShowWidgets] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState(initialState);
   const [globeWidth, globeHeight] = useGlobeSize();
   const [rotation, setRotation] = useState(initialState.rotation);
@@ -26,6 +27,8 @@ export const App = () => {
   const setRandomCountry = () => {
     updateSelectedCountry(getRandomCountry());
   }
+  const toggleWidgetsVisibility = () => setShowWidgets(!showWidgets);
+
 
   const handleCountryClick = ({ target: { id } }) => {
     updateSelectedCountry(getCountryById(id));
@@ -55,11 +58,14 @@ export const App = () => {
       <CssBaseline />
       <Layout
         navbar={
-          <Navbar title={selectedCountry.name} onThemeIconClick={toggleTheme} />
+          <Navbar title={selectedCountry.name} onThemeIconClick={toggleTheme} onWidgetsIconClick={toggleWidgetsVisibility} />
         }
         leftColumn={
           <>
-            <SearchBox onOptionSelect={handleCountrySelect} />
+            <SearchBox show={showWidgets}
+              onOptionSelect={handleCountrySelect} 
+  
+              />
             <Globe
               rotation={rotation}
               rotationBy={rotation}
@@ -70,6 +76,7 @@ export const App = () => {
               onKeyDown={handleKeyDown}
               onCountryClick={handleCountryClick}
               onRandomCountryClick={handleRandomCountryClick}
+              showWidgets={showWidgets}
             />
           </>
         }

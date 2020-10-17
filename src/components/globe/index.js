@@ -32,6 +32,7 @@ export const Globe =
     onKeyDown,
     onCountryClick,
     onRandomCountryClick,
+    showWidgets
   }) => {
     const classes = useStyles();
 
@@ -294,7 +295,7 @@ export const Globe =
             ))}
           </g>
         </svg>
-        <Widgets>
+        <Widgets show={showWidgets}>
           <WidgetRandomCountry onClick={onRandomCountryClick} />
           <WidgetZoom onClick={handleZoomClick} />
           <WidgetNavigation 
@@ -302,6 +303,7 @@ export const Globe =
             onCenterClick={handleCenterClick}
           />
         </Widgets>
+ 
       </div>
     );
   }

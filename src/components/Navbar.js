@@ -12,8 +12,10 @@ import {
   Brightness4 as MoonIcon,
   Brightness7 as SunIcon,
   GitHub as GitHubIcon,
+  Widgets as WidgetsIcon,
 } from '@material-ui/icons';
 import { useTheme, useMediaQuery } from '@material-ui/core';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(({ palette, breakpoints }) => ({
   root: {
@@ -36,7 +38,32 @@ const useStyles = makeStyles(({ palette, breakpoints }) => ({
   },
 }));
 
-export const Navbar = ({ title, onThemeIconClick }) => {
+const useNavbarIconStyles = makeStyles({
+  root: {},
+  pushToRight: {
+    marginLeft: 'auto',
+  },
+});
+
+const NavbarButton = ({ label, pushToRight, ...other }) => {
+  const classes = useNavbarIconStyles();
+
+  return (
+    <Tooltip title={label}>
+      <IconButton
+        className={clsx({
+          [classes.pushToRight]: pushToRight,
+        })}
+        edge="end"
+        color="inherit"
+        aria-label={label}
+        {...other}
+      />
+    </Tooltip>
+  );
+};
+
+export const Navbar = ({ title, onThemeIconClick, onWidgetsIconClick }) => {
   const classes = useStyles();
   const {
     palette: { type },
@@ -57,40 +84,6 @@ export const Navbar = ({ title, onThemeIconClick }) => {
     </IconButton>
   );
 
-  // GitHub repository icon
-  const githubIconLabel = 'GitHub repository';
-  const githubIcon = (
-    <Tooltip title={githubIconLabel} aria-label={githubIconLabel}>
-      <IconButton
-        className={classes.pushToRight}
-        component="a"
-        edge="end"
-        color="inherit"
-        aria-label={githubIconLabel}
-        href="https://github.com/sitek94/pocket-globe-app"
-        target="_blank"
-        rel="noopener"
-      >
-        <GitHubIcon />
-      </IconButton>
-    </Tooltip>
-  );
-
-  // Theme toggle icon
-  const themeIconLabel = 'Toggle light/dark theme';
-  const themeIcon = (
-    <Tooltip title={themeIconLabel} aria-label={themeIconLabel}>
-      <IconButton
-        edge="end"
-        color="inherit"
-        aria-label={themeIconLabel}
-        onClick={onThemeIconClick}
-      >
-        {type === 'light' ? <MoonIcon /> : <SunIcon />}
-      </IconButton>
-    </Tooltip>
-  );
-
   let titleVariant = 'h4';
   if (matchesDownSmall) titleVariant = 'h5';
   if (matchesDownMobile) titleVariant = 'h6';
@@ -102,8 +95,28 @@ export const Navbar = ({ title, onThemeIconClick }) => {
         <Typography className={classes.title} variant={titleVariant}>
           {title}
         </Typography>
-        {githubIcon}
-        {themeIcon}
+        <NavbarButton
+          label="Show/hide widgets"
+          onClick={onWidgetsIconClick}
+          pushToRight
+        >
+          <WidgetsIcon />
+        </NavbarButton>
+        <NavbarButton
+          component="a"
+          label="GitHub repository"
+          href="https://github.com/sitek94/pocket-globe-app"
+          target="_blank"
+          rel="noopener"
+        >
+          <GitHubIcon />
+        </NavbarButton>
+        <NavbarButton
+          label="Toggle light/dark theme"
+          onClick={onThemeIconClick}
+        >
+          {type === 'light' ? <MoonIcon /> : <SunIcon />}
+        </NavbarButton>
       </Toolbar>
     </AppBar>
   );
