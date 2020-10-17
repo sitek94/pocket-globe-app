@@ -7,8 +7,6 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@react-hook/window-size": "^3.0.7",
-    "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -17,14 +15,11 @@
     "d3": "^6.1.1",
     "gh-pages": "^3.1.0",
     "lodash": "^4.17.20",
-    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
     "react-scripts": "3.4.3",
-    "redux": "^4.0.5",
-    "topojson": "^3.0.2",
-    "world-atlas": "^2.0.2"
+    "topojson": "^3.0.2"
   },
   "scripts": {
     "predeploy": "npm run build",
