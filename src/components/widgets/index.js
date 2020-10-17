@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { makeStyles, Slide } from '@material-ui/core';
 
 import { WidgetNavigation } from './WidgetNavigation';
@@ -35,12 +35,18 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
   },
 }));
 
-export const Widgets = ({ show, ...other}) => {
+const WidgetsBase = forwardRef((props, ref) => {
   const classes = useStyles();
 
+  return <div ref={ref} className={classes.widgets} {...props} />;
+});
+
+export const Widgets = ({ show, children }) => {
   return (
-    <Slide direction="left" in={show}>
-      <div className={classes.widgets} {...other} />
+    <Slide direction="left" in={show} mountOnEnter unmountOnExit>
+      <WidgetsBase>
+        {children}
+      </WidgetsBase>
     </Slide>
   );
 };

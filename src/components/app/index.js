@@ -26,9 +26,8 @@ export const App = () => {
   };
   const setRandomCountry = () => {
     updateSelectedCountry(getRandomCountry());
-  }
+  };
   const toggleWidgetsVisibility = () => setShowWidgets(!showWidgets);
-
 
   const handleCountryClick = ({ target: { id } }) => {
     updateSelectedCountry(getCountryById(id));
@@ -51,21 +50,25 @@ export const App = () => {
 
   const handleRandomCountryClick = () => {
     setRandomCountry();
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Layout
         navbar={
-          <Navbar title={selectedCountry.name} onThemeIconClick={toggleTheme} onWidgetsIconClick={toggleWidgetsVisibility} />
+          <Navbar
+            title={selectedCountry.name}
+            onThemeIconClick={toggleTheme}
+            onWidgetsIconClick={toggleWidgetsVisibility}
+          />
         }
         leftColumn={
           <>
-            <SearchBox show={showWidgets}
-              onOptionSelect={handleCountrySelect} 
-  
-              />
+            <SearchBox
+              show={showWidgets}
+              onOptionSelect={handleCountrySelect}
+            />
             <Globe
               rotation={rotation}
               rotationBy={rotation}
@@ -86,8 +89,3 @@ export const App = () => {
     </ThemeProvider>
   );
 };
-
-/* 
-// KEYBOARD EVENT HANDLERS
-    
-*/

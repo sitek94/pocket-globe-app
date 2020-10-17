@@ -7,6 +7,8 @@ export const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     display: 'grid',
     gridTemplateRows: 'auto 1fr',
     gridTemplateColumns: '1fr 1fr',
+    /* Overflow is required due to sliding transitions of widgets */
+    overflowX: 'hidden',
     [breakpoints.down('sm')]: {
       height: '100%',
       display: 'flex',
