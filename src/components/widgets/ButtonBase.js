@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, Button } from '@material-ui/core/';
+import { makeStyles, Button, Tooltip } from '@material-ui/core/';
 
 const useStyles = makeStyles(({ shadows, shape, palette }) => ({
   root: {
@@ -53,27 +53,36 @@ const useStyles = makeStyles(({ shadows, shape, palette }) => ({
 }));
 
 export const ButtonBase = ({
+  label,
   className,
   gridArea,
+  leftLarge = false,
   disableShadow = false,
   ...other
 }) => {
   const classes = useStyles();
 
   return (
-    <Button
-      color="primary"
-      variant="contained"
-      className={clsx(
-        classes.root,
-        classes[gridArea],
-        {
-          [classes.disableShadow]: disableShadow,
-          [classes.shadow]: !disableShadow,
-        },
-        className
-      )}
-      {...other}
-    />
+    <Tooltip 
+      title={label} 
+      placement="left" 
+      enterDelay={500}
+    >
+      <Button
+        color="primary"
+        variant="contained"
+        aria-label={label}
+        className={clsx(
+          classes.root,
+          classes[gridArea],
+          {
+            [classes.disableShadow]: disableShadow,
+            [classes.shadow]: !disableShadow,
+          },
+          className
+        )}
+        {...other}
+      />
+    </Tooltip>
   );
 };

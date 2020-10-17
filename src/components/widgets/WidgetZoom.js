@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { makeStyles, ButtonGroup } from '@material-ui/core/';
+import { makeStyles, ButtonGroup, Tooltip } from '@material-ui/core/';
 import { ButtonBase } from './ButtonBase';
 import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons';
 
@@ -20,10 +20,10 @@ export const WidgetZoom = ({ onClick }) => {
       variant="contained"
       color="primary"
     >
-      <ButtonBase id="widget-zoom-in" aria-label="Zoom in" onClick={onClick}>
+      <ButtonBase id="widget-zoom-in" label="Zoom in" onClick={onClick}>
         <AddIcon />
       </ButtonBase>
-      <ButtonBase id="widget-zoom-out" aria-label="Zoom out" onClick={onClick}>
+      <ButtonBase id="widget-zoom-out" label="Zoom out" onClick={onClick}>
         <RemoveIcon />
       </ButtonBase>
     </ButtonGroup>
