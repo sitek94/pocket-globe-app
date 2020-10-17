@@ -59,6 +59,7 @@ export const App = () => {
         }
         leftColumn={
           <>
+            <SearchBox onOptionSelect={handleCountrySelect} />
             <Globe
               rotation={rotation}
               rotationBy={rotation}
@@ -70,7 +71,6 @@ export const App = () => {
               onCountryClick={handleCountryClick}
               onRandomCountryClick={handleRandomCountryClick}
             />
-            <SearchBox onOptionSelect={handleCountrySelect} />
           </>
         }
         rightColumn={<CountryAbout selectedCountry={selectedCountry} />}
