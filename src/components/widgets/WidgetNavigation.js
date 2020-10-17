@@ -30,7 +30,7 @@ export const WidgetNavigation = ({ onRotateClick, onCenterClick }) => {
     <div className={classes.holder}>
       <ButtonBase
         id="widget-rotate-up"
-        aria-label="Rotate up"
+        label="Rotate up"
         gridArea="up"
         onClick={onRotateClick}
         disableShadow
@@ -39,7 +39,7 @@ export const WidgetNavigation = ({ onRotateClick, onCenterClick }) => {
       </ButtonBase>
       <ButtonBase
         id="widget-rotate-down"
-        aria-label="Rotate down"
+        label="Rotate down"
         gridArea="down"
         onClick={onRotateClick}
         disableShadow
@@ -48,7 +48,8 @@ export const WidgetNavigation = ({ onRotateClick, onCenterClick }) => {
       </ButtonBase>
       <ButtonBase
         id="widget-selected-country"
-        aria-label="Show selected country"
+        label="Show selected country"
+        leftLarge
         gridArea="center"
         onClick={onCenterClick}
         disableShadow
@@ -57,7 +58,7 @@ export const WidgetNavigation = ({ onRotateClick, onCenterClick }) => {
       </ButtonBase>
       <ButtonBase
         id="widget-rotate-left"
-        aria-label="Rotate left"
+        label="Rotate left"
         gridArea="left"
         onClick={onRotateClick}
         disableShadow
@@ -66,7 +67,7 @@ export const WidgetNavigation = ({ onRotateClick, onCenterClick }) => {
       </ButtonBase>
       <ButtonBase
         id="widget-rotate-right"
-        aria-label="Rotate right"
+        label="Rotate right"
         gridArea="right"
         onClick={onRotateClick}
         disableShadow
