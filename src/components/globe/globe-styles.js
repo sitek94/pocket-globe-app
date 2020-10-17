@@ -14,12 +14,6 @@ export const useStyles = makeStyles(
     svg: {
       display: 'block',
       margin: '0 auto',
-      borderRadius: shape.borderRadius,
-      outline: 'none',
-      transition: create('box-shadow', duration.short),
-      '&:focus': {
-        boxShadow: shadows['5'],
-      },
     },
     country: {
       fill: background.default,
