@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 
 import { Layout } from '../layout';
@@ -10,26 +10,42 @@ import { SearchBox } from '../search-box';
 import { useGlobeSize } from '../layout/hooks';
 import { useTheme } from './useTheme';
 import { getCountryById, getRandomCountry, initialState } from '../../utils';
+import { KEY_L, KEY_R, KEY_W } from '../../utils/keyCodes';
 
 export const App = () => {
   const [theme, toggleTheme] = useTheme();
-  const [showWidgets, setShowWidgets] = useState(true);
-  const [selectedCountry, setSelectedCountry] = useState(initialState);
   const [globeWidth, globeHeight] = useGlobeSize();
-  const [rotation, setRotation] = useState(initialState.rotation);
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  // Updates selected country and rotation
-  const updateSelectedCountry = (newCountry) => {
+  /**
+   * Show/hide widgets
+   */
+  const [showWidgets, setShowWidgets] = useState(true);
+  const toggleWidgetsVisibility = () => setShowWidgets(prev => !prev);
+  
+  /**
+   * Selected country and rotation
+   * 
+   * When updating the country it is necessary to update the rotation
+   * as well.
+   * 
+   */
+  const [selectedCountry, setSelectedCountry] = useState(initialState);
+  const [rotation, setRotation] = useState(initialState.rotation);
+  const [, centerOnSelectedCountry] = useReducer((x) => x + 1, 0);
+
+  const updateSelectedCountry = useCallback((newCountry) => {
     setSelectedCountry(newCountry);
     setRotation(newCountry.rotation);
-  };
-  const setRandomCountry = () => {
+  }, []); 
+
+  const setRandomCountry = useCallback(() => {
     updateSelectedCountry(getRandomCountry());
-  }
-  const toggleWidgetsVisibility = () => setShowWidgets(!showWidgets);
+  }, [updateSelectedCountry]);
 
-
+  /**
+   * Event handlers
+   *  
+   */
   const handleCountryClick = ({ target: { id } }) => {
     updateSelectedCountry(getCountryById(id));
   };
@@ -38,34 +54,47 @@ export const App = () => {
     if (newCountry) updateSelectedCountry(newCountry);
   };
 
-  const handleKeyDown = ({ which, keyCode }) => {
-    const pressedKey = which || keyCode;
-
-    const L = 76,
-      R = 82;
-    // Select random country
-    if (pressedKey === L) forceUpdate();
-    // Center on selected country (force the globe to update)
-    if (pressedKey === R) setRandomCountry();
-  };
-
   const handleRandomCountryClick = () => {
     setRandomCountry();
-  }
+  };
+
+  /**
+   * Add key down event listener to the window object
+   * 
+   * 
+   */
+  useEffect(() => {
+    const handleKeyDown = ({ which, keyCode }) => {
+      const pressedKey = which || keyCode;
+
+      if (pressedKey === KEY_L) centerOnSelectedCountry();
+      if (pressedKey === KEY_R) setRandomCountry();
+      if (pressedKey === KEY_W) toggleWidgetsVisibility();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [setRandomCountry])
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Layout
         navbar={
-          <Navbar title={selectedCountry.name} onThemeIconClick={toggleTheme} onWidgetsIconClick={toggleWidgetsVisibility} />
+          <Navbar
+            title={selectedCountry.name}
+            onThemeIconClick={toggleTheme}
+            onWidgetsIconClick={toggleWidgetsVisibility}
+          />
         }
         leftColumn={
           <>
-            <SearchBox show={showWidgets}
-              onOptionSelect={handleCountrySelect} 
-  
-              />
+            <SearchBox
+              show={showWidgets}
+              onOptionSelect={handleCountrySelect}
+            />
             <Globe
               rotation={rotation}
               rotationBy={rotation}
@@ -73,7 +102,6 @@ export const App = () => {
               width={globeWidth}
               height={globeHeight}
               selectedCountry={selectedCountry}
-              onKeyDown={handleKeyDown}
               onCountryClick={handleCountryClick}
               onRandomCountryClick={handleRandomCountryClick}
               showWidgets={showWidgets}
@@ -86,8 +114,3 @@ export const App = () => {
     </ThemeProvider>
   );
 };
-
-/* 
-// KEYBOARD EVENT HANDLERS
-    
-*/

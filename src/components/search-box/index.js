@@ -6,7 +6,7 @@ import { Search as SearchIcon } from '@material-ui/icons';
 import { countries } from '../../utils/countries';
 import { useStyles } from './search-box-styles';
 
-export const SearchBox = ({ show, onOptionSelect }) => {
+export const SearchBox = ({ show, onOptionSelect, ...other }) => {
   const classes = useStyles();
 
   const [value, setValue] = useState('');
@@ -32,6 +32,7 @@ export const SearchBox = ({ show, onOptionSelect }) => {
         root: classes.autocompleteRoot,
         paper: classes.autocompletePaper,
       }}
+      {...other}
       renderInput={(params) => (
         <Paper
           ref={params.InputProps.ref}
@@ -58,7 +59,7 @@ export const SearchBox = ({ show, onOptionSelect }) => {
   );
 
   return (
-    <Slide in={show} direction="right">
+    <Slide in={show} direction="right" mountOnEnter unmountOnExit>
       {autocomplete}
     </Slide>
   );
