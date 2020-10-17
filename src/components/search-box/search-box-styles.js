@@ -16,6 +16,7 @@ export const useStyles = makeStyles(
 
       /* Position over the globe */
       position: 'absolute',
+      zIndex: 100,
       left: spacing(4),
       top: spacing(4),
       [down('md')]: {
