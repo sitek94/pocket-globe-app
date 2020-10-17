@@ -1,12 +1,10 @@
 import React from 'react';
-import {  makeStyles } from '@material-ui/core';
+import { makeStyles, Slide } from '@material-ui/core';
 
 import { WidgetNavigation } from './WidgetNavigation';
 import { WidgetZoom } from './WidgetZoom';
 import { WidgetRandomCountry } from './WidgetRandomCountry';
-export {
-  WidgetNavigation, WidgetZoom, WidgetRandomCountry
-}
+export { WidgetNavigation, WidgetZoom, WidgetRandomCountry };
 
 const useStyles = makeStyles(({ spacing, breakpoints }) => ({
   widgets: {
@@ -24,7 +22,7 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
     [breakpoints.down('md')]: {
       bottom: 0,
       right: 0,
-    }
+    },
   },
   grid: {
     display: 'grid',
@@ -34,15 +32,15 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
       '. up .'
       'left center right'
       '. down .'`,
-  }
+  },
 }));
 
-export const Widgets = ({ children }) => {
+export const Widgets = ({ show, ...other}) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.widgets}>
-      {children}
-    </div>
-  )
-}
+    <Slide direction="left" in={show}>
+      <div className={classes.widgets} {...other} />
+    </Slide>
+  );
+};

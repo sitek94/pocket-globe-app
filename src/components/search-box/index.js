@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Paper, InputBase } from '@material-ui/core';
+import { Paper, InputBase, Slide } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { Search as SearchIcon } from '@material-ui/icons';
 
 import { countries } from '../../utils/countries';
 import { useStyles } from './search-box-styles';
 
-export const SearchBox = ({ onOptionSelect }) => {
+export const SearchBox = ({ show, onOptionSelect }) => {
   const classes = useStyles();
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const handleValueChange = (event, newValue) => {
     setValue(newValue);
 
@@ -19,7 +19,7 @@ export const SearchBox = ({ onOptionSelect }) => {
   const [inputValue, setInputValue] = useState('');
   const handleInputValueChange = (event, newValue) => setInputValue(newValue);
 
-  return (
+  const autocomplete = (
     <Autocomplete
       size="small"
       value={value}
@@ -27,7 +27,7 @@ export const SearchBox = ({ onOptionSelect }) => {
       onChange={handleValueChange}
       onInputChange={handleInputValueChange}
       options={countries}
-      getOptionLabel={(option) => option ? option.name : ""}
+      getOptionLabel={(option) => (option ? option.name : '')}
       classes={{
         root: classes.autocompleteRoot,
         paper: classes.autocompletePaper,
@@ -56,5 +56,10 @@ export const SearchBox = ({ onOptionSelect }) => {
       )}
     />
   );
-};
 
+  return (
+    <Slide in={show} direction="right">
+      {autocomplete}
+    </Slide>
+  );
+};

@@ -56,7 +56,6 @@ export const ButtonBase = ({
   label,
   className,
   gridArea,
-  leftLarge = false,
   disableShadow = false,
   ...other
 }) => {

@@ -49,7 +49,6 @@ export const WidgetNavigation = ({ onRotateClick, onCenterClick }) => {
       <ButtonBase
         id="widget-selected-country"
         label="Show selected country"
-        leftLarge
         gridArea="center"
         onClick={onCenterClick}
         disableShadow

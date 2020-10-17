@@ -16,6 +16,7 @@ export const useStyles = makeStyles(
 
       /* Position over the globe */
       position: 'absolute',
+      zIndex: 100,
       left: spacing(4),
       top: spacing(4),
       [down('md')]: {
@@ -35,6 +36,7 @@ export const useStyles = makeStyles(
       margin: 0,
       borderRadius: shape.borderRadius,
     },
+
     /* Input */
     inputRoot: {
       color: 'inherit',
@@ -47,6 +49,7 @@ export const useStyles = makeStyles(
         backgroundColor: common.white,
       },
     },
+
     /* Input wrapper (Paper) */
     inputWrapper: {
       width: '100%',
@@ -57,6 +60,7 @@ export const useStyles = makeStyles(
       backgroundColor: primary.main,
       transition: create('background-color', duration.standard),
     },
+    
     /* Search icon */
     searchIcon: {
       display: 'flex',
