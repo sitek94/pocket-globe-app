@@ -71,8 +71,10 @@ export const ButtonBase = ({
         color="primary"
         variant="contained"
         aria-label={label}
+        classes={{
+          root: classes.root,
+        }}
         className={clsx(
-          classes.root,
           classes[gridArea],
           {
             [classes.disableShadow]: disableShadow,
