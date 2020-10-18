@@ -4,14 +4,15 @@ import { makeStyles, ButtonGroup } from '@material-ui/core/';
 import { ButtonBase } from './ButtonBase';
 import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons';
 
-const useZoomStyles = makeStyles(({ shape }) => ({
+const useStyles = makeStyles(({ shape }) => ({
   root: {
     borderRadius: shape.borderRadius,
+    width: shape.buttonWidth,
   },
 }));
 
 export const WidgetZoom = ({ onClick }) => {
-  const classes = useZoomStyles();
+  const classes = useStyles();
 
   return (
     <ButtonGroup
