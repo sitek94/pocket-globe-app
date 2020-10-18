@@ -16,11 +16,7 @@ import {
   Widgets,
   WidgetZoom,
 } from '../widgets';
-import {
-  PLUS_MINUS_KEYS,
-  ARROW_KEYS,
-} from '../../utils/keyCodes';
-import * as KEY_ from '../../utils/keyCodes';
+import KEY_, { PLUS_MINUS_KEYS, ARROW_KEYS } from '../../utils/keyCodes';
 
 export const Globe = ({
   /* Initial values */

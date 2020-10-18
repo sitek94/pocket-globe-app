@@ -10,7 +10,7 @@ import { SearchBox } from '../search-box';
 import { useGlobeSize } from '../layout/hooks';
 import { useTheme } from './useTheme';
 import { getCountryById, getRandomCountry, initialState } from '../../utils';
-import * as KEY_ from '../../utils/keyCodes';
+import KEY_ from '../../utils/keyCodes';
 
 export const App = () => {
   const [theme, toggleTheme] = useTheme();

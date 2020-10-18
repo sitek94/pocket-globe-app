@@ -1,6 +1,5 @@
 import { sample } from 'lodash';
 import { countries } from './countries';
-export { countries };
 
 export const initialState = {
   id: '616',
