@@ -66,8 +66,7 @@ export const Photos = memo(({ term }) => {
             />
           ))}
           <Modal
-            open={isModalOpen}
-            inZoom={isModalOpen}
+            show={isModalOpen}
             onClose={() => setIsModalOpen(false)}
           >
             <PhotoViewer photo={photos[currentIndex]} />

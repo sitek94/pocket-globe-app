@@ -13,6 +13,7 @@ import {
   Brightness7 as SunIcon,
   GitHub as GitHubIcon,
   Widgets as WidgetsIcon,
+  Keyboard as KeyboardIcon,
 } from '@material-ui/icons';
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
@@ -63,7 +64,12 @@ const NavbarButton = ({ label, pushToRight, ...other }) => {
   );
 };
 
-export const Navbar = ({ title, onThemeIconClick, onWidgetsIconClick }) => {
+export const Navbar = ({
+  title,
+  onThemeIconClick,
+  onWidgetsIconClick,
+  onShortcutsIconClick,
+}) => {
   const classes = useStyles();
   const {
     palette: { type },
@@ -96,10 +102,13 @@ export const Navbar = ({ title, onThemeIconClick, onWidgetsIconClick }) => {
           {title}
         </Typography>
         <NavbarButton
-          label="Show/hide widgets"
-          onClick={onWidgetsIconClick}
+          label="Show/hide shortcuts"
+          onClick={onShortcutsIconClick}
           pushToRight
         >
+          <KeyboardIcon />
+        </NavbarButton>
+        <NavbarButton label="Show/hide widgets" onClick={onWidgetsIconClick}>
           <WidgetsIcon />
         </NavbarButton>
         <NavbarButton

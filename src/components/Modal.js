@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Modal = ({ inZoom, children, ...other }) => {
+export const Modal = ({ show, children, ...other }) => {
   const classes = useStyles();
 
   return (
     <MuiModal
+      open={show}
       className={classes.modal}
       closeAfterTransition
       BackdropComponent={Backdrop}
@@ -31,7 +32,7 @@ export const Modal = ({ inZoom, children, ...other }) => {
       }}
       {...other}
     >
-      <Zoom in={inZoom}>
+      <Zoom in={show}>
         <div className={classes.div}>{children}</div>
       </Zoom>
     </MuiModal>
