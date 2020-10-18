@@ -33,14 +33,14 @@ export const PhotoViewer = ({ photo }) => {
   const classes = useStyles();
   const {
     urls,
-    description,
+    alt_description,
     links,
     user: { name },
   } = photo;
 
   return (
     <figure className={classes.figure}>
-      <img className={classes.img} src={urls.regular} alt={description} />
+      <img className={classes.img} src={urls.regular} alt={alt_description} />
       <figcaption>
         <Typography variant="caption" display="block" align="center">
           by <Link href={links.html + REFERRAL_STRING}>{name}</Link> on{' '}

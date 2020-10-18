@@ -79,10 +79,10 @@ export const Photos = memo(({ term }) => {
         <LoadingSpinner />
       ) : (
         <div className={classes.list}>
-          {photos.map(({ id, alt, urls, width, height, color }, i) => (
+          {photos.map(({ id, alt_description, urls, width, height, color }, i) => (
             <Image
               key={id}
-              alt={alt}
+              alt={alt_description}
               src={urls.small}
               color={color}
               aspectRatio={width / height}
