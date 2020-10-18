@@ -1,4 +1,4 @@
-# Pocket Globe App
+# Pocket Globe App (:hourglass_flowing_sand: work in progress)
 
 This app let's you explore all the counties of the world by clicking on them
 on the draggable and zoomable globe.
@@ -30,4 +30,5 @@ See the project live here: https://sitek94.github.io/pocket-globe-app/.
 | `-`                | Zoom out                    |
 | `l`                | Rotate to selected country  |
 | `r`                | Select random country       |
+| `w`                | Show/hide widgets           |
 
