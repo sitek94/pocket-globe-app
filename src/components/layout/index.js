@@ -7,7 +7,7 @@ export const Layout = ({ navbar, leftColumn, rightColumn, footer }) => {
 
   return (
     <Container maxWidth={false} disableGutters>
-      <Paper className={classes.container} elevation={0}>
+      <Paper className={classes.layout} elevation={0}>
         <div className={classes.navbar}>{navbar}</div>
         <div className={classes.leftColumn}>{leftColumn}</div>
         <div className={classes.rightColumn}>{rightColumn}</div>

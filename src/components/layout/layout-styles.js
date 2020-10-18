@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles(({ breakpoints, spacing }) => ({
-  container: {
+  layout: {
     minHeight: '100vh',
     height: '100vh',
     display: 'grid',
@@ -31,6 +31,7 @@ export const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     },
   },
   rightColumn: {
+    height: '100%',
     padding: spacing(2),
     paddingLeft: spacing(1),
     overflowY: 'scroll',

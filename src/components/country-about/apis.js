@@ -8,7 +8,7 @@ export const restCountriesApi = axios.create({
 export const unsplashApi = axios.create({
   baseURL: 'https://api.unsplash.com/search/photos/',
   params: {
-    per_page: 12,
+    per_page: 14,
   },
   headers: {
     Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_KEY}`,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, makeStyles, Typography } from '@material-ui/core';
 
-const referralString = '?utm_source=your_app_name&utm_medium=referral';
+const REFERRAL_STRING = '?utm_source=your_app_name&utm_medium=referral';
 
 const useStyles = makeStyles(
   ({ breakpoints, palette: { common, getContrastText } }) => ({
@@ -43,8 +43,8 @@ export const PhotoViewer = ({ photo }) => {
       <img className={classes.img} src={urls.regular} alt={description} />
       <figcaption>
         <Typography variant="caption" display="block" align="center">
-          by <Link href={links.html + referralString}>{name}</Link> on{' '}
-          <Link href={`https://unsplash.com/${referralString}`}>Unsplash</Link>
+          by <Link href={links.html + REFERRAL_STRING}>{name}</Link> on{' '}
+          <Link href={`https://unsplash.com/${REFERRAL_STRING}`}>Unsplash</Link>
         </Typography>
       </figcaption>
     </figure>
