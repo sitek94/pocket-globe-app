@@ -2,7 +2,7 @@ import React from 'react';
 import { ErrorOutline as ErrorIcon } from '@material-ui/icons';
 import { makeStyles, Typography, Box } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(({ spacing }) => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -10,8 +10,10 @@ const useStyles = makeStyles({
     alignItems: 'center',
     height: '100%',
   },
-  box: {},
-});
+  box: {
+    padding: spacing(1)
+  },
+}));
 
 export const ErrorBox = ({ when }) => {
   const classes = useStyles();
