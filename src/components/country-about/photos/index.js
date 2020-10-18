@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core';
+import { makeStyles, useTheme, fade } from '@material-ui/core';
 
 import { LoadingSpinner } from '../../LoadingSpinner';
 import { Modal } from '../../Modal';
@@ -13,6 +13,8 @@ import Image from 'material-ui-image';
 const useStyles = makeStyles(
   ({
     spacing,
+    palette,
+    transitions: { create, duration },
     breakpoints: {
       down,
       only,
@@ -24,9 +26,16 @@ const useStyles = makeStyles(
       height: '100%',
     },
     card: {
-      display: 'block',
+      marginBottom: spacing(1),
+      cursor: 'pointer',
+      overflow: 'hidden',
+      outline: 0,
+      border: '3px solid transparent',
+      transition: create('border', duration.standard),
+      '&:focus': {
+        border: `3px solid ${fade(palette.primary.main, .9)}`,
+      }
     },
-    image: {},
     list: {
       columnCount: 3,
       columnGap: spacing(1),
@@ -39,7 +48,7 @@ const useStyles = makeStyles(
 
 export const Photos = memo(({ term }) => {
   const classes = useStyles();
-  const { spacing } = useTheme();
+  const { spacing, shadows } = useTheme();
 
   // Fetch photos from Unsplash
   const [{ data, isLoading, isError }, { setConfig }] = useDataApi({
@@ -80,22 +89,28 @@ export const Photos = memo(({ term }) => {
       ) : (
         <div className={classes.list}>
           {photos.map(({ id, alt_description, urls, width, height, color }, i) => (
-            <Image
+            <div
+              tabIndex="0"
               key={id}
-              alt={alt_description}
-              src={urls.small}
-              color={color}
-              aspectRatio={width / height}
-              animationDuration={1500}
-              disableSpinner
-              style={{
-                display: 'block',
-                /* Important! Prevents images from breaking in columns */
-                breakInside: 'avoid',
-                marginBottom: spacing(1),
-              }}
-              onClick={() => handlePhotoClick(i)}
-            />
+              className={classes.card}
+            >
+              <Image
+                alt={alt_description}
+                src={urls.small}
+                color={color}
+                aspectRatio={width / height}
+                animationDuration={1500}
+                disableSpinner
+                style={{
+                  display: 'block',
+                  /* Important! Prevents images from breaking in columns */
+                  breakInside: 'avoid',
+                  // marginBottom: spacing(1),
+                  cursor: 'pointer',
+                }}
+                onClick={() => handlePhotoClick(i)}
+              />
+            </div>
           ))}
         </div>
       )}
