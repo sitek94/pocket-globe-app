@@ -31,4 +31,5 @@ See the project live here: https://sitek94.github.io/pocket-globe-app/.
 | `l`                | Rotate to selected country  |
 | `r`                | Select random country       |
 | `w`                | Show/hide widgets           |
+| `ctrl /`           | Show/hide shortcuts         |
 
