@@ -5,10 +5,15 @@ import { Search as SearchIcon } from '@material-ui/icons';
 
 import { countries } from '../../utils/countries';
 import { useStyles } from './search-box-styles';
+import { alphabeticKeys } from '../../utils/keyCodes';
 
 export const SearchBox = ({ show, onOptionSelect, ...other }) => {
   const classes = useStyles();
 
+  /**
+   * A value that is currently selected
+   * 
+   */
   const [value, setValue] = useState('');
   const handleValueChange = (event, newValue) => {
     setValue(newValue);
@@ -16,8 +21,31 @@ export const SearchBox = ({ show, onOptionSelect, ...other }) => {
     if (newValue) onOptionSelect(event, newValue);
   };
 
+  /**
+   * Input value
+   * 
+   */
   const [inputValue, setInputValue] = useState('');
-  const handleInputValueChange = (event, newValue) => setInputValue(newValue);
+  const handleInputValueChange = (event, newValue) => {
+    setInputValue(newValue)
+  };
+
+  /**
+   * Prevents propagtion of alphabetic keyboard events that are used 
+   * as shortcuts and when ctrl key is pressed.
+   * 
+   * This is to ensure that it is not possible to hide widgets or rotate
+   * the globe when typing.
+   * 
+   */
+  const handleKeyDown = (event) => {
+    const { which, keyCode, ctrlKey } = event;
+    const pressedKey = which || keyCode;
+
+    if (ctrlKey || alphabeticKeys.includes(pressedKey)) {
+      event.stopPropagation();
+    }
+  }
 
   const autocomplete = (
     <Autocomplete
@@ -49,6 +77,7 @@ export const SearchBox = ({ show, onOptionSelect, ...other }) => {
               input: classes.inputInput,
             }}
             {...params.inputProps}
+            onKeyDown={handleKeyDown}
           />
           <div className={classes.searchIcon}>
             <SearchIcon />
