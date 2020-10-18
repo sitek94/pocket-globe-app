@@ -12,3 +12,9 @@ export const KEY_MINUS = 189;
 
 export const KEY_NUM_PLUS = 107;
 export const KEY_NUM_MINUS = 109;
+
+export const alphabeticKeys = [
+  KEY_L,
+  KEY_R,
+  KEY_W,
+];
