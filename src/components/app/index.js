@@ -82,7 +82,7 @@ export const App = () => {
       if (pressedKey === KEY_.L) centerOnSelectedCountry();
       if (pressedKey === KEY_.R) setRandomCountry();
       if (pressedKey === KEY_.W) toggleWidgetsVisibility();
-      if (ctrlKey && pressedKey === KEY_.SLASH) hideShortcuts();
+      if (ctrlKey && pressedKey === KEY_.SLASH) toggleShortcutsVisibility();
     };
 
     window.addEventListener('keydown', handleKeyDown);
