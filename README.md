@@ -22,10 +22,10 @@ See the project live here: https://sitek94.github.io/pocket-globe-app/.
 ### Keyboard shortcuts
 | Key                | Description                 |
 | ------------------ | :-------------------------- |
-| `↑`                | Rotate up                   |
-| `↓`                | Rotate down                 |
-| `←`                | Rotate left                 |
-| `→`                | Rotate right                |
+| `ctrl ↑`           | Rotate up                   |
+| `ctrl ↓`           | Rotate down                 |
+| `ctrl ←`           | Rotate left                 |
+| `ctrl →`           | Rotate right                |
 | `+`                | Zoom in                     |
 | `-`                | Zoom out                    |
 | `l`                | Rotate to selected country  |
