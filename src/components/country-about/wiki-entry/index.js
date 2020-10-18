@@ -19,9 +19,10 @@ export const WikiEntry = ({ term }) => {
      setUrl(term);
   }, [term, setUrl]);
 
+  if (isError) return <ErrorBox when="fetching paragraph about the country" />;
+
   return (
     <div className="WikiEntry">
-      {isError && <ErrorBox when="fetching paragraph about the country" />}
       {isLoading ? (
         <LoadingSpinner />
       ) : (
