@@ -1233,7 +1233,7 @@ export const countries = [
   },
   {
     id: '977',
-    name: 'N. Cyprus',
+    name: 'Northern Cyprus',
     code: '977',
     alpha: 'NCY',
     rotation: [-33.557026481400776, -35.274767914204794, 0],
