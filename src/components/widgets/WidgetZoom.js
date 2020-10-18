@@ -7,8 +7,10 @@ import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons';
 const useStyles = makeStyles(({ shape }) => ({
   root: {
     borderRadius: shape.borderRadius,
-    width: shape.buttonWidth,
   },
+  grouped: {
+    minWidth: 0,
+  }
 }));
 
 export const WidgetZoom = ({ onClick }) => {
@@ -16,7 +18,10 @@ export const WidgetZoom = ({ onClick }) => {
 
   return (
     <ButtonGroup
-      className={classes.root}
+      classes={{
+        root: classes.root,
+        grouped: classes.grouped
+      }}
       orientation="vertical"
       variant="contained"
       color="primary"
