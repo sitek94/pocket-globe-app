@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect } from 'react';
-import { makeStyles, useTheme, fade } from '@material-ui/core';
+import { makeStyles, fade } from '@material-ui/core';
 
 import { LoadingSpinner } from '../../LoadingSpinner';
 import { Modal } from '../../Modal';
@@ -48,7 +48,6 @@ const useStyles = makeStyles(
 
 export const Photos = memo(({ term }) => {
   const classes = useStyles();
-  const { spacing, shadows } = useTheme();
 
   // Fetch photos from Unsplash
   const [{ data, isLoading, isError }, { setConfig }] = useDataApi({

@@ -28,7 +28,6 @@ export const useTheme = () => {
       borderRadius: 8,
       buttonWidth: 29
     },
-
   });
 
   const toggleTheme = () => setDarkMode(!darkMode);
