@@ -1,20 +1,18 @@
-export const KEY_L = 76;
-export const KEY_R = 82;
-export const KEY_W = 87;
+export const L = 76;
+export const R = 82;
+export const W = 87;
 
-export const KEY_UP = 38;
-export const KEY_DOWN = 40;
-export const KEY_LEFT = 37;
-export const KEY_RIGHT = 39;
+export const UP = 38;
+export const DOWN = 40;
+export const LEFT = 37;
+export const RIGHT = 39;
 
-export const KEY_PLUS = 187;
-export const KEY_MINUS = 189;
+export const PLUS = 187;
+export const MINUS = 189;
 
-export const KEY_NUM_PLUS = 107;
-export const KEY_NUM_MINUS = 109;
+export const NUM_PLUS = 107;
+export const NUM_MINUS = 109;
 
-export const alphabeticKeys = [
-  KEY_L,
-  KEY_R,
-  KEY_W,
-];
+export const ARROW_KEYS = [UP, DOWN, LEFT, RIGHT];
+export const PLUS_MINUS_KEYS = [PLUS, MINUS, NUM_PLUS, NUM_MINUS];
+export const ALPHA_KEYS = [L, R, W];
