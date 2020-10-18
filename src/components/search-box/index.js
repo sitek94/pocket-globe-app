@@ -5,7 +5,7 @@ import { Search as SearchIcon } from '@material-ui/icons';
 
 import { countries } from '../../utils/countries';
 import { useStyles } from './search-box-styles';
-import { alphabeticKeys } from '../../utils/keyCodes';
+import { ALPHA_KEYS } from '../../utils/keyCodes';
 
 export const SearchBox = ({ show, onOptionSelect, ...other }) => {
   const classes = useStyles();
@@ -42,7 +42,7 @@ export const SearchBox = ({ show, onOptionSelect, ...other }) => {
     const { which, keyCode, ctrlKey } = event;
     const pressedKey = which || keyCode;
 
-    if (ctrlKey || alphabeticKeys.includes(pressedKey)) {
+    if (ctrlKey || ALPHA_KEYS.includes(pressedKey)) {
       event.stopPropagation();
     }
   }

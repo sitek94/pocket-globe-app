@@ -16,6 +16,11 @@ import {
   Widgets,
   WidgetZoom,
 } from '../widgets';
+import {
+  PLUS_MINUS_KEYS,
+  ARROW_KEYS,
+} from '../../utils/keyCodes';
+import * as KEY_ from '../../utils/keyCodes';
 
 export const Globe = ({
   /* Initial values */
@@ -140,11 +145,11 @@ export const Globe = ({
 
   /**
    * Add key down event listener to the window object.
-   * 
+   *
    * - arrows - to ratate the globe
-   * - plus/minus - to zoom in/out 
-   * 
-   * 
+   * - plus/minus - to zoom in/out
+   *
+   *
    */
   useEffect(() => {
     const handleKeyDown = ({ which, keyCode, ctrlKey }) => {
@@ -154,25 +159,16 @@ export const Globe = ({
       const countryPaths = svg.selectAll(`path`);
       const globeCircle = svg.select('circle');
 
-      const UP = 38,
-        DOWN = 40,
-        LEFT = 37,
-        RIGHT = 39,
-        PLUS = 187,
-        NUM_PLUS = 107,
-        MINUS = 189,
-        NUM_MINUS = 109;
-
       // ARROW KEYS used to rotate the globe
-      if (ctrlKey && [UP, DOWN, LEFT, RIGHT].includes(pressedKey)) {
+      if (ctrlKey && ARROW_KEYS.includes(pressedKey)) {
         let x = 0,
           y = 0,
           z = 0;
 
-        if (pressedKey === 38) y = rotationValue;
-        if (pressedKey === 40) y = -rotationValue;
-        if (pressedKey === 37) x = -rotationValue;
-        if (pressedKey === 39) x = rotationValue;
+        if (pressedKey === KEY_.UP) y = rotationValue;
+        if (pressedKey === KEY_.DOWN) y = -rotationValue;
+        if (pressedKey === KEY_.LEFT) x = -rotationValue;
+        if (pressedKey === KEY_.RIGHT) x = rotationValue;
 
         throttledRotateProjectionBy({
           selection: countryPaths,
@@ -183,12 +179,12 @@ export const Globe = ({
       }
 
       // PLUS / MINUS used for zooming
-      if ([PLUS, NUM_PLUS, MINUS, NUM_MINUS].includes(pressedKey)) {
+      if (PLUS_MINUS_KEYS.includes(pressedKey)) {
         let zoomValue;
 
-        if (pressedKey === PLUS || pressedKey === NUM_PLUS)
+        if (pressedKey === KEY_.PLUS || pressedKey === KEY_.NUM_PLUS)
           zoomValue = zoomInValue;
-        if (pressedKey === MINUS || pressedKey === NUM_MINUS)
+        if (pressedKey === KEY_.MINUS || pressedKey === KEY_.NUM_MINUS)
           zoomValue = zoomOutValue;
 
         throttledZoomProjectionBy({
@@ -290,12 +286,7 @@ export const Globe = ({
 
   return (
     <div className={classes.container}>
-      <svg
-        ref={svgRef}
-        className={classes.svg}
-        width={width}
-        height={height}
-      >
+      <svg ref={svgRef} className={classes.svg} width={width} height={height}>
         <circle
           className={classes.circle}
           cx={width / 2}

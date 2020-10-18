@@ -10,7 +10,7 @@ import { SearchBox } from '../search-box';
 import { useGlobeSize } from '../layout/hooks';
 import { useTheme } from './useTheme';
 import { getCountryById, getRandomCountry, initialState } from '../../utils';
-import { KEY_L, KEY_R, KEY_W } from '../../utils/keyCodes';
+import * as KEY_ from '../../utils/keyCodes';
 
 export const App = () => {
   const [theme, toggleTheme] = useTheme();
@@ -67,9 +67,9 @@ export const App = () => {
     const handleKeyDown = ({ which, keyCode }) => {
       const pressedKey = which || keyCode;
 
-      if (pressedKey === KEY_L) centerOnSelectedCountry();
-      if (pressedKey === KEY_R) setRandomCountry();
-      if (pressedKey === KEY_W) toggleWidgetsVisibility();
+      if (pressedKey === KEY_.L) centerOnSelectedCountry();
+      if (pressedKey === KEY_.R) setRandomCountry();
+      if (pressedKey === KEY_.W) toggleWidgetsVisibility();
     };
 
     window.addEventListener('keydown', handleKeyDown);
