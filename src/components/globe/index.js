@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import { geoPath, geoOrthographic, select, drag, zoom } from 'd3';
+import { Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
 
 import { useStyles } from './globe-styles';
@@ -17,6 +18,8 @@ import {
   WidgetZoom,
 } from '../widgets';
 import KEY_, { PLUS_MINUS_KEYS, ARROW_KEYS } from '../../utils/keyCodes';
+import { countries } from '../../utils/countries';
+import { getCountryById } from '../../utils';
 
 export const Globe = ({
   /* Initial values */
@@ -293,15 +296,17 @@ export const Globe = ({
         />
         <g>
           {data.features.map(({ id }) => (
-            <path
-              key={id}
-              id={id}
-              onClick={onCountryClick}
-              className={clsx({
-                [classes.country]: true,
-                [classes.selected]: selectedCountry.id === id,
-              })}
-            />
+            <Tooltip title={getCountryById(id).name} enterDelay={500}>
+              <path
+                key={id}
+                id={id}
+                onClick={onCountryClick}
+                className={clsx({
+                  [classes.country]: true,
+                  [classes.selected]: selectedCountry.id === id,
+                })}
+              />
+            </Tooltip>
           ))}
         </g>
       </svg>
