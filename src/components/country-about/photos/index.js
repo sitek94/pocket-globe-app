@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect } from 'react';
-import { makeStyles, fade } from '@material-ui/core';
+import { makeStyles, fade, Link } from '@material-ui/core';
 
 import { LoadingSpinner } from '../../LoadingSpinner';
 import { Modal } from '../../Modal';
@@ -9,6 +9,7 @@ import { useDataApi } from '../../../hooks/useDataApi';
 import { initialState } from '../../../utils';
 import { unsplashApi } from '../apis';
 import Image from 'material-ui-image';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles(
   ({
@@ -29,12 +30,17 @@ const useStyles = makeStyles(
       marginBottom: spacing(1),
       cursor: 'pointer',
       overflow: 'hidden',
+      /* Focus replacement */
       outline: 0,
       border: '3px solid transparent',
       transition: create('border', duration.standard),
       '&:focus': {
-        border: `3px solid ${fade(palette.primary.main, .9)}`,
-      }
+        border: `3px solid ${fade(palette.primary.main, 0.9)}`,
+      },
+      /* Prevent borders breaks in columns  */
+      WebkitColumnBreakInside: 'avoid',
+      pageBreakInside: 'avoid',
+      breakInside: 'avoid',
     },
     list: {
       columnCount: 3,
@@ -79,6 +85,19 @@ export const Photos = memo(({ term }) => {
   };
 
   if (isError) return <ErrorBox when="fetching photos" />;
+  if (data.total_pages === 0) {
+    return (
+      <Alert severity="info" style={{ marginTop: 16 }}>
+        <AlertTitle>No photos &#x2639;</AlertTitle>
+        Unfortunally, we couldn't find any photos for this country. But you can
+        explore thousands of other photos and images on{' '}
+        <Link href="https://unsplash.com/" target="_blank" rel="noopener">
+          Unpslash website
+        </Link>
+        .
+      </Alert>
+    );
+  }
   const photos = data.results;
 
   return (
@@ -87,30 +106,28 @@ export const Photos = memo(({ term }) => {
         <LoadingSpinner />
       ) : (
         <div className={classes.list}>
-          {photos.map(({ id, alt_description, urls, width, height, color }, i) => (
-            <div
-              tabIndex="0"
-              key={id}
-              className={classes.card}
-            >
-              <Image
-                alt={alt_description}
-                src={urls.small}
-                color={color}
-                aspectRatio={width / height}
-                animationDuration={1500}
-                disableSpinner
-                style={{
-                  display: 'block',
-                  /* Important! Prevents images from breaking in columns */
-                  breakInside: 'avoid',
-                  // marginBottom: spacing(1),
-                  cursor: 'pointer',
-                }}
-                onClick={() => handlePhotoClick(i)}
-              />
-            </div>
-          ))}
+          {photos.map(
+            ({ id, alt_description, urls, width, height, color }, i) => (
+              <div tabIndex="0" key={id} className={classes.card}>
+                <Image
+                  alt={alt_description}
+                  src={urls.small}
+                  color={color}
+                  aspectRatio={width / height}
+                  animationDuration={1500}
+                  disableSpinner
+                  style={{
+                    display: 'block',
+                    /* Important! Prevents images from breaking in columns */
+                    breakInside: 'avoid',
+                    // marginBottom: spacing(1),
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => handlePhotoClick(i)}
+                />
+              </div>
+            )
+          )}
         </div>
       )}
       <Modal show={isModalOpen} onClose={closeModal}>
