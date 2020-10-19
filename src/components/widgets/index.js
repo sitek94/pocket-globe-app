@@ -8,6 +8,7 @@ export { WidgetNavigation, WidgetZoom, WidgetRandomCountry };
 
 const useStyles = makeStyles(({ spacing, breakpoints }) => ({
   widgets: {
+    zIndex: 100,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -43,7 +44,7 @@ const WidgetsBase = forwardRef((props, ref) => {
 
 export const Widgets = ({ show, children }) => {
   return (
-    <Slide direction="left" in={show} mountOnEnter unmountOnExit>
+    <Slide direction="right" in={show} mountOnEnter unmountOnExit>
       <WidgetsBase>
         {children}
       </WidgetsBase>
