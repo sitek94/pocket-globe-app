@@ -142,8 +142,10 @@ export const Globe = ({
   /**
    * Add key down event listener to the window object.
    *
-   * - arrows - to ratate the globe
-   * - plus/minus - to zoom in/out
+   * - ctrl + arrows keys - to ratate the globe
+   * - (NOT ctrl*) + plus/minus keys - to zoom in/out
+   *   * Make sure that ctrl key is not pressed to prevent coliding with
+   *     native browser shortcuts
    *
    *
    */
@@ -155,7 +157,7 @@ export const Globe = ({
       const countryPaths = svg.selectAll(`path`);
       const globeCircle = svg.select('circle');
 
-      // ARROW KEYS used to rotate the globe
+      // CTRL + ARROW KEYS used to rotate the globe
       if (ctrlKey && ARROW_KEYS.includes(pressedKey)) {
         let x = 0,
           y = 0,
@@ -175,7 +177,7 @@ export const Globe = ({
       }
 
       // PLUS / MINUS used for zooming
-      if (PLUS_MINUS_KEYS.includes(pressedKey)) {
+      if (!ctrlKey && PLUS_MINUS_KEYS.includes(pressedKey)) {
         let zoomValue;
 
         if (pressedKey === KEY_.PLUS || pressedKey === KEY_.NUM_PLUS)
