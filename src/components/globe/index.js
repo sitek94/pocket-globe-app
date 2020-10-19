@@ -144,7 +144,7 @@ export const Globe = ({
    *
    * - ctrl + arrows keys - to ratate the globe
    * - (NOT ctrl*) + plus/minus keys - to zoom in/out
-   *   * Make sure that ctrl key is not pressed to prevent coliding with
+   *   * Make sure that ctrl key is not pressed to prevent colliding with
    *     native browser shortcuts
    *
    *
