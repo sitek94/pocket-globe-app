@@ -84,7 +84,9 @@ export const Photos = memo(({ term }) => {
     setIsModalOpen(true);
   };
 
+  // Something went wrong when fetching the photos
   if (isError) return <ErrorBox when="fetching photos" />;
+  // There are no photos
   if (data.total_pages === 0) {
     return (
       <Alert severity="info" style={{ marginTop: 16 }}>
