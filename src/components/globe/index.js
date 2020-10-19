@@ -18,7 +18,6 @@ import {
   WidgetZoom,
 } from '../widgets';
 import KEY_, { PLUS_MINUS_KEYS, ARROW_KEYS } from '../../utils/keyCodes';
-import { countries } from '../../utils/countries';
 import { getCountryById } from '../../utils';
 
 export const Globe = ({
