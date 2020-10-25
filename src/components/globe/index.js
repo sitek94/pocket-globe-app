@@ -1,5 +1,9 @@
-import React, { useEffect, useRef, useMemo } from 'react';
-import { geoPath, geoOrthographic, select, drag, zoom } from 'd3';
+import React, {
+  useEffect,
+  useRef,
+  useMemo,
+} from 'react';
+import { geoPath, geoOrthographic, select, drag, zoom, geoContains } from 'd3';
 import { Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
 
@@ -38,8 +42,11 @@ export const Globe = ({
   selectedCountry,
   onCountryClick,
   onRandomCountryClick,
+  onLocationClick,
   showWidgets,
 }) => {
+  console.log(selectedCountry);
+
   const classes = useStyles();
 
   // Refs
@@ -78,7 +85,7 @@ export const Globe = ({
     const countryPaths = svg.selectAll(`path`);
 
     // Drag
-    const dragBehaviour = drag().on('drag', (event) => {
+    const dragBehaviour = drag().on('drag', event => {
       const rotate = projection.rotate();
       const k = sensitivity / projection.scale();
 
@@ -89,7 +96,7 @@ export const Globe = ({
     });
 
     // Zoom
-    const zoomBehaviour = zoom().on('zoom', (event) => {
+    const zoomBehaviour = zoom().on('zoom', event => {
       const scrollValue = event.transform.k;
 
       // Reached max/min zoom
@@ -131,6 +138,8 @@ export const Globe = ({
    *
    */
   useEffect(() => {
+    if (!rotation) return;
+
     const countryPaths = select(svgRef.current).selectAll('path');
 
     rotateProjectionTo({
@@ -254,23 +263,26 @@ export const Globe = ({
     rotateBy([x, y, z]);
   };
 
-  const handleCenterClick = () => {
-    resetRotation();
+  /**
+   * Navigation Widget - clicking on location button
+   *
+   * It sets a rotation of the globe to the location and calls handler
+   * passed down from app component to update the country.
+   *
+   */
+  const handleLocationClick = coords => {
+    if (!data.features.length) return;
+
+    const [latitude, longitude] = coords;
+
+    // Find feature that contains point of user location
+    const feature = data.features.find(f =>
+      geoContains(f, [-latitude, -longitude])
+    );
+
+    onLocationClick(feature.id, coords);
   };
 
-  // Reset rotation
-  function resetRotation() {
-    const countryPaths = select(svgRef.current).selectAll('path');
-
-    rotateProjectionTo({
-      selection: countryPaths,
-      projection,
-      path,
-      rotation,
-    });
-  }
-
-  // Rotate by
   function rotateBy(rotation) {
     const countryPaths = select(svgRef.current).selectAll('path');
 
@@ -313,7 +325,7 @@ export const Globe = ({
         <WidgetZoom onClick={handleZoomClick} />
         <WidgetNavigation
           onRotateClick={handleRotateClick}
-          onCenterClick={handleCenterClick}
+          onLocationClick={handleLocationClick}
         />
       </Widgets>
     </div>

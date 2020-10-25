@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 
 import { Layout } from '../layout';
@@ -43,7 +43,6 @@ export const App = () => {
    */
   const [selectedCountry, setSelectedCountry] = useState(initialState);
   const [rotation, setRotation] = useState(initialState.rotation);
-  const [, centerOnSelectedCountry] = useReducer((x) => x + 1, 0);
 
   const updateSelectedCountry = useCallback((newCountry) => {
     setSelectedCountry(newCountry);
@@ -70,16 +69,19 @@ export const App = () => {
     setRandomCountry();
   };
 
+  const handleLocationClick = (countryId, rotation) => {
+    setSelectedCountry(getCountryById(countryId));
+    setRotation(rotation);
+  };
+
   /**
    * Add key down event listener to the window object
-   *
    *
    */
   useEffect(() => {
     const handleKeyDown = ({ which, keyCode, ctrlKey }) => {
       const pressedKey = which || keyCode;
 
-      if (pressedKey === KEY_.L) centerOnSelectedCountry();
       if (pressedKey === KEY_.R) setRandomCountry();
       if (pressedKey === KEY_.W) toggleWidgetsVisibility();
       if (ctrlKey && pressedKey === KEY_.SLASH) toggleShortcutsVisibility();
@@ -117,6 +119,7 @@ export const App = () => {
               height={globeHeight}
               selectedCountry={selectedCountry}
               onCountryClick={handleCountryClick}
+              onLocationClick={handleLocationClick}
               onRandomCountryClick={handleRandomCountryClick}
               showWidgets={showWidgets}
             />
