@@ -31,6 +31,7 @@ export const App = () => {
   const [shortcuts, setShowShortcuts] = useState(false);
   const hideShortcuts = () => setShowShortcuts(false);
   const toggleShortcutsVisibility = () => {
+    setRotation(null);
     setShowShortcuts(prev => !prev);
   }
 
