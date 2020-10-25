@@ -1,72 +1,44 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ButtonBase } from './ButtonBase';
 import {
   MyLocation as LocationIcon,
+  HourglassEmpty as HourglassEmptyIcon,
   LocationDisabled as LocationDisabledIcon,
 } from '@material-ui/icons';
-import { CircularProgress, makeStyles, Snackbar } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import KEY_ from '../../utils/keyCodes';
-
-const useStyles = makeStyles({
-  spinner: {
-    color: '#fff',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -10,
-    marginLeft: -10,
-  },
-});
-
-const Spinner = () => {
-  const classes = useStyles();
-  return <CircularProgress className={classes.spinner} size={20} />;
-};
 
 export const WidgetLocation = ({ onClick }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isNotSupported, setIsNotSupported] = useState(false);
-
-  const getLocation = () =>
-    new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          resolve(position);
-        },
-        error => {
-          reject(error);
-        }
-      );
-    });
-
-  /**
-   * Handler triggered by clicking on a button or by pressing "L" key
-   *
-   */
+  const buttonRef = useRef();
   const handleLocationClick = useCallback(() => {
+    setIsLoading(true);
+    
     if (!navigator.geolocation) {
       setIsNotSupported(true);
     } else {
       setIsNotSupported(false);
-      setIsLoading(true);
 
-      getLocation()
-        .then(position => {
-          setIsError(false);
+      // getLocation()
+      navigator.geolocation.getCurrentPosition(
+        position => {
           setIsLoading(false);
-
+          setIsError(false);
+          
           const latitude = Math.floor(position.coords.latitude);
           const longitude = Math.floor(position.coords.longitude);
 
           onClick([-longitude, -latitude]);
-        })
-        .catch(error => {
+          buttonRef.current.blur();
+        },
+        error => {
           setIsLoading(false);
           setIsError(true);
         });
-    }
+      }
   }, [onClick]);
 
   /**
@@ -104,11 +76,10 @@ export const WidgetLocation = ({ onClick }) => {
   };
 
   const renderIcon = () => {
-    let icon = <LocationIcon />;
-    if (isError) icon = <LocationDisabledIcon />;
-    else if (isLoading) icon = <Spinner />;
+    if (isError) return <LocationDisabledIcon />;
+    else if (isLoading) return <HourglassEmptyIcon />;
 
-    return icon;
+    return <LocationIcon />;
   };
 
   /**
@@ -116,7 +87,7 @@ export const WidgetLocation = ({ onClick }) => {
    *
    */
   const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setOpen(false); 
 
   useEffect(() => {
     if (isError || isNotSupported) setOpen(true);
@@ -130,7 +101,8 @@ export const WidgetLocation = ({ onClick }) => {
   return (
     <>
       <ButtonBase
-        id="widget-selected-country"
+        ref={buttonRef}
+        id="widget-location"
         label={createLabel()}
         gridArea="center"
         onClick={handleLocationClick}
