@@ -6,10 +6,10 @@ import {
   IoIosArrowBack as IconLeft,
   IoIosArrowForward as IconRight,
 } from 'react-icons/io';
-import { MyLocation as LocationIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/';
 import { ButtonBase } from './ButtonBase';
 import { ShadowHelper } from './ShadowHelper';
+import { WidgetLocation } from './WidgetLocation';
 
 const useStyles = makeStyles({
   holder: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const WidgetNavigation = ({ onRotateClick, onCenterClick }) => {
+export const WidgetNavigation = ({ onRotateClick, onLocationClick }) => {
   const classes = useStyles();
 
   return (
@@ -46,15 +46,7 @@ export const WidgetNavigation = ({ onRotateClick, onCenterClick }) => {
       >
         <IconDown />
       </ButtonBase>
-      <ButtonBase
-        id="widget-selected-country"
-        label="Show selected country"
-        gridArea="center"
-        onClick={onCenterClick}
-        disableShadow
-      >
-        <LocationIcon />
-      </ButtonBase>
+      <WidgetLocation onClick={onLocationClick} />
       <ButtonBase
         id="widget-rotate-left"
         label="Rotate left"

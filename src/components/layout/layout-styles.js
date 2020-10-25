@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(({ breakpoints, spacing }) => ({
+export const useStyles = makeStyles(({ breakpoints, spacing, transitions: { create, duration } }) => ({
   layout: {
     minHeight: '100vh',
     height: '100vh',
@@ -26,8 +26,17 @@ export const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    transition: create('padding', duration['short']),
     [breakpoints.down('sm')]: {
       padding: spacing(2),
+    },
+    [breakpoints.down(breakpoints.values.mobile)]: {
+      paddingTop: isSearchboxVisible => {
+        console.log(isSearchboxVisible);
+        return isSearchboxVisible 
+          ? spacing(8)
+          : spacing(2);
+      }
     },
   },
   rightColumn: {

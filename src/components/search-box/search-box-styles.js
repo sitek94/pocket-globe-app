@@ -25,10 +25,9 @@ export const useStyles = makeStyles(
       },
       /* Position above the globe */
       [down(mobile)]: {
-        position: 'relative',
-        top: 0,
-        left: 0,
-        width: '100%',
+        top: spacing(1),
+        left: spacing(2),
+        width: `calc(100% - ${spacing(4)}px)`,
         marginBottom: spacing(2),
       },
     },
