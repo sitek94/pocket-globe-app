@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 import { makeStyles, Button, Tooltip } from '@material-ui/core/';
 
@@ -52,13 +52,13 @@ const useStyles = makeStyles(({ shadows, shape, palette }) => ({
   },
 }));
 
-export const ButtonBase = ({
+export const ButtonBase = forwardRef(({
   label,
   className,
   gridArea,
   disableShadow = false,
   ...other
-}) => {
+}, ref) => {
   const classes = useStyles();
 
   return (
@@ -68,6 +68,7 @@ export const ButtonBase = ({
       enterDelay={500}
     >
       <Button
+        ref={ref}
         color="primary"
         variant="contained"
         aria-label={label}
@@ -86,4 +87,4 @@ export const ButtonBase = ({
       />
     </Tooltip>
   );
-};
+});
