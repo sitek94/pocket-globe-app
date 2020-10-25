@@ -295,9 +295,8 @@ export const Globe = ({
         />
         <g>
           {data.features.map(({ id }) => (
-            <Tooltip title={getCountryById(id).name} enterDelay={500}>
+            <Tooltip key={id} title={getCountryById(id).name} enterDelay={500}>
               <path
-                key={id}
                 id={id}
                 onClick={onCountryClick}
                 className={clsx({
