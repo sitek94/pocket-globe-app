@@ -98,6 +98,7 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Layout
+        isSearchboxVisible={showWidgets}
         navbar={
           <Navbar
             title={selectedCountry.name}
