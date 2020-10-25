@@ -15,25 +15,31 @@ import { Shortcuts } from '../Shortcuts';
 
 export const App = () => {
   const [theme, toggleTheme] = useTheme();
+  const handleToggleTheme = () => {
+    preventRotation();
+    toggleTheme();
+  }
+
   const [globeWidth, globeHeight] = useGlobeSize();
 
   /**
    * Show/hide widgets
    */
   const [showWidgets, setShowWidgets] = useState(true);
-  const toggleWidgetsVisibility = () => {
+  const toggleWidgetsVisibility = useCallback(() => {
+    preventRotation();
     setShowWidgets((prev) => !prev);
-  }
+  }, [])
 
   /**
    * Show/hide shortcuts
    */
   const [shortcuts, setShowShortcuts] = useState(false);
   const hideShortcuts = () => setShowShortcuts(false);
-  const toggleShortcutsVisibility = () => {
-    setRotation(null);
+  const toggleShortcutsVisibility = useCallback(() => {
+    preventRotation();
     setShowShortcuts(prev => !prev);
-  }
+  }, [])
 
   /**
    * Selected country and rotation
@@ -44,6 +50,14 @@ export const App = () => {
    */
   const [selectedCountry, setSelectedCountry] = useState(initialState);
   const [rotation, setRotation] = useState(initialState.rotation);
+
+  /**
+   * The globe is watching rotation property and updates its rotation when it changes.
+   * When rotation is set to null, the globe want update the rotation.
+   */
+  function preventRotation() {
+    setRotation(null);
+  }
 
   const updateSelectedCountry = useCallback((newCountry) => {
     setSelectedCountry(newCountry);
@@ -92,7 +106,7 @@ export const App = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [setRandomCountry]);
+  }, [setRandomCountry, toggleShortcutsVisibility, toggleWidgetsVisibility]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -102,7 +116,7 @@ export const App = () => {
         navbar={
           <Navbar
             title={selectedCountry.name}
-            onThemeIconClick={toggleTheme}
+            onThemeIconClick={handleToggleTheme}
             onWidgetsIconClick={toggleWidgetsVisibility}
             onShortcutsIconClick={toggleShortcutsVisibility}
           />
