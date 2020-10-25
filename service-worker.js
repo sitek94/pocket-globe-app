@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/pocket-globe-app/precache-manifest.dd1851b274a600b76b90c5b70cf47665.js"
+  "/pocket-globe-app/precache-manifest.c5899b5d7ae7a819ba36eb4dc05876f3.js"
 );
 
 self.addEventListener('message', (event) => {
