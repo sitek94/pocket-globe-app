@@ -6,7 +6,7 @@ on the draggable and zoomable globe.
 Once you click on the country the app will fetch additional information and
 photos of the country clicked.
 
-See the project live here: https://sitek94.github.io/pocket-globe-app/.
+See the project live here: https://sitek94.github.io/pocket-globe-app
 
 ## Technologies used
 
