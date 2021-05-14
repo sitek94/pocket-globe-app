@@ -53,7 +53,7 @@ export const App = () => {
 
   /**
    * The globe is watching rotation property and updates its rotation when it changes.
-   * When rotation is set to null, the globe want update the rotation.
+   * When rotation is set to null, the globe won't update the rotation.
    */
   function preventRotation() {
     setRotation(null);
