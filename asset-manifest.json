@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/pocket-globe-app/static/js/main.d8641c4c.chunk.js",
-    "main.js.map": "/pocket-globe-app/static/js/main.d8641c4c.chunk.js.map",
+    "main.js": "/pocket-globe-app/static/js/main.564d2883.chunk.js",
+    "main.js.map": "/pocket-globe-app/static/js/main.564d2883.chunk.js.map",
     "runtime-main.js": "/pocket-globe-app/static/js/runtime-main.9d6519a2.js",
     "runtime-main.js.map": "/pocket-globe-app/static/js/runtime-main.9d6519a2.js.map",
-    "static/js/2.0e1f5092.chunk.js": "/pocket-globe-app/static/js/2.0e1f5092.chunk.js",
-    "static/js/2.0e1f5092.chunk.js.map": "/pocket-globe-app/static/js/2.0e1f5092.chunk.js.map",
+    "static/js/2.3e4e1c44.chunk.js": "/pocket-globe-app/static/js/2.3e4e1c44.chunk.js",
+    "static/js/2.3e4e1c44.chunk.js.map": "/pocket-globe-app/static/js/2.3e4e1c44.chunk.js.map",
     "index.html": "/pocket-globe-app/index.html",
-    "precache-manifest.c5899b5d7ae7a819ba36eb4dc05876f3.js": "/pocket-globe-app/precache-manifest.c5899b5d7ae7a819ba36eb4dc05876f3.js",
+    "precache-manifest.d0e06664ced50407f890e387e352283d.js": "/pocket-globe-app/precache-manifest.d0e06664ced50407f890e387e352283d.js",
     "service-worker.js": "/pocket-globe-app/service-worker.js",
-    "static/js/2.0e1f5092.chunk.js.LICENSE.txt": "/pocket-globe-app/static/js/2.0e1f5092.chunk.js.LICENSE.txt"
+    "static/js/2.3e4e1c44.chunk.js.LICENSE.txt": "/pocket-globe-app/static/js/2.3e4e1c44.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.9d6519a2.js",
-    "static/js/2.0e1f5092.chunk.js",
-    "static/js/main.d8641c4c.chunk.js"
+    "static/js/2.3e4e1c44.chunk.js",
+    "static/js/main.564d2883.chunk.js"
   ]
 }
