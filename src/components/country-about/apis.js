@@ -16,5 +16,5 @@ export const unsplashApi = axios.create({
 });
 
 export const wikiApi = axios.create({
-  baseURL: 'https://en.wikipedia.org/api/rest_v1/page/summary/'
+  baseURL: 'https://en.wikipedia.org/api/rest_v1/page/summary/',
 });

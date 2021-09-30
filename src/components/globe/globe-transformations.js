@@ -3,8 +3,8 @@ import { throttle } from 'lodash';
 
 /**
  * A function that rotates the projection by x, y and z value
- * 
- * 
+ *
+ *
  */
 export const rotateProjectionBy = ({
   selection,
@@ -30,7 +30,7 @@ export const rotateProjectionBy = ({
   // Update selection
   selection
     .transition()
-    .attrTween('d', (d) => (t) => {
+    .attrTween('d', d => t => {
       projection.rotate(r(Math.pow(t, 0.33)));
       path.projection(projection);
 
@@ -44,13 +44,13 @@ export const rotateProjectionBy = ({
 
 /**
  * A specialized version of `rotateProjectionBy` used for keyboard events.
- * 
+ *
  * It throttles the calls to `rotateProjectionBy` and sets duration of rotation
  * to zero and throttle time to 50ms so that the effect is quite smooth.
- * 
- * 
+ *
+ *
  */
-export const throttledRotateProjectionBy = throttle((params) => {
+export const throttledRotateProjectionBy = throttle(params => {
   rotateProjectionBy({
     ...params,
     duration: 0,
@@ -58,10 +58,10 @@ export const throttledRotateProjectionBy = throttle((params) => {
 }, 50);
 
 /**
- * A function that makes a transition from current projection.rotation to 
+ * A function that makes a transition from current projection.rotation to
  * given rotation
- * 
- * 
+ *
+ *
  */
 export const rotateProjectionTo = ({
   selection,
@@ -72,7 +72,7 @@ export const rotateProjectionTo = ({
 }) => {
   // Store the current rotation and scale:
   const currentRotate = projection.rotate();
-  
+
   // Update path generator with new projection
   path.projection(projection);
 
@@ -85,7 +85,7 @@ export const rotateProjectionTo = ({
   // Update selection
   selection
     .transition()
-    .attrTween('d', (d) => (t) => {
+    .attrTween('d', d => t => {
       projection.rotate(r(Math.pow(t, 0.33)));
       path.projection(projection);
 
@@ -99,8 +99,8 @@ export const rotateProjectionTo = ({
 
 /**
  * A function that zooms given projection by given value
- * 
- * 
+ *
+ *
  */
 export const zoomProjectionBy = ({
   selection,
@@ -131,13 +131,13 @@ export const zoomProjectionBy = ({
 
 /**
  * A specialized version of `zoomProjectionBy` used for keyboard events.
- * 
+ *
  * It throttles the calls to `zoomProjectionBy` and sets duration of rotation
  * to zero and throttle time to 50ms so that the effect is quite smooth.
- * 
- * 
+ *
+ *
  */
-export const throttledZoomProjectionBy = throttle((params) => {
+export const throttledZoomProjectionBy = throttle(params => {
   zoomProjectionBy({
     ...params,
     duration: 0,

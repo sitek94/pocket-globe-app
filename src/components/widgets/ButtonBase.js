@@ -52,39 +52,31 @@ const useStyles = makeStyles(({ shadows, shape, palette }) => ({
   },
 }));
 
-export const ButtonBase = forwardRef(({
-  label,
-  className,
-  gridArea,
-  disableShadow = false,
-  ...other
-}, ref) => {
-  const classes = useStyles();
+export const ButtonBase = forwardRef(
+  ({ label, className, gridArea, disableShadow = false, ...other }, ref) => {
+    const classes = useStyles();
 
-  return (
-    <Tooltip 
-      title={label} 
-      placement="left" 
-      enterDelay={500}
-    >
-      <Button
-        ref={ref}
-        color="primary"
-        variant="contained"
-        aria-label={label}
-        classes={{
-          root: classes.root,
-        }}
-        className={clsx(
-          classes[gridArea],
-          {
-            [classes.disableShadow]: disableShadow,
-            [classes.shadow]: !disableShadow,
-          },
-          className
-        )}
-        {...other}
-      />
-    </Tooltip>
-  );
-});
+    return (
+      <Tooltip title={label} placement="left" enterDelay={500}>
+        <Button
+          ref={ref}
+          color="primary"
+          variant="contained"
+          aria-label={label}
+          classes={{
+            root: classes.root,
+          }}
+          className={clsx(
+            classes[gridArea],
+            {
+              [classes.disableShadow]: disableShadow,
+              [classes.shadow]: !disableShadow,
+            },
+            className,
+          )}
+          {...other}
+        />
+      </Tooltip>
+    );
+  },
+);

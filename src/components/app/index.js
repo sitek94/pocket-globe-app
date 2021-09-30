@@ -18,7 +18,7 @@ export const App = () => {
   const handleToggleTheme = () => {
     preventRotation();
     toggleTheme();
-  }
+  };
 
   const [globeWidth, globeHeight] = useGlobeSize();
 
@@ -28,8 +28,8 @@ export const App = () => {
   const [showWidgets, setShowWidgets] = useState(true);
   const toggleWidgetsVisibility = useCallback(() => {
     preventRotation();
-    setShowWidgets((prev) => !prev);
-  }, [])
+    setShowWidgets(prev => !prev);
+  }, []);
 
   /**
    * Show/hide shortcuts
@@ -39,7 +39,7 @@ export const App = () => {
   const toggleShortcutsVisibility = useCallback(() => {
     preventRotation();
     setShowShortcuts(prev => !prev);
-  }, [])
+  }, []);
 
   /**
    * Selected country and rotation
@@ -59,7 +59,7 @@ export const App = () => {
     setRotation(null);
   }
 
-  const updateSelectedCountry = useCallback((newCountry) => {
+  const updateSelectedCountry = useCallback(newCountry => {
     setSelectedCountry(newCountry);
     setRotation(newCountry.rotation);
   }, []);

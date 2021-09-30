@@ -17,12 +17,12 @@ const rows = [
   createData('ctrl ↓', 'Rotate down'),
   createData('ctrl ←', 'Rotate left'),
   createData('ctrl →', 'Rotate right'),
-  createData('+', 'Zoom in' ),
-  createData('-', 'Zoom out' ),
-  createData('l', 'Rotate to selected country' ),
-  createData('r', 'Select random country' ),
-  createData('w', 'Show/hide widgets' ),
-  createData('ctrl /', 'Show/hide shortcuts' ),
+  createData('+', 'Zoom in'),
+  createData('-', 'Zoom out'),
+  createData('l', 'Rotate to selected country'),
+  createData('r', 'Select random country'),
+  createData('w', 'Show/hide widgets'),
+  createData('ctrl /', 'Show/hide shortcuts'),
 ];
 
 const useStyles = makeStyles({
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   cellKey: {
     fontFamily: 'monospace',
     fontSize: '1.1rem',
-  }
+  },
 });
 
 const ShortcutsTable = () => {
@@ -40,10 +40,7 @@ const ShortcutsTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table 
-        className={classes.table}
-        aria-label="Shortcuts table"
-      >
+      <Table className={classes.table} aria-label="Shortcuts table">
         <TableHead>
           <TableRow>
             <TableCell>Key</TableCell>
@@ -51,9 +48,11 @@ const ShortcutsTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map(row => (
             <TableRow key={row.key}>
-              <TableCell align="center" className={classes.cellKey}>{row.key}</TableCell>
+              <TableCell align="center" className={classes.cellKey}>
+                {row.key}
+              </TableCell>
               <TableCell align="left">{row.description}</TableCell>
             </TableRow>
           ))}

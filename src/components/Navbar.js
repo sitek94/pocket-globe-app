@@ -80,7 +80,7 @@ export const Navbar = ({
   const matchesUpSm = useMediaQuery(breakpoints.up('sm'));
   const matchesDownSmall = useMediaQuery(breakpoints.down('xs'));
   const matchesDownMobile = useMediaQuery(
-    `(max-width:${breakpoints.values.mobile}px)`
+    `(max-width:${breakpoints.values.mobile}px)`,
   );
 
   // App Globe icon

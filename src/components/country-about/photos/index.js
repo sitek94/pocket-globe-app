@@ -5,7 +5,7 @@ import { LoadingSpinner } from '../../LoadingSpinner';
 import { Modal } from '../../Modal';
 import { PhotoViewer } from './PhotoViewer';
 import { ErrorBox } from '../../ErrorBox';
-import { useDataApi } from '../../../hooks/useDataApi';
+import { useDataApi } from '../../../hooks';
 import { initialState } from '../../../utils';
 import { unsplashApi } from '../apis';
 import Image from 'material-ui-image';
@@ -49,7 +49,7 @@ const useStyles = makeStyles(
       [down('xs')]: { columnCount: 2 },
       [down(mobile)]: { columnCount: 1 },
     },
-  })
+  }),
 );
 
 export const Photos = memo(({ term }) => {
@@ -72,14 +72,14 @@ export const Photos = memo(({ term }) => {
           query: term,
         },
       }),
-    [term, setConfig]
+    [term, setConfig],
   );
 
   // Open photo in a modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
   const [currentIndex, setCurrentIndex] = useState(1);
-  const handlePhotoClick = (index) => {
+  const handlePhotoClick = index => {
     setCurrentIndex(index);
     setIsModalOpen(true);
   };
@@ -128,7 +128,7 @@ export const Photos = memo(({ term }) => {
                   onClick={() => handlePhotoClick(i)}
                 />
               </div>
-            )
+            ),
           )}
         </div>
       )}

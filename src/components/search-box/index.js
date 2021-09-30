@@ -12,7 +12,7 @@ export const SearchBox = ({ show, onOptionSelect, ...other }) => {
 
   /**
    * A value that is currently selected
-   * 
+   *
    */
   const [value, setValue] = useState('');
   const handleValueChange = (event, newValue) => {
@@ -23,29 +23,29 @@ export const SearchBox = ({ show, onOptionSelect, ...other }) => {
 
   /**
    * Input value
-   * 
+   *
    */
   const [inputValue, setInputValue] = useState('');
   const handleInputValueChange = (event, newValue) => {
-    setInputValue(newValue)
+    setInputValue(newValue);
   };
 
   /**
-   * Prevents propagtion of alphabetic keyboard events that are used 
+   * Prevents propagtion of alphabetic keyboard events that are used
    * as shortcuts and when ctrl key is pressed.
-   * 
+   *
    * This is to ensure that it is not possible to hide widgets or rotate
    * the globe when typing.
-   * 
+   *
    */
-  const handleKeyDown = (event) => {
+  const handleKeyDown = event => {
     const { which, keyCode, ctrlKey } = event;
     const pressedKey = which || keyCode;
 
     if (ctrlKey || ALPHA_KEYS.includes(pressedKey)) {
       event.stopPropagation();
     }
-  }
+  };
 
   const autocomplete = (
     <Autocomplete
@@ -55,13 +55,13 @@ export const SearchBox = ({ show, onOptionSelect, ...other }) => {
       onChange={handleValueChange}
       onInputChange={handleInputValueChange}
       options={countries}
-      getOptionLabel={(option) => (option ? option.name : '')}
+      getOptionLabel={option => (option ? option.name : '')}
       classes={{
         root: classes.autocompleteRoot,
         paper: classes.autocompletePaper,
       }}
       {...other}
-      renderInput={(params) => (
+      renderInput={params => (
         <Paper
           ref={params.InputProps.ref}
           className={classes.inputWrapper}

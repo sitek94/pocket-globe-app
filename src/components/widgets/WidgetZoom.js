@@ -10,7 +10,7 @@ const useStyles = makeStyles(({ shape }) => ({
   },
   grouped: {
     minWidth: 0,
-  }
+  },
 }));
 
 export const WidgetZoom = ({ onClick }) => {
@@ -20,7 +20,7 @@ export const WidgetZoom = ({ onClick }) => {
     <ButtonGroup
       classes={{
         root: classes.root,
-        grouped: classes.grouped
+        grouped: classes.grouped,
       }}
       orientation="vertical"
       variant="contained"

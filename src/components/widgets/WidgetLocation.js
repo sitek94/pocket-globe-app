@@ -16,7 +16,7 @@ export const WidgetLocation = ({ onClick }) => {
   const buttonRef = useRef();
   const handleLocationClick = useCallback(() => {
     setIsLoading(true);
-    
+
     if (!navigator.geolocation) {
       setIsNotSupported(true);
     } else {
@@ -27,7 +27,7 @@ export const WidgetLocation = ({ onClick }) => {
         position => {
           setIsLoading(false);
           setIsError(false);
-          
+
           const latitude = Math.floor(position.coords.latitude);
           const longitude = Math.floor(position.coords.longitude);
 
@@ -37,8 +37,9 @@ export const WidgetLocation = ({ onClick }) => {
         error => {
           setIsLoading(false);
           setIsError(true);
-        });
-      }
+        },
+      );
+    }
   }, [onClick]);
 
   /**
@@ -87,7 +88,7 @@ export const WidgetLocation = ({ onClick }) => {
    *
    */
   const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false); 
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     if (isError || isNotSupported) setOpen(true);

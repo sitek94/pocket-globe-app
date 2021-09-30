@@ -26,7 +26,7 @@ export const useTheme = () => {
     },
     shape: {
       borderRadius: 8,
-      buttonWidth: 29
+      buttonWidth: 29,
     },
   });
 

@@ -2,8 +2,8 @@ import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
 const FETCH_INIT = 'FETCH_INIT',
-      FETCH_SUCCESS = 'FETCH_SUCCESS',
-      FETCH_FAILURE = 'FETCH_FAILURE';
+  FETCH_SUCCESS = 'FETCH_SUCCESS',
+  FETCH_FAILURE = 'FETCH_FAILURE';
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
@@ -25,7 +25,7 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: true,
-      }
+      };
     default:
       throw new Error();
   }
@@ -69,7 +69,7 @@ export const useDataApi = ({
 
     return () => {
       didCancel = true;
-    }
+    };
   }, [url, config, axiosInstance]);
 
   return [state, { setUrl, setConfig }];

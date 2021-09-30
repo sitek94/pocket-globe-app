@@ -13,7 +13,7 @@ export const initialDetails = {
 /**
  *
  * A function that transformes data received from REST Countries API
- * 
+ *
  */
 export const generateDetailsArray = ({
   capital,
@@ -29,7 +29,7 @@ export const generateDetailsArray = ({
     label: 'Languages',
     value: languages
       .slice(0, LANGUAGES_LIMIT + 1)
-      .map((l) => l.name)
+      .map(l => l.name)
       .join(', '),
   },
   { label: 'Currency', value: currencies[0].name },

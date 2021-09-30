@@ -21,11 +21,11 @@ const shadowStyles = makeStyles(({ shadows, shape }) => ({
 }));
 
 /**
- * Used by Widget Rotation component, where box shadow is removed due 
+ * Used by Widget Rotation component, where box shadow is removed due
  * to overlapping on the neighbor buttons.
- * 
- * This compoent is rendered beneath Widget Rotation to mimic its box shadow. 
- * 
+ *
+ * This compoent is rendered beneath Widget Rotation to mimic its box shadow.
+ *
  */
 export const ShadowHelper = () => {
   const classes = shadowStyles();

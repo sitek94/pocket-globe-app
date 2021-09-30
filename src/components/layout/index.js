@@ -2,7 +2,13 @@ import React from 'react';
 import { Paper, Container } from '@material-ui/core';
 import { useStyles } from './layout-styles';
 
-export const Layout = ({ navbar, leftColumn, rightColumn, footer, isSearchboxVisible }) => {
+export const Layout = ({
+  navbar,
+  leftColumn,
+  rightColumn,
+  footer,
+  isSearchboxVisible,
+}) => {
   const classes = useStyles(isSearchboxVisible);
 
   return (

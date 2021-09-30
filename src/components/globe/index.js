@@ -1,8 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useMemo,
-} from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { geoPath, geoOrthographic, select, drag, zoom, geoContains } from 'd3';
 import { Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
@@ -61,7 +57,7 @@ export const Globe = ({
         .center([0, 0])
         .rotate(initialRotation)
         .translate([width / 2, height / 2]),
-    [width, height, initialRotation, initialScale]
+    [width, height, initialRotation, initialScale],
   );
   const path = geoPath().projection(projection);
 
@@ -277,7 +273,7 @@ export const Globe = ({
 
     // Find feature that contains point of user location
     const feature = data.features.find(f =>
-      geoContains(f, [-latitude, -longitude])
+      geoContains(f, [-latitude, -longitude]),
     );
 
     onLocationClick(feature.id, coords);

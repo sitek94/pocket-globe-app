@@ -11,8 +11,8 @@ const styles = {
   vertical: {
     display: 'flex',
     flexDirection: 'column-reverse',
-  }
-}
+  },
+};
 
 const useStyles = makeStyles(({ breakpoints }) => ({
   infoBox: {
@@ -20,14 +20,11 @@ const useStyles = makeStyles(({ breakpoints }) => ({
     [breakpoints.down('md')]: styles.vertical,
     [breakpoints.down('sm')]: styles.horizontal,
     [breakpoints.down('xs')]: styles.vertical,
-  }
-}))
+  },
+}));
 
 export const InfoBox = ({ children }) => {
   const classes = useStyles();
 
-  return (
-  <div className={classes.infoBox}>
-    {children}
-  </div>
-)}
+  return <div className={classes.infoBox}>{children}</div>;
+};

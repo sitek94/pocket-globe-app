@@ -6,7 +6,7 @@ import {
   Zoom,
 } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -37,4 +37,4 @@ export const Modal = ({ show, children, ...other }) => {
       </Zoom>
     </MuiModal>
   );
-}
+};

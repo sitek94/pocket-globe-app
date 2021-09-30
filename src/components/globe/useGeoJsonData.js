@@ -19,7 +19,7 @@ export const useGeoJsonData = () => {
 
       try {
         const { data: topology } = await axios.get(
-          'https://gist.githubusercontent.com/sitek94/dff8b65aa26c9ba01d8f4217cf40587f/raw/topojson-countries-110m.json'
+          'https://gist.githubusercontent.com/sitek94/dff8b65aa26c9ba01d8f4217cf40587f/raw/topojson-countries-110m.json',
         );
 
         const geoJsonData = feature(topology, topology.objects.countries);

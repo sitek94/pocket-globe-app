@@ -6,7 +6,7 @@ export const useColumnHeight = () => {
 
   // Check media queries in order to get correct value of the toolbar
   const matchesXsAndLandscape = useMediaQuery(
-    `${breakpoints.up('xs')} and (orientation: landscape)`
+    `${breakpoints.up('xs')} and (orientation: landscape)`,
   );
   const matchesUpSm = useMediaQuery(breakpoints.up('sm'));
 

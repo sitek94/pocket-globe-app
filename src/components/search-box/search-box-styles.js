@@ -4,9 +4,12 @@ export const useStyles = makeStyles(
   ({
     spacing,
     shape,
-    breakpoints: { down, values: { mobile } },
+    breakpoints: {
+      down,
+      values: { mobile },
+    },
     transitions: { create, duration },
-    palette: { primary, common, getContrastText }
+    palette: { primary, common, getContrastText },
   }) => ({
     /* Autocomplete component */
     autocompleteRoot: {
@@ -59,7 +62,7 @@ export const useStyles = makeStyles(
       backgroundColor: primary.main,
       transition: create('background-color', duration.standard),
     },
-    
+
     /* Search icon */
     searchIcon: {
       display: 'flex',
@@ -67,5 +70,5 @@ export const useStyles = makeStyles(
       color: fade(getContrastText(primary.main), 0.8),
       padding: 10,
     },
-  })
+  }),
 );

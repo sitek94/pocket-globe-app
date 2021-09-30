@@ -31,5 +31,5 @@ export const useStyles = makeStyles(
       fill: getContrastText(background.default),
       transition: create('fill', duration.standard),
     },
-  })
+  }),
 );

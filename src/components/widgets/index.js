@@ -45,9 +45,7 @@ const WidgetsBase = forwardRef((props, ref) => {
 export const Widgets = ({ show, children }) => {
   return (
     <Slide direction="right" in={show} mountOnEnter unmountOnExit>
-      <WidgetsBase>
-        {children}
-      </WidgetsBase>
+      <WidgetsBase>{children}</WidgetsBase>
     </Slide>
   );
 };

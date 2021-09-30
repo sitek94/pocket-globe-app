@@ -11,8 +11,8 @@ on the draggable and zoomable globe.
 
 To fetch information about each country I'm using the following REST API endpoints:
 
-* [REST Countries API](https://restcountries.eu/) - to get information such as country's capital, currency, etc.
-* [Wikimedia REST API ](https://wikimedia.org/api/rest_v1/) - to get a short paragraph about a country
+- [REST Countries API](https://restcountries.eu/) - to get information such as country's capital, currency, etc.
+- [Wikimedia REST API ](https://wikimedia.org/api/rest_v1/) - to get a short paragraph about a country
 
 ## Amazing photos from Unsplash JSON API
 
@@ -40,26 +40,26 @@ Use autocomplete form to find a country
 
 ## Technologies used
 
-* React
-* D3 + TopoJSON + World Atlas TopoJSON
-* Material-UI
-* REST Countries API
-* Unsplash API
-* Wikimedia REST API 
+- React
+- D3 + TopoJSON + World Atlas TopoJSON
+- Material-UI
+- REST Countries API
+- Unsplash API
+- Wikimedia REST API
 
-## Accessibility 
+## Accessibility
 
 ### Keyboard shortcuts
-| Key                | Description                 |
-| ------------------ | :-------------------------- |
-| `ctrl ↑`           | Rotate up                   |
-| `ctrl ↓`           | Rotate down                 |
-| `ctrl ←`           | Rotate left                 |
-| `ctrl →`           | Rotate right                |
-| `+`                | Zoom in                     |
-| `-`                | Zoom out                    |
-| `l`                | Rotate to selected country  |
-| `r`                | Select random country       |
-| `w`                | Show/hide widgets           |
-| `ctrl /`           | Show/hide shortcuts         |
 
+| Key      | Description                |
+| -------- | :------------------------- |
+| `ctrl ↑` | Rotate up                  |
+| `ctrl ↓` | Rotate down                |
+| `ctrl ←` | Rotate left                |
+| `ctrl →` | Rotate right               |
+| `+`      | Zoom in                    |
+| `-`      | Zoom out                   |
+| `l`      | Rotate to selected country |
+| `r`      | Select random country      |
+| `w`      | Show/hide widgets          |
+| `ctrl /` | Show/hide shortcuts        |

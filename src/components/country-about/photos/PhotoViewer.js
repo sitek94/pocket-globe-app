@@ -26,7 +26,7 @@ const useStyles = makeStyles(
         width: '100%',
       },
     },
-  })
+  }),
 );
 
 export const PhotoViewer = ({ photo }) => {

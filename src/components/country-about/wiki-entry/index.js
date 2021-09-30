@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 
 import { LoadingSpinner } from '../../LoadingSpinner';
 import { limitCharacters } from './utils';
-import { useDataApi } from '../../../hooks/useDataApi';
+import { useDataApi } from '../../../hooks';
 import { ErrorBox } from '../../ErrorBox';
 import { initialState } from '../../../utils';
 import { wikiApi } from '../apis';
@@ -16,7 +16,7 @@ export const WikiEntry = ({ term }) => {
   });
 
   useEffect(() => {
-     setUrl(term);
+    setUrl(term);
   }, [term, setUrl]);
 
   if (isError) return <ErrorBox when="fetching paragraph about the country" />;
