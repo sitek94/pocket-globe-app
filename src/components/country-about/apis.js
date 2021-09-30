@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Rest Countries API
 export const restCountriesApi = axios.create({
-  baseURL: 'https://restcountries.eu/rest/v2/alpha/',
+  baseURL: 'https://restcountries.com/v2/alpha/',
 });
 
 export const unsplashApi = axios.create({
