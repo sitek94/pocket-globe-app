@@ -1,6 +1,7 @@
 import React from 'react';
 import { ErrorOutline as ErrorIcon } from '@material-ui/icons';
-import { makeStyles, Typography, Box } from '@material-ui/core';
+import {makeStyles, Typography, Box, Link} from '@material-ui/core';
+import pkg from '../../package.json';
 
 const useStyles = makeStyles(({ spacing }) => ({
   container: {
@@ -11,11 +12,16 @@ const useStyles = makeStyles(({ spacing }) => ({
     height: '100%',
   },
   box: {
-    padding: spacing(1)
+    padding: spacing(2)
   },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem'
+  }
 }));
 
-export const ErrorBox = ({ when }) => {
+export const ErrorBox = () => {
   const classes = useStyles();
 
   return (
@@ -25,9 +31,11 @@ export const ErrorBox = ({ when }) => {
       className={classes.container}
     >
       <div className={classes.box}>
-        <ErrorIcon fontSize="large" />
-        <Typography variant="h5">Aw, Snap!</Typography>
-        <Typography variant="subtitle1">Something went wrong while {when}.</Typography>
+        <div className={classes.header}>
+          <ErrorIcon fontSize="large" />
+          <Typography variant="h5">Aw, Snap!</Typography>
+        </div>
+        <Typography variant="subtitle1">Something went wrong, please <Link underline="always" color="inherit" href={pkg.bugs.url}>submit an issue</Link>, and I'll get it fixed, cheers!</Typography>
       </div>
     </Box>
   );
